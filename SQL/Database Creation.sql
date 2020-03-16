@@ -42,20 +42,22 @@ primary key(operatorId, userId),
 go
 
 create table iqueuedb.dbo.Beacon(
-beaconId varchar(32) primary key,
-latitude numeric(10,8),
-longitude numeric(10,8),
-manufacturer varchar(50),
-model varchar(50),
-serialNumber varchar(32)
+beaconMacAddress varchar(12) primary key,
+uidNamespaceId varchar(10) not null,
+uidInstanceId varchar(6) not null,
+ibeaconUuid varchar(32) not null,
+ibeaconMajor int not null,
+ibeaconMinor int not null,
+manufacturer varchar(50) not null,
+model varchar(50) not null
 )
 
 go
 
 create table iqueuedb.dbo.OperatorBeacon(
 operatorId int references iqueuedb.dbo.Operator(operatorId), 
-beaconId varchar(32) references iqueuedb.dbo.Beacon,
-primary key(operatorId, beaconId),
+beaconMacAddress varchar(12) references iqueuedb.dbo.Beacon,
+primary key(operatorId, beaconMacAddress),
 )
 
 go
@@ -121,15 +123,14 @@ create table iqueuedb.dbo.Attendance(
 operatorId int,
 operatorServiceQueueId int,
 deskId int,
-clientId int,
-[date] date,
-startWaitingTime time,
-endWaitingTime time,
-startAttendanceTime time,
-endAttendanceTime time,
-attendanceStatusId int not null,
-attendanceUserId int not null references [User](userId),
-primary key(operatorId, operatorServiceQueueId, deskId, clientId, [date], startWaitingTime),
+clientId int references iqueuedb.dbo.Client(clientId),
+startWaitingTime datetime,
+endWaitingTime datetime,
+startAttendanceTime datetime,
+endAttendanceTime datetime,
+attendanceStatusId int not null references iqueuedb.dbo.AttendanceStatus(attendanceStatusId),
+attendanceUserId int not null references iqueuedb.dbo.[User](userId),
+primary key(operatorId, operatorServiceQueueId, deskId, clientId, startWaitingTime),
 foreign key(operatorId, operatorServiceQueueId, deskId) references iqueuedb.dbo.ServiceQueueDesk(operatorId, operatorServiceQueueId, deskId)
 )
 
@@ -139,11 +140,15 @@ create table iqueuedb.dbo.AttendanceClassification(
 operatorId int,
 operatorServiceQueueId int,
 deskId int,
-creationTime datetime,
+clientId int,
+startWaitingTime datetime,
+classificationCreationTime datetime,
 rate int not null,
 observations varchar(200),
-primary key(operatorId, operatorServiceQueueId, deskId, creationTime),
-foreign key(operatorId, operatorServiceQueueId, deskId) references iqueuedb.dbo.ServiceQueueDesk(operatorId, operatorServiceQueueId, deskId))
+primary key(operatorId, operatorServiceQueueId, deskId, clientId, startWaitingTime, classificationCreationTime),
+foreign key(operatorId, operatorServiceQueueId, deskId, clientId, startWaitingTime) 
+references iqueuedb.dbo.Attendance(operatorId, operatorServiceQueueId, deskId, clientId, startWaitingTime)
+)
 
 go
 

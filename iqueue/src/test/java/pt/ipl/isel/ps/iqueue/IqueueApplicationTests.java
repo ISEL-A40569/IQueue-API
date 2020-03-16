@@ -1,4 +1,4 @@
-package pt.isel.iqueue;
+package pt.ipl.isel.ps.iqueue;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
