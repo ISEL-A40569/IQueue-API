@@ -1,29 +1,36 @@
+use iqueuedb
 
 go
 
---create database iqueuedb
-
-go
-
-create table iqueuedb.dbo.UserProfile(
-userProfileId int primary key,
-userProfileDescription varchar(50) not null
+create table [Language](
+languageId int primary key,
+languageDescription varchar(20)
 )
 
 go
 
-create table iqueuedb.dbo.[User](
+create table UserProfile(
+userProfileId int,
+languageId int,
+userProfileDescription varchar(50) not null,
+primary key(userProfileId, languageId),
+foreign key(languageId) references [Language](languageId)
+)
+
+go
+
+create table [User](
 userId int identity primary key,
 userName varchar(100) not null,
 email varchar(100) not null,
 phoneNumber int,
 [address] varchar(200),
-userProfileId int not null references iqueuedb.dbo.UserProfile(userProfileId),
+userProfileId int not null,
 )
 
 go
 
-create table iqueuedb.dbo.Operator(
+create table Operator(
 operatorId int identity primary key,
 operatorDescription varchar(100) not null,
 email varchar(100),
@@ -33,16 +40,17 @@ phoneNumber int,
 
 go
 
-create table iqueuedb.dbo.OperatorUser(
-operatorId int references iqueuedb.dbo.Operator(operatorId),
-userId int  references iqueuedb.dbo.[User](userId),
+create table OperatorUser(
+operatorId int references Operator(operatorId),
+userId int  references [User](userId),
 primary key(operatorId, userId),
 )
 
 go
 
-create table iqueuedb.dbo.Beacon(
-beaconMacAddress varchar(12) primary key,
+create table Beacon(
+beaconId int identity primary key,
+beaconMacAddress varchar(12) unique not null,
 uidNamespaceId varchar(10) not null,
 uidInstanceId varchar(6) not null,
 ibeaconUuid varchar(32) not null,
@@ -54,33 +62,36 @@ model varchar(50) not null
 
 go
 
-create table iqueuedb.dbo.OperatorBeacon(
-operatorId int references iqueuedb.dbo.Operator(operatorId), 
-beaconMacAddress varchar(12) references iqueuedb.dbo.Beacon,
-primary key(operatorId, beaconMacAddress),
+create table OperatorBeacon(
+operatorId int references Operator(operatorId), 
+beaconId int references Beacon(beaconId),
+primary key(operatorId, beaconId),
 )
 
 go
 
-create table iqueuedb.dbo.ServiceQueueType(
-serviceQueueTypeId int primary key,
-serviceQueueTypeDescription varchar(50) not null
+create table ServiceQueueType(
+serviceQueueTypeId int,
+languageId int,
+serviceQueueTypeDescription varchar(50) not null,
+primary key(serviceQueueTypeId, languageId),
+foreign key(languageId) references [Language](languageId)
 )
 
 go
 
-create table iqueuedb.dbo.OperatorServiceQueue(
-operatorId int,
-operatorServiceQueueId int identity ,
-operatorServiceQueueDescription varchar(100) not null,
-serviceQueueTypeId int not null references iqueuedb.dbo.ServiceQueueType(serviceQueueTypeId),
-daylyLimit int,
-primary key(operatorId, operatorServiceQueueId),
+create table OperatorServiceQueue(
+operatorId int references Operator(operatorId),
+serviceQueueId int identity ,
+serviceQueueDescription varchar(100) not null,
+serviceQueueTypeId int not null,
+dailyLimit int,
+primary key(operatorId, serviceQueueId),
 )
 
 go 
 
-create table iqueuedb.dbo.Client(
+create table Client(
 clientId int identity primary key,
 clientName varchar(100) not null,
 email varchar(100) not null
@@ -88,66 +99,62 @@ email varchar(100) not null
 
 go
 
-create table iqueuedb.dbo.AttendanceStatus(
-AttendanceStatusId int primary key,
-AttendanceStatusDescription varchar(50) not null
+create table AttendanceStatus(
+AttendanceStatusId int,
+languageId int,
+AttendanceStatusDescription varchar(50) not null,
+primary key(AttendanceStatusId, languageId),
+foreign key(languageId) references [Language](languageId)
 )
 
 go
 
 
-create table iqueuedb.dbo.ServiceQueueDesk(
+create table ServiceQueueDesk(
 operatorId int,
-operatorServiceQueueId int,
+serviceQueueId int,
 deskId int,
-primary key(operatorId, operatorServiceQueueId, deskId),
-foreign key(operatorId, operatorServiceQueueId) references iqueuedb.dbo.OperatorServiceQueue(operatorId, operatorServiceQueueId)
+primary key(operatorId, serviceQueueId, deskId),
+foreign key(operatorId, serviceQueueId) references OperatorServiceQueue(operatorId, serviceQueueId)
 )
 
 go
 
-create table iqueuedb.dbo.ServiceQueueDeskUser(
+create table ServiceQueueDeskUser(
 operatorId int,
-operatorServiceQueueId int,
+serviceQueueId int,
 deskId int,
 userId int,
 [date] date not null,
-primary key(operatorId, operatorServiceQueueId, deskId, userId, [date]),
-foreign key(operatorId, operatorServiceQueueId) references iqueuedb.dbo.OperatorServiceQueue(operatorId, operatorServiceQueueId),
-foreign key(userId) references iqueuedb.dbo.[User](userId)
+primary key(operatorId, serviceQueueId, deskId, userId, [date]),
+foreign key(operatorId, serviceQueueId) references OperatorServiceQueue(operatorId, serviceQueueId),
+foreign key(userId) references [User](userId)
 )
 
 go
 
-create table iqueuedb.dbo.Attendance(
-operatorId int,
-operatorServiceQueueId int,
-deskId int,
-clientId int references iqueuedb.dbo.Client(clientId),
-startWaitingTime datetime,
+create table Attendance(
+attendanceId int identity primary key,
+operatorId int not null,
+serviceQueueId int not null,
+deskId int not null,
+clientId int references Client(clientId) not null,
+startWaitingTime datetime not null,
 endWaitingTime datetime,
 startAttendanceTime datetime,
 endAttendanceTime datetime,
-attendanceStatusId int not null references iqueuedb.dbo.AttendanceStatus(attendanceStatusId),
-attendanceUserId int not null references iqueuedb.dbo.[User](userId),
-primary key(operatorId, operatorServiceQueueId, deskId, clientId, startWaitingTime),
-foreign key(operatorId, operatorServiceQueueId, deskId) references iqueuedb.dbo.ServiceQueueDesk(operatorId, operatorServiceQueueId, deskId)
+attendanceStatusId int not null,
+attendanceUserId int not null references [User](userId),
+foreign key(operatorId, serviceQueueId, deskId) references ServiceQueueDesk(operatorId, serviceQueueId, deskId)
 )
 
 go
 
-create table iqueuedb.dbo.AttendanceClassification(
-operatorId int,
-operatorServiceQueueId int,
-deskId int,
-clientId int,
-startWaitingTime datetime,
-classificationCreationTime datetime,
+create table AttendanceClassification(
+attendanceId int primary key references Attendance,
+classificationCreationTime datetime not null,
 rate int not null,
 observations varchar(200),
-primary key(operatorId, operatorServiceQueueId, deskId, clientId, startWaitingTime, classificationCreationTime),
-foreign key(operatorId, operatorServiceQueueId, deskId, clientId, startWaitingTime) 
-references iqueuedb.dbo.Attendance(operatorId, operatorServiceQueueId, deskId, clientId, startWaitingTime)
 )
 
 go

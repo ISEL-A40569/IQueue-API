@@ -58,3 +58,7 @@ go
 drop table if exists UserProfile
 
 go
+
+drop table if exists [Language]
+
+go

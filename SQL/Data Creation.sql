@@ -1,5 +1,10 @@
 use iqueuedb
 
+insert into [Language] values(1, 'English')
+insert into [Language] values(2, 'Portuguese')
+
+select * from [Language]
+
 insert into UserProfile values (1, 'Administrator')
 insert into UserProfile values (2, 'Manager')
 insert into UserProfile values (3, 'Service')
