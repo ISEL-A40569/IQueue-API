@@ -9,8 +9,6 @@ public class IqueueApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(IqueueApplication.class, args);
-
-
 	}
 
 }

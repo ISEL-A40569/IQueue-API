@@ -5,6 +5,8 @@ insert into [Language] values(2, 'Portuguese')
 
 select * from [Language]
 
+update [Language] set languageDescription = 'Japanese' where languageId = 10
+
 insert into UserProfile values (1, 'Administrator')
 insert into UserProfile values (2, 'Manager')
 insert into UserProfile values (3, 'Service')
