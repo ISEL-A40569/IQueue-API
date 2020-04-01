@@ -10,41 +10,36 @@ import java.util.List;
 public class LanguageRepository extends Repository<Language> {
 
     public LanguageRepository(JdbcTemplate jdbcTemplate, LanguageRowMapper languageRowMapper) {
-        super(jdbcTemplate, languageRowMapper);
+        super(jdbcTemplate, languageRowMapper, "exec GetLanguage ?", "exec InsertLanguage ?, ?",
+                "exec DeleteLanguage ?", "exec UpdateLanguage ?, ?");
     }
 
     @Override
     public Language get(int languageId) {
-        String query = "exec GetLanguage ?";
-
-        return jdbcTemplate.queryForObject( query, new Object[]{languageId}, rowMapper);
+        return jdbcTemplate.queryForObject(getQueryTemplate, new Object[]{languageId}, rowMapper);
     }
 
     @Override
     public List<Language> getAll() {
-        String query = "exec GetLanguages";
-
-        return jdbcTemplate.query(query, rowMapper);
+        long startTime = System.nanoTime();
+        List<Language> query = jdbcTemplate.query(getQueryTemplate, new Object[]{null}, rowMapper);
+        long stopTime = System.nanoTime() - startTime;
+        return query;
+//        return jdbcTemplate.query(getQueryTemplate, new Object[]{null}, rowMapper);
     }
 
     @Override
     public boolean add(Language language) {
-        String query = "exec InsertLanguage ?, ?";
-
-        return jdbcTemplate.update(query, new Object[]{language.getLanguageId(), language.getLanguageDescription()}) == 1;
+        return jdbcTemplate.update(insertQueryTemplate, new Object[]{language.getLanguageId(), language.getLanguageDescription()}) == 1;
     }
 
     @Override
     public boolean remove(int languageId) {
-        String query = "exec DeleteLanguage ?";
-
-        return jdbcTemplate.update(query, new Object[]{languageId}) == 1;
+        return jdbcTemplate.update(deleteQueryTemplate, new Object[]{languageId}) == 1;
     }
 
     @Override
     public boolean update(Language language) {
-        String query = "exec UpdateLanguage ?, ?";
-
-        return jdbcTemplate.update(query, new Object[]{language.getLanguageId(), language.getLanguageDescription()}) == 1;
+        return jdbcTemplate.update(updateQueryTemplate, new Object[]{language.getLanguageId(), language.getLanguageDescription()}) == 1;
     }
 }

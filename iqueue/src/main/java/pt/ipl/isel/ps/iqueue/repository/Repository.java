@@ -3,21 +3,30 @@ package pt.ipl.isel.ps.iqueue.repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 public abstract class Repository<T> {
 
     @Autowired
-    protected JdbcTemplate jdbcTemplate;
+    protected final JdbcTemplate jdbcTemplate;
 
     @Autowired
-    protected RowMapper<T> rowMapper;
+    protected final RowMapper<T> rowMapper;
 
-    public Repository(JdbcTemplate jdbcTemplate, RowMapper<T> rowMapper) {
+    protected final String getQueryTemplate;
+    protected final String insertQueryTemplate;
+    protected final String deleteQueryTemplate;
+    protected final String updateQueryTemplate;
+
+    public Repository(JdbcTemplate jdbcTemplate, RowMapper<T> rowMapper, String getQueryTemplate, String insertQueryTemplate,
+                      String deleteQueryTemplate, String updateQueryTemplate) {
         this.jdbcTemplate = jdbcTemplate;
         this.rowMapper = rowMapper;
+        this.getQueryTemplate = getQueryTemplate;
+        this.insertQueryTemplate = insertQueryTemplate;
+        this.deleteQueryTemplate = deleteQueryTemplate;
+        this.updateQueryTemplate = updateQueryTemplate;
     }
 
     public abstract T get(int id);

@@ -5,18 +5,16 @@ insert into [Language] values(2, 'Portuguese')
 
 select * from [Language]
 
-update [Language] set languageDescription = 'Japanese' where languageId = 10
-
-insert into UserProfile values (1, 'Administrator')
-insert into UserProfile values (2, 'Manager')
-insert into UserProfile values (3, 'Service')
+insert into UserProfile values (1, 1, 'Administrator')
+insert into UserProfile values (2, 1, 'Manager')
+insert into UserProfile values (3, 1, 'Service')
 
 select * from UserProfile
 
-insert into ServiceQueueType values (1, 'Single Desk No Antecipation')
-insert into ServiceQueueType values (2, 'Multi Desk No Antecipation')
-insert into ServiceQueueType values (3, 'Single Desk With Antecipation')
-insert into ServiceQueueType values (4, 'Multi Desk With Antecipation')
+insert into ServiceQueueType values (1, 1, 'Single Desk No Antecipation')
+insert into ServiceQueueType values (2, 1, 'Multi Desk No Antecipation')
+insert into ServiceQueueType values (3, 1, 'Single Desk With Antecipation')
+insert into ServiceQueueType values (4, 1, 'Multi Desk With Antecipation')
 
 select * from ServiceQueueType
 

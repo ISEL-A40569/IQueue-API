@@ -48,7 +48,7 @@ public class LanguagesController extends Controller<Language> {
                         .build();
             }
             else {
-                return ResponseEntity.status(404).build();
+                return ResponseEntity.status(409).build();
             }
         } catch (Exception exception) {
             return ResponseEntity.status(500).build();
