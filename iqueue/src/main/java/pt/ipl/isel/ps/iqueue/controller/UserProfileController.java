@@ -4,24 +4,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pt.ipl.isel.ps.iqueue.model.Language;
-import pt.ipl.isel.ps.iqueue.repository.LanguageRepository;
+import pt.ipl.isel.ps.iqueue.model.UserProfile;
+import pt.ipl.isel.ps.iqueue.repository.UserProfileRepository;
 
 @RestController
-@RequestMapping("/api/iqueue/language")
-public class LanguagesController {
+@RequestMapping("/api/iqueue/userprofile")
+public class UserProfileController {
 
     @Autowired
-    private final LanguageRepository languageRepository;
+    private final UserProfileRepository userProfileRepository;
 
-    public LanguagesController(LanguageRepository languageRepository) {
-        this.languageRepository = languageRepository;
+    public UserProfileController(UserProfileRepository userProfileRepository) {
+        this.userProfileRepository = userProfileRepository;
     }
 
-    @GetMapping(value = "{languageId}", headers = {"Accept=application/json"})
-    public ResponseEntity getById(@PathVariable int languageId) {
+    @GetMapping(value = "{userProfileId}", headers = {"Accept=application/json"})
+    public ResponseEntity getByIds(@PathVariable int userProfileId, @RequestParam int languageId) {
         try {
-            return ResponseEntity.ok(languageRepository.getById(languageId));
+            return ResponseEntity.ok(userProfileRepository.getByIds(userProfileId, languageId));
         } catch (EmptyResultDataAccessException emptyResultDataAccessException) {
             return ResponseEntity.status(404).build();
         }
@@ -29,11 +29,10 @@ public class LanguagesController {
             return ResponseEntity.status(500).build();
         }
     }
-
     @GetMapping(headers = {"Accept=application/json"})
-    public ResponseEntity<? extends Object> getAll() {
+    public ResponseEntity getAll(@RequestParam int languageId) {
         try {
-            return ResponseEntity.ok(languageRepository.getAll());
+            return ResponseEntity.ok(userProfileRepository.getAll(languageId));
         } catch (EmptyResultDataAccessException emptyResultDataAccessException) {
             return ResponseEntity.status(404).build();
         }
@@ -43,12 +42,12 @@ public class LanguagesController {
     }
 
     @PostMapping(headers = {"Accept=application/json", "Content-Type=application/json"})
-    public ResponseEntity<?> add(@RequestBody Language language) {
+    public ResponseEntity add(@RequestBody UserProfile userProfile) {
         try {
-            if (languageRepository.add(language)) {
+            if (userProfileRepository.add(userProfile)) {
                 return ResponseEntity
                         .status(201)
-                        .header("Location", "/api/iqueue/language/" + language.getLanguageId())
+                        .header("Location", "/api/iqueue/userprofile/" + userProfile.getUserProfileId())
                         .build();
             }
             else {
@@ -59,10 +58,10 @@ public class LanguagesController {
         }
     }
 
-    @DeleteMapping(value = "{languageId}", headers = {"Accept=application/json"})
-    public ResponseEntity<?> remove(@PathVariable int languageId) {
+    @DeleteMapping(value = "{userProfileId}")
+    public ResponseEntity remove(@PathVariable int userProfileId,  @RequestParam int languageId) {
         try {
-            if (languageRepository.remove(languageId)) {
+            if (userProfileRepository.remove(userProfileId, languageId)) {
                 return ResponseEntity.ok().build();
             }
             else {
@@ -73,10 +72,10 @@ public class LanguagesController {
         }
     }
 
-    @PutMapping(value = "{languageId}", headers = {"Accept=application/json", "Content-Type=application/json"})
-    public ResponseEntity<?> update(@RequestBody Language language) {
+    @PutMapping(value = "{userProfileId}", headers = {"Accept=application/json", "Content-Type=application/json"})
+    public ResponseEntity update(@RequestBody UserProfile userProfile) {
         try {
-            if (languageRepository.update(language)) {
+            if (userProfileRepository.update(userProfile)) {
                 return ResponseEntity.ok().build();
             }
             else {
@@ -86,4 +85,5 @@ public class LanguagesController {
             return ResponseEntity.status(500).build();
         }
     }
+
 }

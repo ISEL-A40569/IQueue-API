@@ -1,0 +1,287 @@
+{
+	"info": {
+		"_postman_id": "36d6c508-0efc-4367-a64b-5c75a1fb9962",
+		"name": "IQueue Project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "POST Language",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"languageId\": 12,\n\t\"languageDescription\": \"Chinese\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/iqueue/language",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"iqueue",
+						"language"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Language",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/iqueue/language/{{languageId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"iqueue",
+						"language",
+						"{{languageId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Languages",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/iqueue/language",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"iqueue",
+						"language"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UPDATE Language",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"languageId\": 12,\n\t\"languageDescription\": \"Japanese\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/iqueue/language/{{languageId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"iqueue",
+						"language",
+						"{{languageId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE Language",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/iqueue/language/{{languageId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"iqueue",
+						"language",
+						"{{languageId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST UserProfile",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\t\"userProfileId\": 12,\n\t\"languageId\": 1,\n\t\"userProfileDescription\": \"Test\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/iqueue/userprofile",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"iqueue",
+						"userprofile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET UserProfile",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/iqueue/userprofile/{{userProfileId}}?languageId=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"iqueue",
+						"userprofile",
+						"{{userProfileId}}"
+					],
+					"query": [
+						{
+							"key": "languageId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET UserProfiles",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/iqueue/userprofile?languageId=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"iqueue",
+						"userprofile"
+					],
+					"query": [
+						{
+							"key": "languageId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE UserProfile",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/iqueue/userprofile/{{userProfileId}}?languageId=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"iqueue",
+						"userprofile",
+						"{{userProfileId}}"
+					],
+					"query": [
+						{
+							"key": "languageId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT UserProfile",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\t\"userProfileId\": 12,\n\t\"languageId\": 1,\n\t\"userProfileDescription\": \"Updated!\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/iqueue/userprofile/{{userProfileId}}?languageId=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"iqueue",
+						"userprofile",
+						"{{userProfileId}}"
+					],
+					"query": [
+						{
+							"key": "languageId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

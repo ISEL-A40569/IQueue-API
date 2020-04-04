@@ -52,7 +52,9 @@ create or alter procedure UpdateLanguage @languageId int, @languageDescription v
 as
 begin transaction set transaction isolation level serializable
 begin try
-update [Language] set languageDescription = @languageDescription where languageId = @languageId
+update [Language] 
+	set languageDescription = @languageDescription 
+	where languageId = @languageId
 commit
 end try
 begin catch
@@ -76,11 +78,6 @@ set @params = '@userProfileId int, @languageId int'
 	if @userProfileId is not null and @languageId is not null
 	begin
 		set @query = @query + ' where userProfileId = @userProfileId and languageId = @languageId'
-	end
-
-	if @userProfileId is not null and @languageId is null
-	begin
-		set @query = @query + ' where userProfileId = @userProfileId'
 	end
 
 	if @userProfileId is null and @languageId is not null
@@ -107,9 +104,30 @@ go
 
 create or alter procedure DeleteUserProfile @userProfileId int, @languageId int
 as
+declare @query nvarchar(max),
+		@params nvarchar(max)
+
+set @query = 'delete UserProfile'
+
+set @params = '@userProfileId int, @languageId int'
 begin transaction set transaction isolation level serializable
 begin try
-delete UserProfile where userProfileId = @userProfileId and languageId = @languageId
+if @userProfileId is not null and @languageId is not null
+begin
+	set @query = @query + ' where userProfileId = @userProfileId and languageId = @languageId'
+end
+
+if @userProfileId is not null and @languageId is null
+begin
+	set @query = @query + ' where userProfileId = @userProfileId'
+end
+
+if @userProfileId is null and @languageId is not null
+begin
+	set @query = @query + ' where languageId = @languageId'
+end
+
+exec sp_executesql @query, @params, @userProfileId = @userProfileId, @languageId = @languageId
 commit
 end try
 begin catch
@@ -122,8 +140,9 @@ create or alter procedure UpdateUserProfile @userProfileId int, @languageId int,
 as
 begin transaction set transaction isolation level serializable
 begin try
-update UserProfile set userProfileDescription = @userProfileDescription 
-where userProfileId  = @userProfileId and languageId = @languageId
+update UserProfile 
+	set userProfileDescription = @userProfileDescription 
+	where userProfileId  = @userProfileId and languageId = @languageId
 commit
 end try
 begin catch
@@ -134,7 +153,7 @@ go
 
 -- User SPs
 
-create or alter procedure SelectUser @userId int, @userProfileId int
+create or alter procedure SelectUser @userId int
 as
  
 declare @query nvarchar(max),
@@ -142,28 +161,18 @@ declare @query nvarchar(max),
 
 set @query = 'select * from [User]'
 
-set @params = '@userId int, @userProfileId int'
+set @params = '@userId int'
 
-if @userId is not null and @userProfileId is not null
-begin
-	set @query = @query + ' where userId = @userId and userProfileId = @userProfileId'
-end
-
-if @userId is not null and @userProfileId is null
+if @userId is not null
 begin
 	set @query = @query + ' where userId = @userId'
 end
 
-if @userId is null and @userProfileId is not null
-begin
-	set @query = @query + ' where userProfileId = @userProfileId'
-end
-
-exec sp_executesql @query, @params, @userId = @userId, @userProfileId = @userProfileId
+exec sp_executesql @query, @params, @userId = @userId
 
 go
 
-create  or alter procedure InsertUser @userName varchar(100), @email varchar(100), @phoneNumber int, @address varchar(200), @userProfileId int 
+create or alter procedure InsertUser @userName varchar(100), @email varchar(100), @phoneNumber int, @address varchar(200), @userProfileId int 
 as
 begin transaction set transaction isolation level serializable
 begin try
@@ -176,7 +185,7 @@ end catch
 
 go
 
-create  or alter procedure DeleteUser @userId int
+create or alter procedure DeleteUser @userId int
 as
 begin transaction set transaction isolation level serializable
 begin try
@@ -189,16 +198,17 @@ end catch
 
 go
 
-create  or alter procedure UpdateUser @userId int, @userName varchar(100), @email varchar(100), 
+create or alter procedure UpdateUser @userId int, @userName varchar(100), @email varchar(100), 
 									@phoneNumber int, @address varchar(200), @userProfileId int 
 as
 begin transaction set transaction isolation level serializable
 begin try
-update [User] set userName = @userName,
-				email = @email,
-				phoneNumber = @phoneNumber,
-				[address] = @address,
-				userProfileId = @userProfileId
+update [User] 
+set userName = @userName,
+	email = @email,
+	phoneNumber = @phoneNumber,
+	[address] = @address,
+	userProfileId = @userProfileId
 where userId  = @userId 
 commit
 end try
@@ -225,11 +235,6 @@ begin
 	set @query = @query + ' where serviceQueueTypeId = @serviceQueueTypeId and languageId = @languageId'
 end
 
-if @serviceQueueTypeId is not null and @languageId is null
-begin
-	set @query = @query + ' where serviceQueueTypeId = @serviceQueueTypeId'
-end
-
 if @serviceQueueTypeId is null and @languageId is not null
 begin
 set @query = @query + ' where languageId = @languageId'
@@ -239,7 +244,7 @@ exec sp_executesql @query, @params, @serviceQueueTypeId = @serviceQueueTypeId, @
 
 go
 
-create  or alter procedure InsertServiceQueueType @serviceQueueTypeId int, @languageId int, @serviceQueueTypeDescription varchar(50)
+create or alter procedure InsertServiceQueueType @serviceQueueTypeId int, @languageId int, @serviceQueueTypeDescription varchar(50)
 as
 begin transaction set transaction isolation level serializable
 begin try
@@ -252,10 +257,33 @@ end catch
 
 go
 
-create  or alter procedure DeleteServiceQueueType @serviceQueueTypeId int, @languageId int
+create or alter procedure DeleteServiceQueueType @serviceQueueTypeId int, @languageId int
 as
+declare @query nvarchar(max),
+		@params nvarchar(max)
+
+set @query = 'delete ServiceQueueType'
+
+set @params = '@serviceQueueTypeId int, @languageId int'
 begin transaction set transaction isolation level serializable
 begin try
+if @serviceQueueTypeId is not null and @languageId is not null
+begin
+	set @query = @query + ' where serviceQueueTypeId = @serviceQueueTypeId and languageId = @languageId'
+end
+
+if @serviceQueueTypeId is not null and @languageId is null
+begin
+	set @query = @query + ' where serviceQueueTypeId = @serviceQueueTypeId'
+end
+
+if @serviceQueueTypeId is null and @languageId is not null
+begin
+	set @query = @query + ' where languageId = @languageId'
+end
+
+exec sp_executesql @query, @params, @serviceQueueTypeId = @serviceQueueTypeId, @languageId = @languageId
+
 delete ServiceQueueType where serviceQueueTypeId = @serviceQueueTypeId and languageId = @languageId
 commit
 end try
@@ -269,7 +297,8 @@ create  or alter procedure UpdateServiceQueueType @serviceQueueTypeId int, @lang
 as
 begin transaction set transaction isolation level serializable
 begin try
-update ServiceQueueType set serviceQueueTypeDescription = @serviceQueueTypeDescription 
+update ServiceQueueType 
+set serviceQueueTypeDescription = @serviceQueueTypeDescription 
 where serviceQueueTypeId  = @serviceQueueTypeId and languageId = @languageId
 commit
 end try

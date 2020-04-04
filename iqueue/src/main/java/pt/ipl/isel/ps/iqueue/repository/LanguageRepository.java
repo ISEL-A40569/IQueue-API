@@ -1,45 +1,49 @@
 package pt.ipl.isel.ps.iqueue.repository;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 import pt.ipl.isel.ps.iqueue.model.Language;
 import pt.ipl.isel.ps.iqueue.repository.rowmapper.LanguageRowMapper;
 import java.util.List;
 
 @Component
-public class LanguageRepository extends Repository<Language> {
+public class LanguageRepository {
+
+    @Autowired
+    private final JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    private final RowMapper<Language> languageRowMapper;
+
+    private final String getQueryTemplate = "exec SelectLanguage ?";
 
     public LanguageRepository(JdbcTemplate jdbcTemplate, LanguageRowMapper languageRowMapper) {
-        super(jdbcTemplate, languageRowMapper, "exec GetLanguage ?", "exec InsertLanguage ?, ?",
-                "exec DeleteLanguage ?", "exec UpdateLanguage ?, ?");
+        this.jdbcTemplate = jdbcTemplate;
+        this.languageRowMapper = languageRowMapper;
     }
 
-    @Override
-    public Language get(int languageId) {
-        return jdbcTemplate.queryForObject(getQueryTemplate, new Object[]{languageId}, rowMapper);
+    public Language getById(int languageId) {
+        return jdbcTemplate.queryForObject(getQueryTemplate, new Object[]{languageId}, languageRowMapper);
     }
 
-    @Override
     public List<Language> getAll() {
-        long startTime = System.nanoTime();
-        List<Language> query = jdbcTemplate.query(getQueryTemplate, new Object[]{null}, rowMapper);
-        long stopTime = System.nanoTime() - startTime;
-        return query;
-//        return jdbcTemplate.query(getQueryTemplate, new Object[]{null}, rowMapper);
+        return jdbcTemplate.query(getQueryTemplate, new Object[]{null}, languageRowMapper);
     }
 
-    @Override
     public boolean add(Language language) {
-        return jdbcTemplate.update(insertQueryTemplate, new Object[]{language.getLanguageId(), language.getLanguageDescription()}) == 1;
+        String insertQueryTemplate = "exec InsertLanguage ?, ?";
+        return jdbcTemplate.update(insertQueryTemplate, language.getLanguageId(), language.getLanguageDescription()) == 1;
     }
 
-    @Override
     public boolean remove(int languageId) {
-        return jdbcTemplate.update(deleteQueryTemplate, new Object[]{languageId}) == 1;
+        String deleteQueryTemplate = "exec DeleteLanguage ?";
+        return jdbcTemplate.update(deleteQueryTemplate, languageId) > 0;
     }
 
-    @Override
     public boolean update(Language language) {
-        return jdbcTemplate.update(updateQueryTemplate, new Object[]{language.getLanguageId(), language.getLanguageDescription()}) == 1;
+        String updateQueryTemplate = "exec UpdateLanguage ?, ?";
+        return jdbcTemplate.update(updateQueryTemplate, language.getLanguageId(), language.getLanguageDescription()) == 1;
     }
 }
