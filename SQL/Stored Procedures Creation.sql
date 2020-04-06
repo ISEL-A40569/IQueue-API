@@ -369,7 +369,7 @@ rollback
 end catch
 
 go
-
+-- TODO: review this SP query
 create or alter procedure DeleteServiceQueueDeskUser @operatorId int, @serviceQueueId int, @deskId int, @userId int, @date date
 as
 begin transaction set transaction isolation level serializable
@@ -388,7 +388,7 @@ go
 
 -- ServiceQueueDesk SPs
 
-create or alter procedure SelectServiceQueueDesk @operatorId int, @serviceQueueId int, @deskId int
+create or alter procedure SelectServiceQueueDesk @operatorId int, @serviceQueueId int
 as
 
 declare @query nvarchar(max),
@@ -396,7 +396,7 @@ declare @query nvarchar(max),
 
 set @query = 'select * from ServiceQueueDesk'
 
-set @params = '@operatorId int, @serviceQueueId int, @deskId int'
+set @params = '@operatorId int, @serviceQueueId int'
 
 if @operatorId is not null
 begin
@@ -408,12 +408,7 @@ begin
 	set @query = @query + ' and serviceQueueId = @serviceQueueId'
 end
 
-if @deskId is not null
-begin
-	set @query = @query + ' and deskId = @deskId'
-end
-
-exec sp_executesql @query, @params, @operatorId = @operatorId, @serviceQueueId = @serviceQueueId, @deskId = @deskId
+exec sp_executesql @query, @params, @operatorId = @operatorId, @serviceQueueId = @serviceQueueId
 
 go
 
@@ -447,7 +442,7 @@ go
 
 -- OperatorUser SPs
 
-create or alter procedure SelectOperatorUser @operatorId int, @userId int
+create or alter procedure SelectOperatorUser @operatorId int
 as
 
 declare @query nvarchar(max),
@@ -455,19 +450,14 @@ declare @query nvarchar(max),
 
 set @query = 'select * from OperatorUser'
 
-set @params = '@operatorId int, @userId int'
+set @params = '@operatorId int'
 
 if @operatorId is not null
 begin
 	set @query = @query + ' where operatorId = @operatorId'
 end
 
-if @userId is not null
-begin
-	set @query = @query + ' and userId = @userId'
-end
-
-exec sp_executesql @query, @params, @operatorId = @operatorId, @userId = @userId
+exec sp_executesql @query, @params, @operatorId = @operatorId
 
 go
 
@@ -580,11 +570,6 @@ declare @query nvarchar(max),
 set @query = 'select * from OperatorBeacon'
 
 set @params = '@operatorId int, @beaconId int'
-
-if @operatorId is not null and @beaconId is not null
-begin 
-	set @query = @query + ' where operatorId = @operatorId and beaconId = @beaconId'
-end
 
 if @operatorId is not null and @beaconId is null
 begin 
@@ -833,11 +818,6 @@ set @params = '@attendanceStatusId int, @languageId int'
 	if @attendanceStatusId is not null and @languageId is not null
 	begin
 		set @query = @query + ' where attendanceStatusId = @attendanceStatusId and languageId = @languageId'
-	end
-
-	if @attendanceStatusId is not null and @languageId is null
-	begin
-		set @query = @query + ' where attendanceStatusId = @attendanceStatusId'
 	end
 
 	if @attendanceStatusId is null and @languageId is not null
