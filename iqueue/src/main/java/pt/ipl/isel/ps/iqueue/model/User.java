@@ -3,11 +3,13 @@ package pt.ipl.isel.ps.iqueue.model;
 public class User {
 
     private int userId;
-    private final String userName;
-    private final String email;
-    private final int phoneNumber;
-    private final String address;
-    private final int userProfileId;
+    private String userName;
+    private String email;
+    private int phoneNumber;
+    private String address;
+    private int userProfileId;
+
+    public User() { }
 
     public User(String userName, String email, int phoneNumber, String address, int userProfileId) {
         this.userName = userName;

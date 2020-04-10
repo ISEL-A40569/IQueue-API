@@ -20,12 +20,21 @@ public class AttendanceStatusRepository extends Repository<AttendanceStatus> {
 
     @Override
     public AttendanceStatus getById(int attendanceStatusId) {
-        return jdbcTemplate.queryForObject(getQueryTemplate, new Object[]{attendanceStatusId}, rowMapper);
+        throw new UnsupportedOperationException();
+    }
+
+    public AttendanceStatus getByIds(int attendanceStatusId, int languageId) {
+        return jdbcTemplate.queryForObject(getQueryTemplate, new Object[]{attendanceStatusId, languageId}, rowMapper);
+    }
+
+
+    public AttendanceStatus getByLanguage(int languageId) {
+        return jdbcTemplate.queryForObject(getQueryTemplate, new Object[]{null, languageId}, rowMapper);
     }
 
     @Override
     public List<AttendanceStatus> getAll() {
-        return jdbcTemplate.query(getQueryTemplate, new Object[]{null}, rowMapper);
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -37,7 +46,7 @@ public class AttendanceStatusRepository extends Repository<AttendanceStatus> {
     @Override
     public boolean remove(int attendanceStatusId) {
         throw new UnsupportedOperationException();
-    }
+    }   //TODO: implement this?!? if so, must change SQL SP query
 
     public boolean remove(int attendanceStatusId, int languageId) {
         return jdbcTemplate.update(removeQueryTemplate, attendanceStatusId, languageId) == 1;

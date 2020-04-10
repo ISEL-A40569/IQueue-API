@@ -2,10 +2,13 @@ package pt.ipl.isel.ps.iqueue.model;
 
 public class Operator {
     private int operatorId;
-    private final String operatorDescription;
-    private final String email;
-    private final int phoneNumber;
-    private final String address;
+    private String operatorDescription;
+    private String email;
+    private int phoneNumber;
+    private String address;
+
+    public Operator() {
+    }
 
     public Operator(String operatorDescription, String email, int phoneNumber, String address) {
         this.operatorDescription = operatorDescription;

@@ -3,25 +3,20 @@ package pt.ipl.isel.ps.iqueue.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import pt.ipl.isel.ps.iqueue.model.Language;
-import pt.ipl.isel.ps.iqueue.repository.LanguageRepository;
+import pt.ipl.isel.ps.iqueue.repository.Repository;
 
-@RestController
-@RequestMapping("/api/iqueue/language")
-public class LanguagesController {
+public class Controller<T> {
 
     @Autowired
-    private final LanguageRepository languageRepository;
+    final protected Repository<T> repository;
 
-    public LanguagesController(LanguageRepository languageRepository) {
-        this.languageRepository = languageRepository;
+    public Controller(Repository<T> repository) {
+        this.repository = repository;
     }
 
-    @GetMapping(value = "{languageId}", headers = {"Accept=application/json"})
-    public ResponseEntity getById(@PathVariable int languageId) {
+    protected ResponseEntity getById(int id) {
         try {
-            return ResponseEntity.ok(languageRepository.getById(languageId));
+            return ResponseEntity.ok(repository.getById(id));
         } catch (EmptyResultDataAccessException emptyResultDataAccessException) {
             return ResponseEntity.status(404).build();
         }
@@ -30,10 +25,9 @@ public class LanguagesController {
         }
     }
 
-    @GetMapping(headers = {"Accept=application/json"})
-    public ResponseEntity getAll() {
+    protected ResponseEntity getAll() {
         try {
-            return ResponseEntity.ok(languageRepository.getAll());
+            return ResponseEntity.ok(repository.getAll());
         } catch (EmptyResultDataAccessException emptyResultDataAccessException) {
             return ResponseEntity.status(404).build();
         }
@@ -42,13 +36,12 @@ public class LanguagesController {
         }
     }
 
-    @PostMapping(headers = {"Accept=application/json", "Content-Type=application/json"})
-    public ResponseEntity add(@RequestBody Language language) {
+    protected ResponseEntity add(T t/*, String locationUrl, int id*/) {
         try {
-            if (languageRepository.add(language)) {
+            if (repository.add(t)) {
                 return ResponseEntity
                         .status(201)
-                        .header("Location", "/api/iqueue/language/" + language.getLanguageId())
+//                        .header("Location", locationUrl + id)
                         .build();
             }
             else {
@@ -59,10 +52,9 @@ public class LanguagesController {
         }
     }
 
-    @DeleteMapping(value = "{languageId}", headers = {"Accept=application/json"})
-    public ResponseEntity remove(@PathVariable int languageId) {
+    protected ResponseEntity remove(int id) {
         try {
-            if (languageRepository.remove(languageId)) {
+            if (repository.remove(id)) {
                 return ResponseEntity.ok().build();
             }
             else {
@@ -73,11 +65,9 @@ public class LanguagesController {
         }
     }
 
-    @PutMapping(value = "{languageId}", headers = {"Accept=application/json", "Content-Type=application/json"})
-    public ResponseEntity update(@PathVariable int languageId, @RequestBody Language language) {
-        language.setLanguageId(languageId);
+    protected ResponseEntity update(T t) {
         try {
-            if (languageRepository.update(language)) {
+            if (repository.update(t)) {
                 return ResponseEntity.ok().build();
             }
             else {

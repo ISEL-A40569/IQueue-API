@@ -4,16 +4,19 @@ import java.time.LocalDateTime;
 
 public class Attendance {
     private int attendanceId;
-    private final int operatorId;
-    private final int serviceQueueId;
-    private final int deskId;
-    private final int clientId;
-    private final LocalDateTime startWaitingTime;
+    private int operatorId;
+    private int serviceQueueId;
+    private int deskId;
+    private int clientId;
+    private LocalDateTime startWaitingTime;
     private LocalDateTime endWaitingTime;
     private LocalDateTime startAttendanceTime;
     private LocalDateTime endAttendanceTime;
-    private final int attendanceStatusId;
-    private final int attendanceUserId;
+    private int attendanceStatusId;
+    private int attendanceUserId;
+
+    public Attendance() {
+    }
 
     public Attendance(int operatorId, int serviceQueueId, int deskId, int clientId, LocalDateTime startWaitingTime, int attendanceStatusId, int attendanceUserId) {
         this.operatorId = operatorId;

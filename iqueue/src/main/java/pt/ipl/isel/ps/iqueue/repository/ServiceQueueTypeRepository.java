@@ -1,8 +1,6 @@
 package pt.ipl.isel.ps.iqueue.repository;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 import pt.ipl.isel.ps.iqueue.model.ServiceQueueType;
 import pt.ipl.isel.ps.iqueue.repository.rowmapper.ServiceQueueTypeRowMapper;
@@ -10,44 +8,47 @@ import pt.ipl.isel.ps.iqueue.repository.rowmapper.ServiceQueueTypeRowMapper;
 import java.util.List;
 
 @Component
-public class ServiceQueueTypeRepository {
-
-    @Autowired
-    private final JdbcTemplate jdbcTemplate;
-
-    @Autowired
-    private final RowMapper<ServiceQueueType> serviceQueueTypeRowMapper;
-
-    private final String getQueryTemplate = "exec SelectServiceQueueType ?, ?";
+public class ServiceQueueTypeRepository extends Repository<ServiceQueueType>{
 
     public ServiceQueueTypeRepository(JdbcTemplate jdbcTemplate, ServiceQueueTypeRowMapper serviceQueueTypeRowMapper) {
-        this.jdbcTemplate = jdbcTemplate;
-        this.serviceQueueTypeRowMapper = serviceQueueTypeRowMapper;
+        super(jdbcTemplate, serviceQueueTypeRowMapper, "exec SelectServiceQueueType ?, ?",
+                "exec InsertServiceQueueType ?, ?, ?",
+                "exec DeleteServiceQueueType ?, ?",
+                "exec UpdateServiceQueueType ?, ?, ?");
     }
 
     public ServiceQueueType getByIds(int serviceQueueTypeId, int languageId) {
-        return jdbcTemplate.queryForObject(getQueryTemplate, new Object[]{serviceQueueTypeId, languageId}, serviceQueueTypeRowMapper);
+        return jdbcTemplate.queryForObject(getQueryTemplate, new Object[]{serviceQueueTypeId, languageId}, rowMapper);
     }
 
     public List<ServiceQueueType> getAll(int languageId) {
-        return jdbcTemplate.query(getQueryTemplate, new Object[]{null, languageId}, serviceQueueTypeRowMapper);
+        return jdbcTemplate.query(getQueryTemplate, new Object[]{null, languageId}, rowMapper);
+    }
+
+    @Override
+    public ServiceQueueType getById(int id) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public List<ServiceQueueType> getAll() {
+        throw new UnsupportedOperationException();
     }
 
     public boolean add(ServiceQueueType serviceQueueType) {
-        String insertQueryTemplate = "exec InsertServiceQueueType ?, ?, ?";
-
         return jdbcTemplate.update(insertQueryTemplate, serviceQueueType.getServiceQueueTypeId(),
                 serviceQueueType.getLanguageId(), serviceQueueType.getServiceQueueTypeDescription()) == 1;
     }
 
-    public boolean remove(int serviceQueueTypeId, int languageId) {
-        String deleteQueryTemplate = "exec DeleteServiceQueueType ?, ?";
+    @Override
+    public boolean remove(int id) {
+        throw new UnsupportedOperationException();
+    }
 
-        return jdbcTemplate.update(deleteQueryTemplate, serviceQueueTypeId, languageId) > 0;
+    public boolean remove(int serviceQueueTypeId, int languageId) {
+        return jdbcTemplate.update(removeQueryTemplate, serviceQueueTypeId, languageId) > 0;
     }
     public boolean update(ServiceQueueType serviceQueueType) {
-        String updateQueryTemplate = "exec UpdateServiceQueueType ?, ?, ?";
-
         return jdbcTemplate.update(updateQueryTemplate, serviceQueueType.getServiceQueueTypeId(),
                 serviceQueueType.getLanguageId(), serviceQueueType.getServiceQueueTypeDescription()) == 1;
     }

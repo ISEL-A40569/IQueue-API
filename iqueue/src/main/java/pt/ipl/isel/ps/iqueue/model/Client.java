@@ -3,8 +3,11 @@ package pt.ipl.isel.ps.iqueue.model;
 public class Client {
 
     private int clientId;
-    private final String clientName;
-    private final String email;
+    private String clientName;
+    private String email;
+
+    public Client() {
+    }
 
     public Client(String clientName, String email) {
         this.clientName = clientName;

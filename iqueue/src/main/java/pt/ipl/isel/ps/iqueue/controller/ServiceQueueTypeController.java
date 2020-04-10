@@ -4,24 +4,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pt.ipl.isel.ps.iqueue.model.UserProfile;
-import pt.ipl.isel.ps.iqueue.repository.UserProfileRepository;
+import pt.ipl.isel.ps.iqueue.model.ServiceQueueType;
+import pt.ipl.isel.ps.iqueue.repository.ServiceQueueTypeRepository;
 
 @RestController
-@RequestMapping("/api/iqueue/userprofile")
-public class UserProfileController {
+@RequestMapping("/api/iqueue/servicequeuetype")
+public class ServiceQueueTypeController {
 
     @Autowired
-    private final UserProfileRepository userProfileRepository;
+    final private ServiceQueueTypeRepository serviceQueueTypeRepository;
 
-    public UserProfileController(UserProfileRepository userProfileRepository) {
-        this.userProfileRepository = userProfileRepository;
+    public ServiceQueueTypeController(ServiceQueueTypeRepository serviceQueueTypeRepository) {
+        this.serviceQueueTypeRepository = serviceQueueTypeRepository;
     }
 
-    @GetMapping(value = "{userProfileId}", headers = {"Accept=application/json"})
-    public ResponseEntity getByIds(@PathVariable int userProfileId, @RequestParam int languageId) {
+    @GetMapping(value = "{serviceQueueTypeId}", headers = {"Accept=application/json"})
+    public ResponseEntity getByIds(@PathVariable int serviceQueueTypeId, @RequestParam int languageId) {
         try {
-            return ResponseEntity.ok(userProfileRepository.getByIds(userProfileId, languageId));
+            return ResponseEntity.ok(serviceQueueTypeRepository.getByIds(serviceQueueTypeId, languageId));
         } catch (EmptyResultDataAccessException emptyResultDataAccessException) {
             return ResponseEntity.status(404).build();
         }
@@ -33,7 +33,7 @@ public class UserProfileController {
     @GetMapping(headers = {"Accept=application/json"})
     public ResponseEntity getAll(@RequestParam int languageId) {
         try {
-            return ResponseEntity.ok(userProfileRepository.getAll(languageId));
+            return ResponseEntity.ok(serviceQueueTypeRepository.getAll(languageId));
         } catch (EmptyResultDataAccessException emptyResultDataAccessException) {
             return ResponseEntity.status(404).build();
         }
@@ -43,12 +43,12 @@ public class UserProfileController {
     }
 
     @PostMapping(headers = {"Accept=application/json", "Content-Type=application/json"})
-    public ResponseEntity add(@RequestBody UserProfile userProfile) {
+    public ResponseEntity add(@RequestBody ServiceQueueType serviceQueueType) {
         try {
-            if (userProfileRepository.add(userProfile)) {
+            if (serviceQueueTypeRepository.add(serviceQueueType)) {
                 return ResponseEntity
                         .status(201)
-                        .header("Location", "/api/iqueue/userprofile/" + userProfile.getUserProfileId())
+                        .header("Location", "/api/iqueue/userprofile/" + serviceQueueType.getServiceQueueTypeId())
                         .build();
             }
             else {
@@ -59,10 +59,10 @@ public class UserProfileController {
         }
     }
 
-    @DeleteMapping(value = "{userProfileId}")
-    public ResponseEntity remove(@PathVariable int userProfileId,  @RequestParam int languageId) {
+    @DeleteMapping(value = "{serviceQueueType}")
+    public ResponseEntity remove(@PathVariable int serviceQueueType,  @RequestParam int languageId) {
         try {
-            if (userProfileRepository.remove(userProfileId, languageId)) {
+            if (serviceQueueTypeRepository.remove(serviceQueueType, languageId)) {
                 return ResponseEntity.ok().build();
             }
             else {
@@ -73,11 +73,11 @@ public class UserProfileController {
         }
     }
 
-    @PutMapping(value = "{userProfileId}", headers = {"Accept=application/json", "Content-Type=application/json"})
-    public ResponseEntity update(@PathVariable int userProfileId, @RequestBody UserProfile userProfile) {
-        userProfile.setUserProfileId(userProfileId);
+    @PutMapping(value = "{serviceQueueTypeId}", headers = {"Accept=application/json", "Content-Type=application/json"})
+    public ResponseEntity update(@PathVariable int serviceQueueTypeId, @RequestBody ServiceQueueType serviceQueueType) {
+        serviceQueueType.setServiceQueueTypeId(serviceQueueTypeId);
         try {
-            if (userProfileRepository.update(userProfile)) {
+            if (serviceQueueTypeRepository.update(serviceQueueType)) {
                 return ResponseEntity.ok().build();
             }
             else {
@@ -87,5 +87,4 @@ public class UserProfileController {
             return ResponseEntity.status(500).build();
         }
     }
-
 }

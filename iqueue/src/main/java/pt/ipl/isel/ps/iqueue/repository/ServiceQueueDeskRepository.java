@@ -24,7 +24,7 @@ public class ServiceQueueDeskRepository {
         this.serviceQueueDeskRowMapper = serviceQueueDeskRowMapper;
     }
 
-    public List<ServiceQueueDesk> getSome(int operatorId, int serviceQueueId) {
+    public List<ServiceQueueDesk> getServiceQueueDesks(int operatorId, int serviceQueueId) {
         return jdbcTemplate.query(getQueryTemplate, new Object[]{operatorId, serviceQueueId}, serviceQueueDeskRowMapper);
     }
 

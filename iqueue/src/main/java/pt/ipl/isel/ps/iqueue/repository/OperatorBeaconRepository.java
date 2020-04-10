@@ -30,8 +30,8 @@ public class OperatorBeaconRepository {
         return jdbcTemplate.query(getQueryTemplate, new Object[]{operatorId, null}, operatorBeaconRowMapper);
     }
 
-    public List<OperatorBeacon> getBeaconOperator(int beaconId) {
-        return jdbcTemplate.query(getQueryTemplate, new Object[]{null, beaconId}, operatorBeaconRowMapper);
+    public OperatorBeacon getBeaconOperator(int beaconId) {
+        return jdbcTemplate.queryForObject(getQueryTemplate, new Object[]{null, beaconId}, operatorBeaconRowMapper);
     }
 
     public List<OperatorBeacon> getAll() {

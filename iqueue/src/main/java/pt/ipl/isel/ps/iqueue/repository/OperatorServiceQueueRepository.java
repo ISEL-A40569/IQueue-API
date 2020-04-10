@@ -27,16 +27,16 @@ public class OperatorServiceQueueRepository {
         this.operatorServiceQueueRowMapper = operatorServiceQueueRowMapper;
     }
 
-    public OperatorServiceQueue getByIds(int operatorId, int serviceQueueId) {
+    public OperatorServiceQueue getOperatorServiceQueue(int operatorId, int serviceQueueId) {
         return jdbcTemplate.queryForObject(getQueryTemplate, new Object[]{operatorId, serviceQueueId}, operatorServiceQueueRowMapper);
+    }
+
+    public OperatorServiceQueue getOperatorServiceQueues(int operatorId) {
+        return jdbcTemplate.queryForObject(getQueryTemplate, new Object[]{operatorId, null}, operatorServiceQueueRowMapper);
     }
 
     public List<OperatorServiceQueue> getAll() {
         return jdbcTemplate.query(getQueryTemplate, new Object[]{null, null}, operatorServiceQueueRowMapper);
-    }
-
-    public List<OperatorServiceQueue> getSome(int operatorId) {
-        return jdbcTemplate.query(getQueryTemplate, new Object[]{operatorId, null}, operatorServiceQueueRowMapper);
     }
 
     public boolean add(OperatorServiceQueue operatorServiceQueue) {

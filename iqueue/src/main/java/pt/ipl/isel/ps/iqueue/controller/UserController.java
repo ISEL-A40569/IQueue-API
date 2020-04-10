@@ -4,24 +4,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pt.ipl.isel.ps.iqueue.model.UserProfile;
-import pt.ipl.isel.ps.iqueue.repository.UserProfileRepository;
+import pt.ipl.isel.ps.iqueue.model.User;
+import pt.ipl.isel.ps.iqueue.repository.UserRepository;
 
 @RestController
-@RequestMapping("/api/iqueue/userprofile")
-public class UserProfileController {
+@RequestMapping("/api/iqueue/user")
+public class UserController {
 
     @Autowired
-    private final UserProfileRepository userProfileRepository;
+    private final UserRepository userRepository;
 
-    public UserProfileController(UserProfileRepository userProfileRepository) {
-        this.userProfileRepository = userProfileRepository;
+    public UserController(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
-    @GetMapping(value = "{userProfileId}", headers = {"Accept=application/json"})
-    public ResponseEntity getByIds(@PathVariable int userProfileId, @RequestParam int languageId) {
+    @GetMapping(value = "{userId}", headers = {"Accept=application/json"})
+    public ResponseEntity getById(@PathVariable int userId) {
         try {
-            return ResponseEntity.ok(userProfileRepository.getByIds(userProfileId, languageId));
+            return ResponseEntity.ok(userRepository.getById(userId));
         } catch (EmptyResultDataAccessException emptyResultDataAccessException) {
             return ResponseEntity.status(404).build();
         }
@@ -31,9 +31,9 @@ public class UserProfileController {
     }
 
     @GetMapping(headers = {"Accept=application/json"})
-    public ResponseEntity getAll(@RequestParam int languageId) {
+    public ResponseEntity getAll() {
         try {
-            return ResponseEntity.ok(userProfileRepository.getAll(languageId));
+            return ResponseEntity.ok(userRepository.getAll());
         } catch (EmptyResultDataAccessException emptyResultDataAccessException) {
             return ResponseEntity.status(404).build();
         }
@@ -43,12 +43,12 @@ public class UserProfileController {
     }
 
     @PostMapping(headers = {"Accept=application/json", "Content-Type=application/json"})
-    public ResponseEntity add(@RequestBody UserProfile userProfile) {
+    public ResponseEntity add(@RequestBody User user) {
         try {
-            if (userProfileRepository.add(userProfile)) {
+            if (userRepository.add(user)) {
                 return ResponseEntity
                         .status(201)
-                        .header("Location", "/api/iqueue/userprofile/" + userProfile.getUserProfileId())
+                        .header("Location", "/api/iqueue/user/" + user.getUserId())
                         .build();
             }
             else {
@@ -59,10 +59,10 @@ public class UserProfileController {
         }
     }
 
-    @DeleteMapping(value = "{userProfileId}")
-    public ResponseEntity remove(@PathVariable int userProfileId,  @RequestParam int languageId) {
+    @DeleteMapping(value = "{userId}", headers = {"Accept=application/json"})
+    public ResponseEntity remove(@PathVariable int userId) {
         try {
-            if (userProfileRepository.remove(userProfileId, languageId)) {
+            if (userRepository.remove(userId)) {
                 return ResponseEntity.ok().build();
             }
             else {
@@ -73,11 +73,10 @@ public class UserProfileController {
         }
     }
 
-    @PutMapping(value = "{userProfileId}", headers = {"Accept=application/json", "Content-Type=application/json"})
-    public ResponseEntity update(@PathVariable int userProfileId, @RequestBody UserProfile userProfile) {
-        userProfile.setUserProfileId(userProfileId);
+    @PutMapping(value = "{userId}", headers = {"Accept=application/json", "Content-Type=application/json"})
+    public ResponseEntity update(@RequestBody User user) {
         try {
-            if (userProfileRepository.update(userProfile)) {
+            if (userRepository.update(user)) {
                 return ResponseEntity.ok().build();
             }
             else {
@@ -87,5 +86,4 @@ public class UserProfileController {
             return ResponseEntity.status(500).build();
         }
     }
-
 }

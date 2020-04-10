@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import pt.ipl.isel.ps.iqueue.model.ServiceQueueDeskUser;
 import pt.ipl.isel.ps.iqueue.repository.rowmapper.ServiceQueueDeskUserRowMapper;
 
@@ -24,9 +26,34 @@ public class ServiceQueueDeskUserRepository  {
         this.serviceQueueDeskUserRowMapper = serviceQueueDeskUserRowMapper;
     }
 
-    public List<ServiceQueueDeskUser> getSome(int operatorId, int serviceQueueId, int deskId, int userId, LocalDateTime date) {
+    public List<ServiceQueueDeskUser> getDeskUsers(int operatorId, int serviceQueueId, int deskId) {
         String getQueryTemplate = "exec SelectServiceQueueDeskUser ?, ?, ?, ?, ?";
-        return jdbcTemplate.query(getQueryTemplate, new Object[]{null}, serviceQueueDeskUserRowMapper);
+        return jdbcTemplate.query(getQueryTemplate, new Object[]{operatorId, serviceQueueId, deskId,
+        null, null}, serviceQueueDeskUserRowMapper);
+    }
+
+    public List<ServiceQueueDeskUser> getDeskUsersByDate(int operatorId, int serviceQueueId, int deskId, LocalDateTime date) {
+        String getQueryTemplate = "exec SelectServiceQueueDeskUser ?, ?, ?, ?, ?";
+        return jdbcTemplate.query(getQueryTemplate, new Object[]{operatorId, serviceQueueId, deskId,
+                null, date}, serviceQueueDeskUserRowMapper);
+    }
+
+    public List<ServiceQueueDeskUser> getDeskUserDates(int operatorId, int serviceQueueId, int deskId, int userId) {
+        String getQueryTemplate = "exec SelectServiceQueueDeskUser ?, ?, ?, ?, ?";
+        return jdbcTemplate.query(getQueryTemplate, new Object[]{operatorId, serviceQueueId, deskId,
+                userId, null}, serviceQueueDeskUserRowMapper);
+    }
+
+    public List<ServiceQueueDeskUser> getUserDesks(int userId) {
+        String getQueryTemplate = "exec SelectServiceQueueDeskUser ?, ?, ?, ?, ?";
+        return jdbcTemplate.query(getQueryTemplate, new Object[]{null, null, null,
+                userId, null}, serviceQueueDeskUserRowMapper);
+    }
+
+    public List<ServiceQueueDeskUser> getUserDesksByDate(int userId, LocalDateTime date) {
+        String getQueryTemplate = "exec SelectServiceQueueDeskUser ?, ?, ?, ?, ?";
+        return jdbcTemplate.query(getQueryTemplate, new Object[]{null, null, null,
+                userId, date}, serviceQueueDeskUserRowMapper);
     }
 
     public boolean add(ServiceQueueDeskUser serviceQueueDeskUser) {
@@ -38,12 +65,8 @@ public class ServiceQueueDeskUserRepository  {
                 LocalDateTime.now()) == 1;
     }
 
-    public boolean remove(ServiceQueueDeskUser serviceQueueDeskUser) {  // TODO: review this SP query
+    public boolean remove(int operadorId, int serviceQueueId, int deskId, int userId, LocalDateTime date) {
         String removeQueryTemplate = "exec DeleteServiceQueueDeskUser ?, ?, ?, ?, ?";
-        return jdbcTemplate.update(removeQueryTemplate, serviceQueueDeskUser.getOperatorId(),
-                serviceQueueDeskUser.getServiceQueueId(),
-                serviceQueueDeskUser.getDeskId(),
-                serviceQueueDeskUser.getUserId(),
-                LocalDateTime.now()) == 1;
+        return jdbcTemplate.update(removeQueryTemplate, operadorId, serviceQueueId, deskId, userId, date) == 1;
     }
 }

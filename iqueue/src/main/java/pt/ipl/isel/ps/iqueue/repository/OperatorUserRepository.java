@@ -25,8 +25,12 @@ public class OperatorUserRepository {
         this.operatorUserRowMapper = operatorUserRowMapper;
     }
 
-    public List<OperatorUser> getSome(int operatorId) {
-        return jdbcTemplate.query(getQueryTemplate, new Object[]{operatorId}, operatorUserRowMapper);
+    public List<OperatorUser> getOperatorUsers(int operatorId) {
+        return jdbcTemplate.query(getQueryTemplate, new Object[]{operatorId, null}, operatorUserRowMapper);
+    }
+
+    public List<OperatorUser> getUserOperator(int userId) {
+        return jdbcTemplate.query(getQueryTemplate, new Object[]{null, userId}, operatorUserRowMapper);
     }
 
     public List<OperatorUser> getAll() {

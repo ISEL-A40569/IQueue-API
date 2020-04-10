@@ -11,43 +11,34 @@ import pt.ipl.isel.ps.iqueue.repository.rowmapper.OperatorRowMapper;
 import java.util.List;
 
 @Component
-public class OperatorRepository {
-
-    @Autowired
-    private final JdbcTemplate jdbcTemplate;
-
-    @Autowired
-    private final RowMapper<Operator> operatorRowMapper;
+public class OperatorRepository extends Repository<Operator>{
 
     public OperatorRepository(JdbcTemplate jdbcTemplate, OperatorRowMapper operatorRowMapper) {
-        this.jdbcTemplate = jdbcTemplate;
-        this.operatorRowMapper = operatorRowMapper;
+        super(jdbcTemplate, operatorRowMapper, "exec SelectOperator ?",
+                "exec Insert Operator ?, ?, ?, ?",
+                "exec DeleteOperator ?",
+                "exec UpdateOperator ?, ?, ?, ?, ?");
     }
 
-    private final String getQueryTemplate = "exec SelectOperator ?";
-
     public Operator getById(int operatorId) {
-        return jdbcTemplate.queryForObject(getQueryTemplate, new Object[]{operatorId}, operatorRowMapper);
+        return jdbcTemplate.queryForObject(getQueryTemplate, new Object[]{operatorId}, rowMapper);
     }
 
     public List<Operator> getAll() {
-        return jdbcTemplate.query(getQueryTemplate, new Object[]{null}, operatorRowMapper);
+        return jdbcTemplate.query(getQueryTemplate, new Object[]{null}, rowMapper);
     }
 
     public boolean add(Operator operator) {
-        String insertQueryTemplate = "exec Insert Operator ?, ?, ?, ?";
 
         return jdbcTemplate.update(insertQueryTemplate, operator.getOperatorDescription(),
                 operator.getEmail(), operator.getPhoneNumber(), operator.getAddress()) == 1;
     }
 
     public boolean remove(int operatorId) {
-        String removeQueryTemplate = "exec DeleteOperator ?";
         return jdbcTemplate.update(removeQueryTemplate, operatorId) == 1;
     }
 
     public boolean update(Operator operator) {
-        String updateQueryTemplate = "exec UpdateOperator ?, ?, ?, ?, ?";
         return jdbcTemplate.update(updateQueryTemplate, operator.getOperatorId(), operator.getOperatorDescription(),
                 operator.getEmail(), operator.getPhoneNumber(), operator.getAddress()) == 1;
     }

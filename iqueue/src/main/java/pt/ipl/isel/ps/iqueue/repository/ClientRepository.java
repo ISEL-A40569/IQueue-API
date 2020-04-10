@@ -11,36 +11,28 @@ import pt.ipl.isel.ps.iqueue.repository.rowmapper.ClientRowMapper;
 import java.util.List;
 
 @Component
-public class ClientRepository {
-    @Autowired
-    private final JdbcTemplate jdbcTemplate;
-
-    @Autowired
-    private final RowMapper<Client> clientRowMapper;
+public class ClientRepository extends Repository<Client>{
 
     public ClientRepository(JdbcTemplate jdbcTemplate, ClientRowMapper clientRowMapper) {
-        this.jdbcTemplate = jdbcTemplate;
-        this.clientRowMapper = clientRowMapper;
+        super(jdbcTemplate, clientRowMapper, "exec SelectClient ?",
+                "exec InsertClient ?, ?",
+                "exec DeleteClient ?",
+                "exec UpdateClient ?, ?, ?");
     }
 
-    private final String getQueryTemplate = "exec SelectClient ?";
-    private final String insertQueryTemplate = "exec InsertClient ?, ?";
-    private final String removeQueryTemplate = "exec DeleteClient ?";
-    private final String updateQueryTemplate = "exec UpdateClient ?, ?, ?";
-
-    public Client getByIy(int clientId) {
-        return jdbcTemplate.queryForObject(getQueryTemplate, new Object[]{clientId}, clientRowMapper);
+    public Client getById(int clientId) {
+        return jdbcTemplate.queryForObject(getQueryTemplate, new Object[]{clientId}, rowMapper);
     }
 
     public List<Client> getAll() {
-        return jdbcTemplate.query(getQueryTemplate, new Object[]{null}, clientRowMapper);
+        return jdbcTemplate.query(getQueryTemplate, new Object[]{null}, rowMapper);
     }
 
     public boolean add(Client client) {
         return jdbcTemplate.update(insertQueryTemplate, client.getClientName(), client.getEmail()) == 1;
     }
 
-    public boolean delete(int clientId) {
+    public boolean remove(int clientId) {
         return jdbcTemplate.update(removeQueryTemplate, clientId) == 1;
     }
 

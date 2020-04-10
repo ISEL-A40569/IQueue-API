@@ -172,11 +172,12 @@ exec sp_executesql @query, @params, @userId = @userId
 
 go
 
-create or alter procedure InsertUser @userName varchar(100), @email varchar(100), @phoneNumber int, @address varchar(200), @userProfileId int 
+create or alter procedure InsertUser @userName varchar(100), @email varchar(100), @phoneNumber int, @address varchar(200), @userProfileId int
 as
 begin transaction set transaction isolation level serializable
 begin try
 insert into [User] values (@userName, @email, @phoneNumber, @address, @userProfileId)
+
 commit
 end try
 begin catch
@@ -398,14 +399,9 @@ set @query = 'select * from ServiceQueueDesk'
 
 set @params = '@operatorId int, @serviceQueueId int'
 
-if @operatorId is not null
+if @operatorId is not null and @serviceQueueId is not null
 begin
-	set @query = @query + ' where operatorId = @operatorId'
-end
-
-if @serviceQueueId is not null
-begin
-	set @query = @query + ' and serviceQueueId = @serviceQueueId'
+	set @query = @query + ' where operatorId = @operatorId and serviceQueueId = @serviceQueueId'
 end
 
 exec sp_executesql @query, @params, @operatorId = @operatorId, @serviceQueueId = @serviceQueueId
@@ -442,7 +438,7 @@ go
 
 -- OperatorUser SPs
 
-create or alter procedure SelectOperatorUser @operatorId int
+create or alter procedure SelectOperatorUser @operatorId int, @userId int
 as
 
 declare @query nvarchar(max),
@@ -450,14 +446,19 @@ declare @query nvarchar(max),
 
 set @query = 'select * from OperatorUser'
 
-set @params = '@operatorId int'
+set @params = '@operatorId int, @userId int'
 
 if @operatorId is not null
 begin
 	set @query = @query + ' where operatorId = @operatorId'
 end
 
-exec sp_executesql @query, @params, @operatorId = @operatorId
+if @userId is not null
+begin
+	set @query = @query + ' where userId = @userId'
+end
+
+exec sp_executesql @query, @params, @operatorId = @operatorId, @userId = @userId 
 
 go
 
@@ -571,12 +572,12 @@ set @query = 'select * from OperatorBeacon'
 
 set @params = '@operatorId int, @beaconId int'
 
-if @operatorId is not null and @beaconId is null
+if @operatorId is not null
 begin 
 	set @query = @query + ' where operatorId = @operatorId'
 end
 
-if @operatorId is null and @beaconId is not null
+if @beaconId is not null
 begin 
 	set @query = @query + ' where beaconId = @beaconId'
 end
@@ -847,7 +848,7 @@ as
 begin transaction set transaction isolation level serializable
 begin try
 delete AttendanceStatus where attendanceStatusId = @attendanceStatusId and
-								languageId = @languageId
+							languageId = @languageId
 commit
 end try
 begin catch
@@ -873,7 +874,7 @@ go
 
 -- AttendanceClassification SPs
 
-create or alter procedure SelectAttendanceClassification @attendanceStatusId int
+create or alter procedure SelectAttendanceClassification @attendanceId int
 as
 
 declare @query nvarchar(max),
@@ -881,14 +882,14 @@ declare @query nvarchar(max),
 
 set @query = 'select * from AttendanceClassification'
 
-set @params = '@attendanceStatusId int'
+set @params = '@attendanceId int'
 
-	if @attendanceStatusId is not null
+	if @attendanceId is not null
 	begin
-		set @query = @query + ' where attendanceStatusId = @attendanceStatusId'
+		set @query = @query + ' where attendanceId = @attendanceId'
 	end
 
-	exec sp_executesql @query, @params, @attendanceStatusId = @attendanceStatusId
+	exec sp_executesql @query, @params, @attendanceId = @attendanceId
 
 go
 

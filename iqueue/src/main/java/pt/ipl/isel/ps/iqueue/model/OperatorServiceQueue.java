@@ -1,11 +1,14 @@
 package pt.ipl.isel.ps.iqueue.model;
 
 public class OperatorServiceQueue {
-    private final int operatorId;
-    private final int serviceQueueId;
-    private final String serviceQueueDescription;
-    private final int serviceQueueTypeId;
-    private final int dailyLimit;
+    private int operatorId;
+    private int serviceQueueId;
+    private String serviceQueueDescription;
+    private int serviceQueueTypeId;
+    private int dailyLimit;
+
+    public OperatorServiceQueue() {
+    }
 
     public OperatorServiceQueue(int operatorId, int serviceQueueId, String serviceQueueDescription, int serviceQueueTypeId, int dailyLimit) {
         this.operatorId = operatorId;
@@ -21,6 +24,14 @@ public class OperatorServiceQueue {
 
     public int getServiceQueueId() {
         return serviceQueueId;
+    }
+
+    public void setOperatorId(int operatorId) {
+        this.operatorId = operatorId;
+    }
+
+    public void setServiceQueueId(int serviceQueueId) {
+        this.serviceQueueId = serviceQueueId;
     }
 
     public String getServiceQueueDescription() {

@@ -3,14 +3,17 @@ package pt.ipl.isel.ps.iqueue.model;
 public class Beacon {
 
     private int beaconId;
-    private final String beaconMacAddress;
-    private final String uidNamespaceId;
-    private final String uidInstanceId;
-    private final String iBeaconUuid;
-    private final String iBeaconMajor;
-    private final String iBeaconMinor;
-    private final String manufacturer;
-    private final String model;
+    private String beaconMacAddress;
+    private String uidNamespaceId;
+    private String uidInstanceId;
+    private String iBeaconUuid;
+    private String iBeaconMajor;
+    private String iBeaconMinor;
+    private String manufacturer;
+    private String model;
+
+    public Beacon() {
+    }
 
     public Beacon(String beaconMacAddress, String uidNamespaceId, String uidInstanceId, String iBeaconUuid, String iBeaconMajor, String iBeaconMinor, String manufacturer, String model) {
         this.beaconMacAddress = beaconMacAddress;
