@@ -4,7 +4,7 @@ public class AttendanceStatus {
 
     private int attendanceStatusId;
     private int languageId;
-    private String AttendanceStatusDescription;
+    private String attendanceStatusDescription;
 
     public AttendanceStatus() {
     }
@@ -12,7 +12,7 @@ public class AttendanceStatus {
     public AttendanceStatus(int attendanceStatusId, int languageId, String attendanceStatusDescription) {
         this.attendanceStatusId = attendanceStatusId;
         this.languageId = languageId;
-        AttendanceStatusDescription = attendanceStatusDescription;
+        this.attendanceStatusDescription = attendanceStatusDescription;
     }
 
     public int getAttendanceStatusId() {
@@ -32,6 +32,6 @@ public class AttendanceStatus {
     }
 
     public String getAttendanceStatusDescription() {
-        return AttendanceStatusDescription;
+        return attendanceStatusDescription;
     }
 }

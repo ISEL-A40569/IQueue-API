@@ -69,7 +69,7 @@ public class ServiceQueueDeskUserController {
     }
 
     @PostMapping(value = "/api/iqueue/operator/servicequeue/desk/user", headers = {"Accept=application/json", "Content-Type=application/json"})
-    public ResponseEntity add(ServiceQueueDeskUser serviceQueueDeskUser) {
+    public ResponseEntity add(@RequestBody  ServiceQueueDeskUser serviceQueueDeskUser) {
         try {
             if (serviceQueueDeskUserRepository.add(serviceQueueDeskUser)) {
                 return ResponseEntity
@@ -78,7 +78,7 @@ public class ServiceQueueDeskUserController {
 //                                "/servicequeue/" + serviceQueueDeskUser.getServiceQueueId() +
 //                                "/desk/" + serviceQueueDeskUser.getDeskId() +
 //                                "/user/" + serviceQueueDeskUser.getUserId())
-                        .build();
+                        .body(serviceQueueDeskUser);
             }
             else {
                 return ResponseEntity.status(409).build();

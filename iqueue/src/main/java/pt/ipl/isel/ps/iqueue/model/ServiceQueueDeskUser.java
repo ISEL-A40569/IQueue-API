@@ -1,5 +1,6 @@
 package pt.ipl.isel.ps.iqueue.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class ServiceQueueDeskUser {
@@ -8,9 +9,9 @@ public class ServiceQueueDeskUser {
     private final int serviceQueueId;
     private final int deskId;
     private final int userId;
-    private final LocalDateTime date;
+    private final LocalDate date;
 
-    public ServiceQueueDeskUser(int operatorId, int serviceQueueId, int deskId, int userId, LocalDateTime date) {
+    public ServiceQueueDeskUser(int operatorId, int serviceQueueId, int deskId, int userId, LocalDate date) {
         this.operatorId = operatorId;
         this.serviceQueueId = serviceQueueId;
         this.deskId = deskId;
@@ -34,7 +35,7 @@ public class ServiceQueueDeskUser {
         return userId;
     }
 
-    public LocalDateTime getDate() {
+    public LocalDate getDate() {
         return date;
     }
 }

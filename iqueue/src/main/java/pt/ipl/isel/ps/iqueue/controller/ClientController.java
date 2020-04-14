@@ -7,7 +7,7 @@ import pt.ipl.isel.ps.iqueue.repository.ClientRepository;
 
 
 @RestController
-@RequestMapping("/api/iqueue/client/")
+@RequestMapping("/api/iqueue/client")
 public class ClientController extends Controller<Client> {
 
     public ClientController(ClientRepository clientRepository) {
@@ -26,7 +26,7 @@ public class ClientController extends Controller<Client> {
 
     @PostMapping(headers = {"Accept=application/json", "Content-Type=application/json"})
     public ResponseEntity add(@RequestBody Client client) {
-        return super.add(client);
+        return super.add(client, "/api/iqueue/client");
     }
 
     @DeleteMapping(value = "{clientId}")

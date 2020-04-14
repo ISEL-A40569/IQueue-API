@@ -6,6 +6,7 @@ import pt.ipl.isel.ps.iqueue.model.ServiceQueueDeskUser;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Component
@@ -16,6 +17,6 @@ public class ServiceQueueDeskUserRowMapper implements RowMapper<ServiceQueueDesk
                 rs.getInt("serviceQueueId"),
                 rs.getInt("deskId"),
                 rs.getInt("userId"),
-                LocalDateTime.parse(rs.getDate("date").toString()));
+                LocalDate.parse(rs.getDate("date").toString()));
     }
 }

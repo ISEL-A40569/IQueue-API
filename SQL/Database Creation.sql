@@ -4,7 +4,7 @@ go
 
 create table [Language](
 languageId int primary key,
-languageDescription varchar(20)
+languageDescription varchar(20) not null
 )
 
 go
@@ -100,20 +100,20 @@ email varchar(100) not null
 go
 
 create table AttendanceStatus(
-AttendanceStatusId int,
+attendanceStatusId int,
 languageId int,
-AttendanceStatusDescription varchar(50) not null,
-primary key(AttendanceStatusId, languageId),
+attendanceStatusDescription varchar(50) not null,
+primary key(attendanceStatusId, languageId),
 foreign key(languageId) references [Language](languageId)
 )
 
 go
 
-
 create table ServiceQueueDesk(
 operatorId int,
 serviceQueueId int,
 deskId int,
+deskDescription varchar(50),
 primary key(operatorId, serviceQueueId, deskId),
 foreign key(operatorId, serviceQueueId) references OperatorServiceQueue(operatorId, serviceQueueId)
 )
@@ -125,7 +125,7 @@ operatorId int,
 serviceQueueId int,
 deskId int,
 userId int,
-[date] date not null,
+[date] date,
 primary key(operatorId, serviceQueueId, deskId, userId, [date]),
 foreign key(operatorId, serviceQueueId) references OperatorServiceQueue(operatorId, serviceQueueId),
 foreign key(userId) references [User](userId)

@@ -42,4 +42,6 @@ public class ServiceQueueDeskRepository {
         String removeQueryTemplate = "exec DeleteServiceQueueDesk ?, ?, ?";
         return jdbcTemplate.update(removeQueryTemplate, operatorId, serviceQueueId, deskId) == 1;
     }
+
+    // TODO: UPDATE function
 }

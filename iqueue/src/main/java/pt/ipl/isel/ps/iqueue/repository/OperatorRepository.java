@@ -15,7 +15,7 @@ public class OperatorRepository extends Repository<Operator>{
 
     public OperatorRepository(JdbcTemplate jdbcTemplate, OperatorRowMapper operatorRowMapper) {
         super(jdbcTemplate, operatorRowMapper, "exec SelectOperator ?",
-                "exec Insert Operator ?, ?, ?, ?",
+                "exec InsertOperator ?, ?, ?, ?",
                 "exec DeleteOperator ?",
                 "exec UpdateOperator ?, ?, ?, ?, ?");
     }
@@ -28,10 +28,10 @@ public class OperatorRepository extends Repository<Operator>{
         return jdbcTemplate.query(getQueryTemplate, new Object[]{null}, rowMapper);
     }
 
-    public boolean add(Operator operator) {
-
-        return jdbcTemplate.update(insertQueryTemplate, operator.getOperatorDescription(),
-                operator.getEmail(), operator.getPhoneNumber(), operator.getAddress()) == 1;
+    public int add(Operator operator) {
+        return jdbcTemplate.queryForObject(insertQueryTemplate, new Object[]{operator.getOperatorDescription(),
+                operator.getEmail(), operator.getPhoneNumber(), operator.getAddress()},
+                Integer.class);
     }
 
     public boolean remove(int operatorId) {

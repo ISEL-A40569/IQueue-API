@@ -28,8 +28,8 @@ public class AttendanceStatusRepository extends Repository<AttendanceStatus> {
     }
 
 
-    public AttendanceStatus getByLanguage(int languageId) {
-        return jdbcTemplate.queryForObject(getQueryTemplate, new Object[]{null, languageId}, rowMapper);
+    public List<AttendanceStatus> getByLanguage(int languageId) {
+        return jdbcTemplate.query(getQueryTemplate, new Object[]{null, languageId}, rowMapper);
     }
 
     @Override
@@ -38,9 +38,10 @@ public class AttendanceStatusRepository extends Repository<AttendanceStatus> {
     }
 
     @Override
-    public boolean add(AttendanceStatus attendanceStatus) {
+    public int add(AttendanceStatus attendanceStatus) {
         return jdbcTemplate.update(insertQueryTemplate, attendanceStatus.getAttendanceStatusId(),
-                attendanceStatus.getLanguageId(), attendanceStatus.getAttendanceStatusDescription()) == 1;
+                attendanceStatus.getLanguageId(), attendanceStatus.getAttendanceStatusDescription()) == 1 ?
+                attendanceStatus.getAttendanceStatusId() : 0;
     }
 
     @Override

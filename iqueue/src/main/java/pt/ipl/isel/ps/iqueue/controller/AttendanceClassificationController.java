@@ -25,6 +25,8 @@ public class AttendanceClassificationController extends Controller<AttendanceCla
 
     @PostMapping(value = "/api/iqueue/attendance/classification", headers = {"Accept=application/json", "Content-Type=application/json"})
     public ResponseEntity add(AttendanceClassification attendanceClassification) {
-        return super.add(attendanceClassification);
+        return super.add(attendanceClassification, "/api/iqueue/attendance/classification");
     }
+
+    // TODO: DELETE function
 }

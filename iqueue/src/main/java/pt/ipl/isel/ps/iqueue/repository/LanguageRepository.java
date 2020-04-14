@@ -39,7 +39,7 @@ public class LanguageRepository {
 
     public boolean remove(int languageId) {
         String deleteQueryTemplate = "exec DeleteLanguage ?";
-        return jdbcTemplate.update(deleteQueryTemplate, languageId) > 0;
+        return jdbcTemplate.update(deleteQueryTemplate, languageId) == 1;
     }
 
     public boolean update(Language language) {

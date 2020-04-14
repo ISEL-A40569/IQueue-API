@@ -18,7 +18,7 @@ public class OperatorUserRepository {
     @Autowired
     private final RowMapper<OperatorUser> operatorUserRowMapper;
 
-    private final String getQueryTemplate = "exec SelectOperatorUser ?";
+    private final String getQueryTemplate = "exec SelectOperatorUser ?, ?";
 
     public OperatorUserRepository(JdbcTemplate jdbcTemplate, OperatorUserRowMapper operatorUserRowMapper) {
         this.jdbcTemplate = jdbcTemplate;
@@ -34,7 +34,7 @@ public class OperatorUserRepository {
     }
 
     public List<OperatorUser> getAll() {
-        return jdbcTemplate.query(getQueryTemplate, new Object[]{null}, operatorUserRowMapper);
+        return jdbcTemplate.query(getQueryTemplate, new Object[]{null, null}, operatorUserRowMapper);
     }
 
     public boolean add(OperatorUser operatorUser) {

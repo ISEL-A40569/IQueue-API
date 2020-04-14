@@ -58,11 +58,17 @@ public class ServiceQueueDeskUserRepository  {
 
     public boolean add(ServiceQueueDeskUser serviceQueueDeskUser) {
         String insertQueryTemplate = "exec InsertServiceQueueDeskUser ?, ?, ?, ?, ?";
-        return jdbcTemplate.update(insertQueryTemplate, serviceQueueDeskUser.getOperatorId(),
-                serviceQueueDeskUser.getServiceQueueId(),
-                serviceQueueDeskUser.getDeskId(),
-                serviceQueueDeskUser.getUserId(),
-                LocalDateTime.now()) == 1;
+        int update = 0;
+        try {
+            update = jdbcTemplate.update(insertQueryTemplate, serviceQueueDeskUser.getOperatorId(),
+                    serviceQueueDeskUser.getServiceQueueId(),
+                    serviceQueueDeskUser.getDeskId(),
+                    serviceQueueDeskUser.getUserId(),
+                    serviceQueueDeskUser.getDate());
+        } catch (Exception e) {
+            System.out.printf("");
+        }
+        return update == 1;
     }
 
     public boolean remove(int operadorId, int serviceQueueId, int deskId, int userId, LocalDateTime date) {

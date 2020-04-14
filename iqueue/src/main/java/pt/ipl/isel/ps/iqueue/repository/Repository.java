@@ -32,7 +32,7 @@ public abstract class Repository<T> {
 
     public abstract List<T> getAll();
 
-    public abstract boolean add(T t);
+    public abstract int add(T t);
 
     public abstract boolean remove(int id);
 

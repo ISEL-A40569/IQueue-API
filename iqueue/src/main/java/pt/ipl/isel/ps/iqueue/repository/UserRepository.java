@@ -33,23 +33,22 @@ public class UserRepository {
         return jdbcTemplate.query(getQueryTemplate, new Object[]{null}, userRowMapper);
     }
 
-    public boolean add(User user) {
+    public int add(User user) {
         String insertQueryTemplate = "exec InsertUser ?, ?, ?, ?, ?";
-        return jdbcTemplate.update(insertQueryTemplate, user.getUserName(),
+        return jdbcTemplate.queryForObject(insertQueryTemplate, new Object[]{user.getUserName(),
                 user.getEmail(), user.getPhoneNumber(), user.getAddress(),
-                user.getUserProfileId()) == 1;
+                user.getUserProfileId()}, Integer.class);
     }
 
     public boolean remove(int userId) {
         String removeQueryTemplate = "exec DeleteUser ?";
-
         return jdbcTemplate.update(removeQueryTemplate, userId) == 1;
     }
 
     public boolean update(User user) {
         String updateQueryTemplate = "exec UpdateUser ?, ?, ?, ?, ?, ?";
 
-        return jdbcTemplate.update(updateQueryTemplate, user.getUserProfileId(),
+        return jdbcTemplate.update(updateQueryTemplate, user.getUserId(),
                 user.getUserName(), user.getEmail(), user.getPhoneNumber(),
                 user.getAddress(), user.getUserProfileId()) == 1;
     }

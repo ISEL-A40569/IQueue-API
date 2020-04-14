@@ -29,12 +29,12 @@ public class BeaconRepository extends Repository<Beacon> {
     }
 
     @Override
-    public boolean add(Beacon beacon) {
+    public int add(Beacon beacon) {
         return jdbcTemplate.update(insertQueryTemplate, beacon.getBeaconMacAddress(),
                 beacon.getUidNamespaceId(), beacon.getUidInstanceId(),
                 beacon.getiBeaconUuid(), beacon.getiBeaconMajor(),
                 beacon.getiBeaconMinor(), beacon.getManufacturer(),
-                beacon.getModel()) == 1;
+                beacon.getModel());
     }
 
     @Override

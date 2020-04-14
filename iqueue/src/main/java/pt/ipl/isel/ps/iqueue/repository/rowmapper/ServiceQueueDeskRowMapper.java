@@ -13,6 +13,7 @@ public class ServiceQueueDeskRowMapper implements RowMapper<ServiceQueueDesk> {
     public ServiceQueueDesk mapRow(ResultSet rs, int rowNum) throws SQLException {
         return new ServiceQueueDesk(rs.getInt("operatorId"),
                 rs.getInt("serviceQueueId"),
-                rs.getInt("deskId"));
+                rs.getInt("deskId"),
+                rs.getString("deskDescription"));
     }
 }

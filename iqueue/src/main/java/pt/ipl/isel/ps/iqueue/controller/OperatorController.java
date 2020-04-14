@@ -25,7 +25,7 @@ public class OperatorController extends Controller<Operator> {
 
     @PostMapping(headers = {"Accept=application/json", "Content-Type=application/json"})
     public ResponseEntity add(@RequestBody Operator operator) {
-        return super.add(operator);
+        return super.add(operator, "/api/iqueue/operator");
     }
 
     @DeleteMapping(value = "{operatorId}")

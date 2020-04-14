@@ -44,13 +44,13 @@ public class AttendanceStatusController {
     }
 
     @PostMapping(headers = {"Accept=application/json", "Content-Type=application/json"})
-    public ResponseEntity add(AttendanceStatus attendanceStatus) {
+    public ResponseEntity add(@RequestBody AttendanceStatus attendanceStatus) {
         try {
-            if (attendanceStatusRepository.add(attendanceStatus)) {
+            if (attendanceStatusRepository.add(attendanceStatus) != 0) {
                 return ResponseEntity
                         .status(201)
-//                        .header("Location", "/api/iqueue/attendancestatus/" + attendanceStatus.getAttendanceStatusId())
-                        .build();
+                        .header("Location", "/api/iqueue/attendancestatus/" + attendanceStatus.getAttendanceStatusId())
+                        .body(attendanceStatus);
             }
             else {
                 return ResponseEntity.status(409).build();
@@ -81,7 +81,7 @@ public class AttendanceStatusController {
         attendanceStatus.setLanguageId(languageId);
         try {
             if (attendanceStatusRepository.update(attendanceStatus)) {
-                return ResponseEntity.ok().build();
+                return ResponseEntity.ok().body(attendanceStatus);
             } else {
                 return ResponseEntity.status(404).build();
             }

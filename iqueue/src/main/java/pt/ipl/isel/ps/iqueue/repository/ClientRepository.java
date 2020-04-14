@@ -28,8 +28,10 @@ public class ClientRepository extends Repository<Client>{
         return jdbcTemplate.query(getQueryTemplate, new Object[]{null}, rowMapper);
     }
 
-    public boolean add(Client client) {
-        return jdbcTemplate.update(insertQueryTemplate, client.getClientName(), client.getEmail()) == 1;
+    public int add(Client client) {
+        return jdbcTemplate.queryForObject(insertQueryTemplate, new Object[]{client.getClientName(), client.getEmail()}, Integer.class);
+//        return update == 1;
+//        return jdbcTemplate.update(insertQueryTemplate, client.getClientName(), client.getEmail()) == 1;
     }
 
     public boolean remove(int clientId) {

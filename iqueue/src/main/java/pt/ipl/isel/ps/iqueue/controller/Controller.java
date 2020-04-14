@@ -36,13 +36,14 @@ public class Controller<T> {
         }
     }
 
-    protected ResponseEntity add(T t/*, String locationUrl, int id*/) {
+    protected ResponseEntity add(T t, String locationUrl) {
         try {
-            if (repository.add(t)) {
+            int insertedId = repository.add(t);
+            if (insertedId != 0) {
                 return ResponseEntity
                         .status(201)
-//                        .header("Location", locationUrl + id)
-                        .build();
+                        .header("Location", locationUrl + "/" + insertedId)
+                        .body(t);
             }
             else {
                 return ResponseEntity.status(409).build();

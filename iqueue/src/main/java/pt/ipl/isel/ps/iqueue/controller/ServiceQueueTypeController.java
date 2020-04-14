@@ -45,11 +45,11 @@ public class ServiceQueueTypeController {
     @PostMapping(headers = {"Accept=application/json", "Content-Type=application/json"})
     public ResponseEntity add(@RequestBody ServiceQueueType serviceQueueType) {
         try {
-            if (serviceQueueTypeRepository.add(serviceQueueType)) {
+            if (serviceQueueTypeRepository.add(serviceQueueType) != 0) {
                 return ResponseEntity
                         .status(201)
-                        .header("Location", "/api/iqueue/userprofile/" + serviceQueueType.getServiceQueueTypeId())
-                        .build();
+                        .header("Location", "/api/iqueue/servicequeuetype/" + serviceQueueType.getServiceQueueTypeId())
+                        .body(serviceQueueType);
             }
             else {
                 return ResponseEntity.status(409).build();
@@ -59,10 +59,10 @@ public class ServiceQueueTypeController {
         }
     }
 
-    @DeleteMapping(value = "{serviceQueueType}")
-    public ResponseEntity remove(@PathVariable int serviceQueueType,  @RequestParam int languageId) {
+    @DeleteMapping(value = "{serviceQueueTypeId}")
+    public ResponseEntity remove(@PathVariable int serviceQueueTypeId,  @RequestParam int languageId) {
         try {
-            if (serviceQueueTypeRepository.remove(serviceQueueType, languageId)) {
+            if (serviceQueueTypeRepository.remove(serviceQueueTypeId, languageId)) {
                 return ResponseEntity.ok().build();
             }
             else {
@@ -78,7 +78,7 @@ public class ServiceQueueTypeController {
         serviceQueueType.setServiceQueueTypeId(serviceQueueTypeId);
         try {
             if (serviceQueueTypeRepository.update(serviceQueueType)) {
-                return ResponseEntity.ok().build();
+                return ResponseEntity.ok().body(serviceQueueType);
             }
             else {
                 return ResponseEntity.status(404).build();

@@ -5,7 +5,6 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pt.ipl.isel.ps.iqueue.model.OperatorServiceQueue;
-import pt.ipl.isel.ps.iqueue.model.OperatorUser;
 import pt.ipl.isel.ps.iqueue.repository.OperatorServiceQueueRepository;
 
 @RestController
@@ -31,7 +30,7 @@ public class OperatorServiceQueueController {
     }
 
     @GetMapping(value = "/api/iqueue/operator/{operadorId}/servicequeue/{serviceQueueId}", headers = {"Accept=application/json"})
-    public ResponseEntity getOperatorServiceQueues(@PathVariable int operatorId, @PathVariable int serviceQueueId) {
+    public ResponseEntity getOperatorServiceQueue(@PathVariable int operatorId, @PathVariable int serviceQueueId) {
         try {
             return ResponseEntity.ok(operatorServiceQueueRepository.getOperatorServiceQueue(operatorId, serviceQueueId));
         } catch (EmptyResultDataAccessException emptyResultDataAccessException) {
@@ -42,7 +41,7 @@ public class OperatorServiceQueueController {
         }
     }
 
-    @GetMapping(value = "/api/iqueue/operator/servicequeue/", headers = {"Accept=application/json"})
+    @GetMapping(value = "/api/iqueue/operator/servicequeue", headers = {"Accept=application/json"})
     public ResponseEntity getAll() {
         try {
             return ResponseEntity.ok(operatorServiceQueueRepository.getAll());
@@ -62,7 +61,7 @@ public class OperatorServiceQueueController {
                         .status(201)
 //                        .header("Location", "/api/iqueue/operator/" + operatorServiceQueue.getOperatorId() +
 //                                "/servicequeue/" + operatorServiceQueue.getServiceQueueId())
-                        .build();
+                        .body(operatorServiceQueue);
             }
             else {
                 return ResponseEntity.status(409).build();

@@ -27,7 +27,7 @@ public class BeaconController extends Controller<Beacon> {
 
     @PostMapping(headers = {"Accept=application/json", "Content-Type=application/json"})
     public ResponseEntity add(@RequestBody Beacon beacon) {
-        return super.add(beacon);
+        return super.add(beacon, "/api/iqueue/beacon");
     }
 
     @DeleteMapping(value = "{beaconId}")

@@ -6,142 +6,44 @@
 	},
 	"item": [
 		{
-			"name": "User",
-			"item": [
-				{
-					"name": "POST User",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"userName\": \"test\",\r\n    \"email\": \"test@email.pt\",\r\n    \"phoneNumber\": 0,\r\n    \"address\": \"null\",\r\n    \"userProfileId\": 1\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/api/iqueue/user",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"iqueue",
-								"user"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GET User",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/api/iqueue/user/{{userId}}",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"iqueue",
-								"user",
-								"{{userId}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GET Users",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/api/iqueue/user",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"iqueue",
-								"user"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "PUT User",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"userName\": \"test\",\r\n    \"email\": \"test@email.pt\",\r\n    \"phoneNumber\": 123123123,\r\n    \"address\": \"Lisboa\",\r\n    \"userProfileId\": 1\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/api/iqueue/user/{{userId}}",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"iqueue",
-								"user",
-								"{{userId}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "DELETE User",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/api/iqueue/user/{{userId}}",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"iqueue",
-								"user",
-								"{{userId}}"
-							]
-						}
-					},
-					"response": []
-				}
-			],
-			"protocolProfileBehavior": {}
-		},
-		{
 			"name": "Language",
 			"item": [
 				{
 					"name": "POST Language",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4df98e73-99b1-4299-ab68-ca6b06e20be9",
+								"exec": [
+									"// OK response test\r",
+									"pm.test(\"response is ok\", () => {\r",
+									"    pm.response.to.have.status(201)\r",
+									"    pm.response.to.not.be.error\r",
+									"})\r",
+									"\r",
+									"// Response has body test\r",
+									"pm.test(\"response has body\", () => {\r",
+									"    pm.response.to.have.body\r",
+									"})\r",
+									"\r",
+									"const jsonObject = JSON.parse(responseBody)\r",
+									"\r",
+									"// Response has expected properties test\r",
+									"pm.test(\"response has expected properties\", () => {\r",
+									"    pm.expect(jsonObject).to.have.property('languageId')\r",
+									"    pm.expect(jsonObject.languageId).to.eql(pm.environment.get(\"languageId\"))\r",
+									"    pm.expect(jsonObject).to.have.property('languageDescription')\r",
+									"    pm.expect(jsonObject.languageDescription).not.to.eql('')\r",
+									"})\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -154,7 +56,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"languageId\": 12,\n\t\"languageDescription\": \"Chinese\"\n}"
+							"raw": "{\n\t\"languageId\": {{languageId}},\n\t\"languageDescription\": \"Chinese\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:8080/api/iqueue/language",
@@ -174,6 +76,37 @@
 				},
 				{
 					"name": "GET Language",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8b0c2957-0648-4439-85ef-99f730fa1d8f",
+								"exec": [
+									"// OK response test\r",
+									"pm.test(\"response is ok\", () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"    pm.response.to.not.be.error\r",
+									"})\r",
+									"\r",
+									"// Response has body test\r",
+									"pm.test(\"response has body\", () => {\r",
+									"    pm.response.to.have.body\r",
+									"})\r",
+									"\r",
+									"const jsonObject = JSON.parse(responseBody)\r",
+									"\r",
+									"// Response has expected properties test\r",
+									"pm.test(\"response has expected properties\", () => {\r",
+									"    pm.expect(jsonObject).to.have.property('languageId')\r",
+									"    pm.expect(jsonObject.languageId).to.eql(pm.environment.get(\"languageId\"))\r",
+									"    pm.expect(jsonObject).to.have.property('languageDescription')\r",
+									"    pm.expect(jsonObject.languageDescription).not.to.eql('')\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -196,6 +129,41 @@
 				},
 				{
 					"name": "GET Languages",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9180db1a-bf64-425c-bb1a-b180525d5908",
+								"exec": [
+									"// OK response test\r",
+									"pm.test(\"response is ok\", () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"    pm.response.to.not.be.error\r",
+									"})\r",
+									"\r",
+									"// Response has body test\r",
+									"pm.test(\"response has body\", () => {\r",
+									"    pm.response.to.have.body\r",
+									"})\r",
+									"\r",
+									"const jsonObject = JSON.parse(responseBody)\r",
+									"\r",
+									"// Response has expected properties test\r",
+									"pm.test(\"response has expected properties\", () => {\r",
+									"    pm.expect(jsonObject).to.be.an('array')\r",
+									"    \r",
+									"    jsonObject.forEach(entry => {\r",
+									"        pm.expect(entry).to.have.property('languageId')\r",
+									"        pm.expect(entry.languageId).not.to.eql('')\r",
+									"        pm.expect(entry).to.have.property('languageDescription')\r",
+									"        pm.expect(entry.languageDescription).not.to.eql('')\r",
+									"    })\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -217,6 +185,37 @@
 				},
 				{
 					"name": "PUT Language",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cfa4428e-638b-4f9b-82b6-3000f15dd518",
+								"exec": [
+									"// OK response test\r",
+									"pm.test(\"response is ok\", () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"    pm.response.to.not.be.error\r",
+									"})\r",
+									"\r",
+									"// Response has body test\r",
+									"pm.test(\"response has body\", () => {\r",
+									"    pm.response.to.have.body\r",
+									"})\r",
+									"\r",
+									"const jsonObject = JSON.parse(responseBody)\r",
+									"\r",
+									"// Response has expected properties test\r",
+									"pm.test(\"response has expected properties\", () => {\r",
+									"    pm.expect(jsonObject).to.have.property('languageId')\r",
+									"    pm.expect(jsonObject.languageId).to.eql(pm.environment.get(\"languageId\"))\r",
+									"    pm.expect(jsonObject).to.have.property('languageDescription')\r",
+									"    pm.expect(jsonObject.languageDescription).not.to.eql('')\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "PUT",
 						"header": [],
@@ -245,28 +244,6 @@
 						}
 					},
 					"response": []
-				},
-				{
-					"name": "DELETE Language",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/api/iqueue/language/{{languageId}}",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"iqueue",
-								"language",
-								"{{languageId}}"
-							]
-						}
-					},
-					"response": []
 				}
 			],
 			"protocolProfileBehavior": {}
@@ -276,12 +253,48 @@
 			"item": [
 				{
 					"name": "POST UserProfile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "84426f87-a7ad-4576-a2dd-307a2d0cdd1a",
+								"exec": [
+									"// OK response test\r",
+									"pm.test(\"response is ok\", () => {\r",
+									"    pm.response.to.have.status(201)\r",
+									"    pm.response.to.not.be.error\r",
+									"})\r",
+									"\r",
+									"// Response has body test\r",
+									"pm.test(\"response has body\", () => {\r",
+									"    pm.response.to.have.body\r",
+									"})\r",
+									"\r",
+									"const jsonObject = JSON.parse(responseBody)\r",
+									"\r",
+									"// Response has expected properties test\r",
+									"pm.test(\"response has expected properties\", () => {\r",
+									"    pm.expect(jsonObject).to.have.property('userProfileId')\r",
+									"    pm.expect(jsonObject.userProfileId).to.eql(+pm.environment.get(\"userProfileId\"))\r",
+									"    \r",
+									"    pm.expect(jsonObject).to.have.property('languageId')\r",
+									"    pm.expect(jsonObject.languageId).to.eql(pm.environment.get(\"languageId\"))\r",
+									"    \r",
+									"    pm.expect(jsonObject).to.have.property('userProfileDescription')\r",
+									"    pm.expect(jsonObject.languageDescription).not.to.eql('')\r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\t\"userProfileId\": 12,\n\t\"languageId\": 1,\n\t\"userProfileDescription\": \"Test\"\n}",
+							"raw": "{\n\t\"userProfileId\": {{userProfileId}},\n\t\"languageId\": {{languageId}},\n\t\"userProfileDescription\": \"Test\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -306,11 +319,47 @@
 				},
 				{
 					"name": "GET UserProfile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b7eff1ed-232c-4dd7-8da4-e9431455b86c",
+								"exec": [
+									"// OK response test\r",
+									"pm.test(\"response is ok\", () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"    pm.response.to.not.be.error\r",
+									"})\r",
+									"\r",
+									"// Response has body test\r",
+									"pm.test(\"response has body\", () => {\r",
+									"    pm.response.to.have.body\r",
+									"})\r",
+									"\r",
+									"const jsonObject = JSON.parse(responseBody)\r",
+									"\r",
+									"// Response has expected properties test\r",
+									"pm.test(\"response has expected properties\", () => {\r",
+									"    pm.expect(jsonObject).to.have.property('userProfileId')\r",
+									"    pm.expect(jsonObject.userProfileId).to.eql(+pm.environment.get(\"userProfileId\"))\r",
+									"    \r",
+									"    pm.expect(jsonObject).to.have.property('languageId')\r",
+									"    pm.expect(jsonObject.languageId).to.eql(pm.environment.get(\"languageId\"))\r",
+									"    \r",
+									"    pm.expect(jsonObject).to.have.property('userProfileDescription')\r",
+									"    pm.expect(jsonObject.languageDescription).not.to.eql('')\r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/userprofile/{{userProfileId}}?languageId=1",
+							"raw": "http://localhost:8080/api/iqueue/userprofile/{{userProfileId}}?languageId={{languageId}}",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -325,7 +374,7 @@
 							"query": [
 								{
 									"key": "languageId",
-									"value": "1"
+									"value": "{{languageId}}"
 								}
 							]
 						}
@@ -334,11 +383,50 @@
 				},
 				{
 					"name": "GET UserProfiles",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "db8e9ef1-0f35-40cd-abfb-c260b0ea04f4",
+								"exec": [
+									"// OK response test\r",
+									"pm.test(\"response is ok\", () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"    pm.response.to.not.be.error\r",
+									"})\r",
+									"\r",
+									"// Response has body test\r",
+									"pm.test(\"response has body\", () => {\r",
+									"    pm.response.to.have.body\r",
+									"})\r",
+									"\r",
+									"const jsonObject = JSON.parse(responseBody)\r",
+									"\r",
+									"// Response has expected properties test\r",
+									"pm.test(\"response has expected properties\", () => {\r",
+									"    pm.expect(jsonObject).to.be.an('array')\r",
+									"    \r",
+									"    jsonObject.forEach(entry => {\r",
+									"        pm.expect(entry).to.have.property('userProfileId')\r",
+									"        pm.expect(entry.userProfileId).not.to.eql('')\r",
+									"        \r",
+									"        pm.expect(entry).to.have.property('languageId')\r",
+									"        pm.expect(entry.languageId).not.to.eql('')\r",
+									"        \r",
+									"        pm.expect(entry).to.have.property('userProfileDescription')\r",
+									"        pm.expect(entry.languageDescription).not.to.eql('')\r",
+									"    })\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/userprofile?languageId=1",
+							"raw": "http://localhost:8080/api/iqueue/userprofile?languageId={{languageId}}",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -352,35 +440,7 @@
 							"query": [
 								{
 									"key": "languageId",
-									"value": "1"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "DELETE UserProfile",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/api/iqueue/userprofile/{{userProfileId}}?languageId=1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"iqueue",
-								"userprofile",
-								"{{userProfileId}}"
-							],
-							"query": [
-								{
-									"key": "languageId",
-									"value": "1"
+									"value": "{{languageId}}"
 								}
 							]
 						}
@@ -389,12 +449,47 @@
 				},
 				{
 					"name": "PUT UserProfile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "54e43be1-2bd1-4d01-845a-4b6ce1608140",
+								"exec": [
+									"pm.test(\"response is ok\", () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"    pm.response.to.not.be.error\r",
+									"})\r",
+									"\r",
+									"// Response has body test\r",
+									"pm.test(\"response has body\", () => {\r",
+									"    pm.response.to.have.body\r",
+									"})\r",
+									"\r",
+									"const jsonObject = JSON.parse(responseBody)\r",
+									"\r",
+									"// Response has expected properties test\r",
+									"pm.test(\"response has expected properties\", () => {\r",
+									"    pm.expect(jsonObject).to.have.property('userProfileId')\r",
+									"    pm.expect(jsonObject.userProfileId).to.eql(+pm.environment.get('userProfileId'))\r",
+									"    \r",
+									"    pm.expect(jsonObject).to.have.property('languageId')\r",
+									"    pm.expect(jsonObject.languageId).to.eql(pm.environment.get('languageId'))\r",
+									"    \r",
+									"    pm.expect(jsonObject).to.have.property('userProfileDescription')\r",
+									"    pm.expect(jsonObject.languageDescription).not.to.eql('')\r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\t\"languageId\": 1,\n\t\"userProfileDescription\": \"Updated!\"\n}",
+							"raw": "{\t\"languageId\": {{languageId}},\n\t\"userProfileDescription\": \"Updated!\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -422,16 +517,352 @@
 			"protocolProfileBehavior": {}
 		},
 		{
-			"name": "ServiceQueueType",
+			"name": "User",
 			"item": [
 				{
-					"name": "POST ServiceQueueType",
+					"name": "POST User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cd5051ee-f938-4195-ac15-5391e14df377",
+								"exec": [
+									"// OK response test\r",
+									"pm.test(\"response is ok\", () => {\r",
+									"    pm.response.to.have.status(201)\r",
+									"    pm.response.to.not.be.error\r",
+									"})\r",
+									"\r",
+									"// Response has body test\r",
+									"pm.test(\"response has body\", () => {\r",
+									"    pm.response.to.have.body\r",
+									"})\r",
+									"\r",
+									"const jsonObject = JSON.parse(responseBody)\r",
+									"\r",
+									"// Response has expected properties test\r",
+									"pm.test(\"response has expected properties\", () => {\r",
+									"    pm.expect(jsonObject).to.have.property('userId')\r",
+									"    pm.expect(jsonObject.userId).not.to.eql(0)    \r",
+									"    pm.environment.set('userId', jsonObject.userId);\r",
+									"    \r",
+									"    pm.expect(jsonObject).to.have.property('userName')\r",
+									"    pm.expect(jsonObject.userName).to.eql(\"test\")\r",
+									"    \r",
+									"    pm.expect(jsonObject).to.have.property('email')\r",
+									"    pm.expect(jsonObject.email).to.eql('test@email.pt')    \r",
+									"    \r",
+									"    pm.expect(jsonObject).to.have.property('phoneNumber')\r",
+									"    pm.expect(jsonObject.phoneNumber).to.eql(123456789)  \r",
+									"    \r",
+									"    pm.expect(jsonObject).to.have.property('address')\r",
+									"    pm.expect(jsonObject.address).to.eql('Rua das Flores')      \r",
+									"    \r",
+									"    pm.expect(jsonObject).to.have.property('userProfileId')\r",
+									"    pm.expect(jsonObject.userProfileId).to.eql(+pm.environment.get('userProfileId'))\r",
+									"    \r",
+									"})\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"serviceQueueTypeId\": 12,\r\n    \"languageId\": 1,\r\n    \"serviceQueueTypeDescription\": \"TEST\"\r\n}",
+							"raw": "{\r\n    \"userName\": \"test\",\r\n    \"email\": \"test@email.pt\",\r\n    \"phoneNumber\": 123456789,\r\n    \"address\": \"Rua das Flores\",\r\n    \"userProfileId\": {{userProfileId}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b245afd8-0fc9-474a-9a5a-8149ec3f02c6",
+								"exec": [
+									"// OK response test\r",
+									"pm.test(\"response is ok\", () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"    pm.response.to.not.be.error\r",
+									"})\r",
+									"\r",
+									"// Response has body test\r",
+									"pm.test(\"response has body\", () => {\r",
+									"    pm.response.to.have.body\r",
+									"})\r",
+									"\r",
+									"const jsonObject = JSON.parse(responseBody)\r",
+									"\r",
+									"// Response has expected properties test\r",
+									"pm.test(\"response has expected properties\", () => {\r",
+									"    pm.expect(jsonObject).to.have.property('userId')\r",
+									"    pm.expect(jsonObject.userId).to.eql(+pm.environment.get(\"userId\"))    \r",
+									"    \r",
+									"    pm.expect(jsonObject).to.have.property('userName')\r",
+									"    pm.expect(jsonObject.userName).to.eql(\"test\")\r",
+									"    \r",
+									"    pm.expect(jsonObject).to.have.property('email')\r",
+									"    pm.expect(jsonObject.email).to.eql('test@email.pt')    \r",
+									"    \r",
+									"    pm.expect(jsonObject).to.have.property('phoneNumber')\r",
+									"    pm.expect(jsonObject.phoneNumber).to.eql(123456789)  \r",
+									"    \r",
+									"    pm.expect(jsonObject).to.have.property('address')\r",
+									"    pm.expect(jsonObject.address).to.eql('Rua das Flores')      \r",
+									"    \r",
+									"    pm.expect(jsonObject).to.have.property('userProfileId')\r",
+									"    pm.expect(jsonObject.userProfileId).to.eql(+pm.environment.get('userProfileId'))\r",
+									"    \r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/user/{{userId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"user",
+								"{{userId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e5217238-e7db-42ba-bf6e-4f1b76a578f8",
+								"exec": [
+									"// OK response test\r",
+									"pm.test(\"response is ok\", () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"    pm.response.to.not.be.error\r",
+									"})\r",
+									"\r",
+									"// Response has body test\r",
+									"pm.test(\"response has body\", () => {\r",
+									"    pm.response.to.have.body\r",
+									"})\r",
+									"\r",
+									"const jsonObject = JSON.parse(responseBody)\r",
+									"// Response has expected properties test\r",
+									"\r",
+									"pm.test(\"response has expected properties\", () => {\r",
+									"    pm.expect(jsonObject).to.be.an('array')\r",
+									"    \r",
+									"    jsonObject.forEach(entry => {\r",
+									"    pm.expect(entry).to.have.property('userId')\r",
+									"    pm.expect(entry.userId).not.to.eql(0)    \r",
+									"    \r",
+									"    pm.expect(entry).to.have.property('userName')\r",
+									"    pm.expect(entry.userName).not.to.eql('')\r",
+									"    \r",
+									"    pm.expect(entry).to.have.property('email')\r",
+									"    pm.expect(entry.email).not.to.eql('')    \r",
+									"    \r",
+									"    pm.expect(entry).to.have.property('phoneNumber')\r",
+									"    pm.expect(entry.phoneNumber).not.to.eql('')  \r",
+									"    \r",
+									"    pm.expect(entry).to.have.property('address')\r",
+									"    pm.expect(entry.address).not.to.eql('')  \r",
+									"        \r",
+									"    pm.expect(entry).to.have.property('userProfileId')\r",
+									"    pm.expect(entry.userProfileId).not.to.eql('')\r",
+									"    })\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d9a5a61e-2a23-4a9d-8092-0d3094d21f5f",
+								"exec": [
+									"// OK response test\r",
+									"pm.test(\"response is ok\", () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"    pm.response.to.not.be.error\r",
+									"})\r",
+									"\r",
+									"// Response has body test\r",
+									"pm.test(\"response has body\", () => {\r",
+									"    pm.response.to.have.body\r",
+									"})\r",
+									"\r",
+									"const jsonObject = JSON.parse(responseBody)\r",
+									"\r",
+									"// Response has expected properties test\r",
+									"pm.test(\"response has expected properties\", () => {\r",
+									"    pm.expect(jsonObject).to.have.property('userId')\r",
+									"    pm.expect(jsonObject.userId).not.to.eql(0)    \r",
+									"\r",
+									"    pm.expect(jsonObject).to.have.property('userName')\r",
+									"    pm.expect(jsonObject.userName).to.eql(\"updated\")\r",
+									"    \r",
+									"    pm.expect(jsonObject).to.have.property('email')\r",
+									"    pm.expect(jsonObject.email).to.eql('updated@email.pt')    \r",
+									"    \r",
+									"    pm.expect(jsonObject).to.have.property('phoneNumber')\r",
+									"    pm.expect(jsonObject.phoneNumber).to.eql(123123123)  \r",
+									"    \r",
+									"    pm.expect(jsonObject).to.have.property('address')\r",
+									"    pm.expect(jsonObject.address).to.eql('updated')      \r",
+									"    \r",
+									"    pm.expect(jsonObject).to.have.property('userProfileId')\r",
+									"    pm.expect(jsonObject.userProfileId).to.eql(+pm.environment.get('userProfileId'))\r",
+									"    \r",
+									"})\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": \"updated\",\r\n    \"email\": \"updated@email.pt\",\r\n    \"phoneNumber\": 123123123,\r\n    \"address\": \"updated\",\r\n    \"userProfileId\": {{userProfileId}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/user/{{userId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"user",
+								"{{userId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "ServiceQueueType",
+			"item": [
+				{
+					"name": "POST ServiceQueueType",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a2e837f3-d752-4e65-a284-80d566cc62b1",
+								"exec": [
+									"// OK response test\r",
+									"pm.test(\"response is ok\", () => {\r",
+									"    pm.response.to.have.status(201)\r",
+									"    pm.response.to.not.be.error\r",
+									"})\r",
+									"\r",
+									"// Response has body test\r",
+									"pm.test(\"response has body\", () => {\r",
+									"    pm.response.to.have.body\r",
+									"})\r",
+									"\r",
+									"const jsonObject = JSON.parse(responseBody)\r",
+									"\r",
+									"// Response has expected properties test\r",
+									"pm.test(\"response has expected properties\", () => {\r",
+									"    pm.expect(jsonObject).to.have.property('serviceQueueTypeId')\r",
+									"    pm.expect(jsonObject.serviceQueueTypeId).to.eql(+pm.environment.get(\"serviceQueueTypeId\"))\r",
+									"    \r",
+									"    pm.expect(jsonObject).to.have.property('languageId')\r",
+									"    pm.expect(jsonObject.languageId).to.eql(pm.environment.get(\"languageId\"))\r",
+									"    \r",
+									"    pm.expect(jsonObject).to.have.property('serviceQueueTypeDescription')\r",
+									"    pm.expect(jsonObject.serviceQueueTypeDescription).to.eql('test')\r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"serviceQueueTypeId\": {{serviceQueueTypeId}},\r\n    \"languageId\": {{languageId}},\r\n    \"serviceQueueTypeDescription\": \"test\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -456,11 +887,46 @@
 				},
 				{
 					"name": "GET ServiceQueueType",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e0384b4c-1048-4dc9-b472-283957b2b052",
+								"exec": [
+									"// OK response test\r",
+									"pm.test(\"response is ok\", () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"    pm.response.to.not.be.error\r",
+									"})\r",
+									"\r",
+									"// Response has body test\r",
+									"pm.test(\"response has body\", () => {\r",
+									"    pm.response.to.have.body\r",
+									"})\r",
+									"\r",
+									"const jsonObject = JSON.parse(responseBody)\r",
+									"\r",
+									"// Response has expected properties test\r",
+									"pm.test(\"response has expected properties\", () => {\r",
+									"    pm.expect(jsonObject).to.have.property('serviceQueueTypeId')\r",
+									"    pm.expect(jsonObject.serviceQueueTypeId).to.eql(+pm.environment.get(\"serviceQueueTypeId\"))\r",
+									"    \r",
+									"    pm.expect(jsonObject).to.have.property('languageId')\r",
+									"    pm.expect(jsonObject.languageId).to.eql(pm.environment.get(\"languageId\"))\r",
+									"    \r",
+									"    pm.expect(jsonObject).to.have.property('serviceQueueTypeDescription')\r",
+									"    pm.expect(jsonObject.serviceQueueTypeDescription).to.eql('test')\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/servicequeuetype/1?languageId=1",
+							"raw": "http://localhost:8080/api/iqueue/servicequeuetype/{{serviceQueueTypeId}}?languageId={{languageId}}",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -470,12 +936,12 @@
 								"api",
 								"iqueue",
 								"servicequeuetype",
-								"1"
+								"{{serviceQueueTypeId}}"
 							],
 							"query": [
 								{
 									"key": "languageId",
-									"value": "1"
+									"value": "{{languageId}}"
 								}
 							]
 						}
@@ -484,6 +950,45 @@
 				},
 				{
 					"name": "GET ServiceQueueTypes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d7651a05-ca47-4043-b7a2-ed9a0a9ecb76",
+								"exec": [
+									"// OK response test\r",
+									"pm.test(\"response is ok\", () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"    pm.response.to.not.be.error\r",
+									"})\r",
+									"\r",
+									"// Response has body test\r",
+									"pm.test(\"response has body\", () => {\r",
+									"    pm.response.to.have.body\r",
+									"})\r",
+									"\r",
+									"const jsonObject = JSON.parse(responseBody)\r",
+									"\r",
+									"// Response has expected properties test\r",
+									"pm.test(\"response has expected properties\", () => {\r",
+									"    pm.expect(jsonObject).to.be.an('array')\r",
+									"    \r",
+									"    jsonObject.forEach(entry => {\r",
+									"        pm.expect(entry).to.have.property('serviceQueueTypeId')\r",
+									"        pm.expect(entry.serviceQueueTypeId).not.to.eql(0)\r",
+									"        \r",
+									"        pm.expect(entry).to.have.property('languageId')\r",
+									"        pm.expect(entry.languageId).not.to.eql(0)\r",
+									"        \r",
+									"        pm.expect(entry).to.have.property('serviceQueueTypeDescription')\r",
+									"        pm.expect(entry.serviceQueueTypeDescription).not.to.eql('')\r",
+									"    })\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -510,41 +1015,48 @@
 					"response": []
 				},
 				{
-					"name": "DELETE ServiceQueueType",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/api/iqueue/servicequeuetype/12?languageId=1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"iqueue",
-								"servicequeuetype",
-								"12"
-							],
-							"query": [
-								{
-									"key": "languageId",
-									"value": "1"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "PUT ServiceQueueType",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c3285587-58be-4693-b566-87dcf955b6d3",
+								"exec": [
+									"// OK response test\r",
+									"pm.test(\"response is ok\", () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"    pm.response.to.not.be.error\r",
+									"})\r",
+									"\r",
+									"// Response has body test\r",
+									"pm.test(\"response has body\", () => {\r",
+									"    pm.response.to.have.body\r",
+									"})\r",
+									"\r",
+									"const jsonObject = JSON.parse(responseBody)\r",
+									"\r",
+									"// Response has expected properties test\r",
+									"pm.test(\"response has expected properties\", () => {\r",
+									"    pm.expect(jsonObject).to.have.property('serviceQueueTypeId')\r",
+									"    pm.expect(jsonObject.serviceQueueTypeId).to.eql(+pm.environment.get(\"serviceQueueTypeId\"))\r",
+									"    \r",
+									"    pm.expect(jsonObject).to.have.property('languageId')\r",
+									"    pm.expect(jsonObject.languageId).to.eql(pm.environment.get(\"languageId\"))\r",
+									"    \r",
+									"    pm.expect(jsonObject).to.have.property('serviceQueueTypeDescription')\r",
+									"    pm.expect(jsonObject.serviceQueueTypeDescription).to.eql('UPDATED!')\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"languageId\": 1,\r\n    \"serviceQueueTypeDescription\": \"UPDATED!\"\r\n}",
+							"raw": "{\r\n    \"languageId\": {{languageId}},\r\n    \"serviceQueueTypeDescription\": \"UPDATED!\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -552,7 +1064,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/servicequeuetype/12",
+							"raw": "http://localhost:8080/api/iqueue/servicequeuetype/{{serviceQueueTypeId}}",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -562,7 +1074,3462 @@
 								"api",
 								"iqueue",
 								"servicequeuetype",
-								"12"
+								"{{serviceQueueTypeId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Operator",
+			"item": [
+				{
+					"name": "POST Operator",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "233533e9-b4bc-41ec-8163-731af5f81058",
+								"exec": [
+									"// OK response test\r",
+									"pm.test(\"response is ok\", () => {\r",
+									"    pm.response.to.have.status(201)\r",
+									"    pm.response.to.not.be.error\r",
+									"})\r",
+									"\r",
+									"// Response has body test\r",
+									"pm.test(\"response has body\", () => {\r",
+									"    pm.response.to.have.body\r",
+									"})\r",
+									"\r",
+									"const jsonObject = JSON.parse(responseBody)\r",
+									"\r",
+									"// Response has expected properties test\r",
+									"pm.test(\"response has expected properties\", () => {\r",
+									"    pm.expect(jsonObject).to.have.property('operatorId')\r",
+									"    pm.expect(jsonObject.operatorId).not.to.eql(0)\r",
+									"    pm.environment.set('operatorId', jsonObject.operatorId);\r",
+									"    \r",
+									"    pm.expect(jsonObject).to.have.property('operatorDescription')\r",
+									"    pm.expect(jsonObject.email).to.eql('Test') \r",
+									"    \r",
+									"    pm.expect(jsonObject).to.have.property('email')\r",
+									"    pm.expect(jsonObject.email).to.eql('test@email.pt')    \r",
+									"    \r",
+									"    pm.expect(jsonObject).to.have.property('phoneNumber')\r",
+									"    pm.expect(jsonObject.phoneNumber).to.eql(111111111)  \r",
+									"    \r",
+									"    pm.expect(jsonObject).to.have.property('address')\r",
+									"    pm.expect(jsonObject.address).to.eql('Rua das Flores')  \r",
+									"})\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"operatorDescription\": \"Test\",\r\n    \"email\": \"test@email.pt\",\r\n    \"phoneNumber\": 111111111,\r\n    \"address\": \"Rua das Flores\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/operator",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"operator"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Operator",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "336e124a-a775-42b4-b7b8-0e0166d5b23f",
+								"exec": [
+									"// OK response test\r",
+									"pm.test(\"response is ok\", () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"    pm.response.to.not.be.error\r",
+									"})\r",
+									"\r",
+									"// Response has body test\r",
+									"pm.test(\"response has body\", () => {\r",
+									"    pm.response.to.have.body\r",
+									"})\r",
+									"\r",
+									"const jsonObject = JSON.parse(responseBody)\r",
+									"\r",
+									"// Response has expected properties test\r",
+									"pm.test(\"response has expected properties\", () => {\r",
+									"    pm.expect(jsonObject).to.have.property('operatorId')\r",
+									"    pm.expect(jsonObject.operatorId).to.eql( pm.environment.get('operatorId'))\r",
+									"\r",
+									"    pm.expect(jsonObject).to.have.property('operatorDescription')\r",
+									"    pm.expect(jsonObject.email).to.eql('Test') \r",
+									"    \r",
+									"    pm.expect(jsonObject).to.have.property('email')\r",
+									"    pm.expect(jsonObject.email).to.eql('test@email.pt')    \r",
+									"    \r",
+									"    pm.expect(jsonObject).to.have.property('phoneNumber')\r",
+									"    pm.expect(jsonObject.phoneNumber).to.eql(111111111)  \r",
+									"    \r",
+									"    pm.expect(jsonObject).to.have.property('address')\r",
+									"    pm.expect(jsonObject.address).to.eql('Rua das Flores')  \r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/operator/{{operatorId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"operator",
+								"{{operatorId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Operators",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "fb1ff83e-c58f-41de-b548-ae24aef74aaf",
+								"exec": [
+									"// OK response test\r",
+									"pm.test(\"response is ok\", () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"    pm.response.to.not.be.error\r",
+									"})\r",
+									"\r",
+									"// Response has body test\r",
+									"pm.test(\"response has body\", () => {\r",
+									"    pm.response.to.have.body\r",
+									"})\r",
+									"\r",
+									"const jsonObject = JSON.parse(responseBody)\r",
+									"\r",
+									"// Response has expected properties test\r",
+									"pm.test(\"response has expected properties\", () => {\r",
+									"    pm.expect(jsonObject).to.be.an('array')\r",
+									"    \r",
+									"    jsonObject.forEach(entry => {\r",
+									"        pm.expect(entry).to.have.property('operatorId')\r",
+									"        pm.expect(entry.operatorId).not.to.eql( pm.environment.get(0))\r",
+									"    \r",
+									"        pm.expect(entry).to.have.property('operatorDescription')\r",
+									"        pm.expect(entry.email).not.to.eql('') \r",
+									"        \r",
+									"        pm.expect(entry).to.have.property('email')\r",
+									"        pm.expect(entry.email).not.to.eql('')    \r",
+									"        \r",
+									"        pm.expect(entry).to.have.property('phoneNumber')\r",
+									"        pm.expect(entry.phoneNumber).not.to.eql('')  \r",
+									"        \r",
+									"        pm.expect(entry).to.have.property('address')\r",
+									"        pm.expect(entry.address).not.to.eql('')  \r",
+									"    })\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/operator",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"operator"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT Operator",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d992bec3-37f1-4d78-b07c-e229ad1e0c1f",
+								"exec": [
+									"// OK response test\r",
+									"pm.test(\"response is ok\", () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"    pm.response.to.not.be.error\r",
+									"})\r",
+									"\r",
+									"// Response has body test\r",
+									"pm.test(\"response has body\", () => {\r",
+									"    pm.response.to.have.body\r",
+									"})\r",
+									"\r",
+									"const jsonObject = JSON.parse(responseBody)\r",
+									"\r",
+									"// Response has expected properties test\r",
+									"pm.test(\"response has expected properties\", () => {\r",
+									"    pm.expect(jsonObject).to.have.property('operatorId')\r",
+									"    pm.expect(jsonObject.operatorId).to.eql(pm.environment.get('operatorId'))\r",
+									"\r",
+									"    pm.expect(jsonObject).to.have.property('operatorDescription')\r",
+									"    pm.expect(jsonObject.email).to.eql('Updated') \r",
+									"    \r",
+									"    pm.expect(jsonObject).to.have.property('email')\r",
+									"    pm.expect(jsonObject.email).to.eql('Updated@email.pt')    \r",
+									"    \r",
+									"    pm.expect(jsonObject).to.have.property('phoneNumber')\r",
+									"    pm.expect(jsonObject.phoneNumber).to.eql(222222222)  \r",
+									"    \r",
+									"    pm.expect(jsonObject).to.have.property('Updated')\r",
+									"    pm.expect(jsonObject.address).to.eql('Rua das Flores')  \r",
+									"})\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"operatorDescription\": \"Updated\",\r\n    \"email\": \"Updated@email.pt\",\r\n    \"phoneNumber\": 222222222,\r\n    \"address\": \"Updated\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/operator/{{operatorId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"operator",
+								"{{operatorId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Client",
+			"item": [
+				{
+					"name": "POST Client",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a4b7ecb2-2b5b-40fa-b7f2-0ef9a9bb0d4b",
+								"exec": [
+									"// OK response test\r",
+									"pm.test(\"response is ok\", () => {\r",
+									"    pm.response.to.have.status(201)\r",
+									"    pm.response.to.not.be.error\r",
+									"})\r",
+									"\r",
+									"// Response has body test\r",
+									"pm.test(\"response has body\", () => {\r",
+									"    pm.response.to.have.body\r",
+									"})\r",
+									"\r",
+									"const jsonObject = JSON.parse(responseBody)\r",
+									"\r",
+									"// Response has expected properties test\r",
+									"pm.test(\"response has expected properties\", () => {\r",
+									"    pm.expect(jsonObject).to.have.property('clientId')\r",
+									"    pm.expect(jsonObject.clientId).not.to.eql(0)\r",
+									"    pm.environment.set('clientId', jsonObject.operatorId);\r",
+									"    \r",
+									"    pm.expect(jsonObject).to.have.property('clientName')\r",
+									"    pm.expect(jsonObject.clientName).to.eql('Test') \r",
+									"    \r",
+									"    pm.expect(jsonObject).to.have.property('email')\r",
+									"    pm.expect(jsonObject.email).to.eql('Test@email.pt')    \r",
+									"})\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"clientName\": \"Test\",\r\n    \"email\": \"Test@email.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/client",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"client"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Client",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "584cd603-4a7d-414b-9554-396a26ce19ad",
+								"exec": [
+									"// OK response test\r",
+									"pm.test(\"response is ok\", () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"    pm.response.to.not.be.error\r",
+									"})\r",
+									"\r",
+									"// Response has body test\r",
+									"pm.test(\"response has body\", () => {\r",
+									"    pm.response.to.have.body\r",
+									"})\r",
+									"\r",
+									"const jsonObject = JSON.parse(responseBody)\r",
+									"\r",
+									"// Response has expected properties test\r",
+									"pm.test(\"response has expected properties\", () => {\r",
+									"    pm.expect(jsonObject).to.have.property('clientId')\r",
+									"    pm.expect(jsonObject.clientId).to.eql(+pm.environment.get('clientId'))\r",
+									"\r",
+									"    pm.expect(jsonObject).to.have.property('clientName')\r",
+									"    pm.expect(jsonObject.clientName).to.eql('Test') \r",
+									"    \r",
+									"    pm.expect(jsonObject).to.have.property('email')\r",
+									"    pm.expect(jsonObject.email).to.eql('Test@email.pt')    \r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/client/{{clientId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"client",
+								"{{clientId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Clients",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9b08e067-6316-4b9a-b2ac-8bbe473a28bb",
+								"exec": [
+									"// OK response test\r",
+									"pm.test(\"response is ok\", () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"    pm.response.to.not.be.error\r",
+									"})\r",
+									"\r",
+									"// Response has body test\r",
+									"pm.test(\"response has body\", () => {\r",
+									"    pm.response.to.have.body\r",
+									"})\r",
+									"\r",
+									"const jsonObject = JSON.parse(responseBody)\r",
+									"\r",
+									"// Response has expected properties test\r",
+									"pm.test(\"response has expected properties\", () => {\r",
+									"    pm.expect(jsonObject).to.be.an('array')\r",
+									"    \r",
+									"    jsonObject.forEach(entry => {\r",
+									"        pm.expect(entry).to.have.property('clientId')\r",
+									"        pm.expect(entry.clientId).not.to.eql(0)\r",
+									"    \r",
+									"        pm.expect(entry).to.have.property('clientName')\r",
+									"        pm.expect(entry.clientName).not.to.eql('') \r",
+									"        \r",
+									"        pm.expect(entry).to.have.property('email')\r",
+									"        pm.expect(entry.email).not.to.eql('')    \r",
+									"    })\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/client",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"client"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT Client",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d15ab3b1-d677-4944-aab4-ec2a033b6ec8",
+								"exec": [
+									"// OK response test\r",
+									"pm.test(\"response is ok\", () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"    pm.response.to.not.be.error\r",
+									"})\r",
+									"\r",
+									"// Response has body test\r",
+									"pm.test(\"response has body\", () => {\r",
+									"    pm.response.to.have.body\r",
+									"})\r",
+									"\r",
+									"const jsonObject = JSON.parse(responseBody)\r",
+									"\r",
+									"// Response has expected properties test\r",
+									"pm.test(\"response has expected properties\", () => {\r",
+									"    pm.expect(jsonObject).to.have.property('clientId')\r",
+									"    pm.expect(jsonObject.clientId).to.eql(+pm.environment.get('clientId'))\r",
+									"\r",
+									"    pm.expect(jsonObject).to.have.property('clientName')\r",
+									"    pm.expect(jsonObject.clientName).to.eql('Update') \r",
+									"    \r",
+									"    pm.expect(jsonObject).to.have.property('email')\r",
+									"    pm.expect(jsonObject.email).to.eql('Update@email.pt')    \r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"clientName\": \"Update\",\r\n    \"email\": \"Update@email.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/client/{{clientId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"client",
+								"{{clientId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Beacon",
+			"item": [
+				{
+					"name": "POST Beacon",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9b8fc162-1e29-4a09-8cc5-93bc63862ef1",
+								"exec": [
+									"// OK response test\r",
+									"pm.test(\"response is ok\", () => {\r",
+									"    pm.response.to.have.status(201)\r",
+									"    pm.response.to.not.be.error\r",
+									"})\r",
+									"\r",
+									"// Response has body test\r",
+									"pm.test(\"response has body\", () => {\r",
+									"    pm.response.to.have.body\r",
+									"})\r",
+									"\r",
+									"const jsonObject = JSON.parse(responseBody)\r",
+									"\r",
+									"// Response has expected properties test\r",
+									"pm.test(\"response has expected properties\", () => {\r",
+									"    pm.expect(jsonObject).to.have.property('beaconId')\r",
+									"    pm.expect(jsonObject.beaconId).not.to.eql(0)\r",
+									"    pm.environment.set('beaconId', jsonObject.operatorId);\r",
+									"    \r",
+									"    pm.expect(jsonObject).to.have.property('beaconMacAddress')\r",
+									"    pm.expect(jsonObject.beaconMacAddress).to.eql('111111111') \r",
+									"    \r",
+									"    pm.expect(jsonObject).to.have.property('uidNamespaceId')\r",
+									"    pm.expect(jsonObject.uidNamespaceId).to.eql('1')    \r",
+									"    \r",
+									"    pm.expect(jsonObject).to.have.property('uidInstanceId')\r",
+									"    pm.expect(jsonObject.uidInstanceId).to.eql('2')  \r",
+									"    \r",
+									"    pm.expect(jsonObject).to.have.property('iBeaconUuid')\r",
+									"    pm.expect(jsonObject.iBeaconUuid).to.eql('1') \r",
+									"    \r",
+									"    pm.expect(jsonObject).to.have.property('iBeaconMajor')\r",
+									"    pm.expect(jsonObject.iBeaconMajor).to.eql('1') \r",
+									"    \r",
+									"    pm.expect(jsonObject).to.have.property('iBeaconMinor')\r",
+									"    pm.expect(jsonObject.iBeaconMinor).to.eql('1')\r",
+									"    \r",
+									"    pm.expect(jsonObject).to.have.property('manufacturer')\r",
+									"    pm.expect(jsonObject.manufacturer).to.eql('Minew')\r",
+									"    \r",
+									"    pm.expect(jsonObject).to.have.property('model')\r",
+									"    pm.expect(jsonObject.model).to.eql('C3')\r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"beaconMacAddress\": \"111111111\",\r\n    \"uidNamespaceId\": \"1\",\r\n    \"uidInstanceId\": \"2\",\r\n    \"iBeaconUuid\": \"1\",\r\n    \"iBeaconMajor\": \"1\",\r\n    \"iBeaconMinor\": \"1\",\r\n    \"manufacturer\": \"Minew\",\r\n    \"model\": \"C3\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/beacon",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"beacon"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Beacon",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f89ba2d6-de52-49c5-aea8-eea72ea5bda5",
+								"exec": [
+									"// OK response test\r",
+									"pm.test(\"response is ok\", () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"    pm.response.to.not.be.error\r",
+									"})\r",
+									"\r",
+									"// Response has body test\r",
+									"pm.test(\"response has body\", () => {\r",
+									"    pm.response.to.have.body\r",
+									"})\r",
+									"\r",
+									"const jsonObject = JSON.parse(responseBody)\r",
+									"\r",
+									"// Response has expected properties test\r",
+									"pm.test(\"response has expected properties\", () => {\r",
+									"    pm.expect(jsonObject).to.have.property('beaconId')\r",
+									"    pm.expect(jsonObject.beaconId).to.eql(pm.environment.get('beaconId'))\r",
+									"\r",
+									"    pm.expect(jsonObject).to.have.property('beaconMacAddress')\r",
+									"    pm.expect(jsonObject.beaconMacAddress).to.eql('111111111') \r",
+									"    \r",
+									"    pm.expect(jsonObject).to.have.property('uidNamespaceId')\r",
+									"    pm.expect(jsonObject.uidNamespaceId).to.eql('1')    \r",
+									"    \r",
+									"    pm.expect(jsonObject).to.have.property('uidInstanceId')\r",
+									"    pm.expect(jsonObject.uidInstanceId).to.eql('2')  \r",
+									"    \r",
+									"    pm.expect(jsonObject).to.have.property('iBeaconUuid')\r",
+									"    pm.expect(jsonObject.iBeaconUuid).to.eql('1') \r",
+									"    \r",
+									"    pm.expect(jsonObject).to.have.property('iBeaconMajor')\r",
+									"    pm.expect(jsonObject.iBeaconMajor).to.eql('1') \r",
+									"    \r",
+									"    pm.expect(jsonObject).to.have.property('iBeaconMinor')\r",
+									"    pm.expect(jsonObject.iBeaconMinor).to.eql('1')\r",
+									"    \r",
+									"    pm.expect(jsonObject).to.have.property('manufacturer')\r",
+									"    pm.expect(jsonObject.manufacturer).to.eql('Minew')\r",
+									"    \r",
+									"    pm.expect(jsonObject).to.have.property('model')\r",
+									"    pm.expect(jsonObject.model).to.eql('C3')\r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/beacon/{{beaconId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"beacon",
+								"{{beaconId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Beacons",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5e71b271-ff3f-4b0f-90e4-24362594a801",
+								"exec": [
+									"// OK response test\r",
+									"pm.test(\"response is ok\", () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"    pm.response.to.not.be.error\r",
+									"})\r",
+									"\r",
+									"// Response has body test\r",
+									"pm.test(\"response has body\", () => {\r",
+									"    pm.response.to.have.body\r",
+									"})\r",
+									"\r",
+									"const jsonObject = JSON.parse(responseBody)\r",
+									"\r",
+									"// Response has expected properties test\r",
+									"pm.test(\"response has expected properties\", () => {\r",
+									"    pm.expect(jsonObject).to.be.an('array')\r",
+									"    \r",
+									"    jsonObject.forEach(entry => {\r",
+									"        pm.expect(entry).to.have.property('beaconId')\r",
+									"        pm.expect(entry.beaconId).not.to.eql(0)\r",
+									"    \r",
+									"        pm.expect(entry).to.have.property('beaconMacAddress')\r",
+									"        pm.expect(entry.beaconMacAddress).not.to.eql('') \r",
+									"        \r",
+									"        pm.expect(entry).to.have.property('uidNamespaceId')\r",
+									"        pm.expect(entry.uidNamespaceId).not.to.eql('')  \r",
+									"        \r",
+									"        pm.expect(entry).to.have.property('uidInstanceId')\r",
+									"        pm.expect(entry.uidInstanceId).not.to.eql('')  \r",
+									"        \r",
+									"        pm.expect(entry).to.have.property('iBeaconUuid')\r",
+									"        pm.expect(entry.iBeaconUuid).not.to.eql('') \r",
+									"        \r",
+									"        pm.expect(entry).to.have.property('iBeaconMajor')\r",
+									"        pm.expect(entry.iBeaconMajor).not.to.eql('') \r",
+									"        \r",
+									"        pm.expect(entry).to.have.property('iBeaconMinor')\r",
+									"        pm.expect(entry.iBeaconMinor).not.to.eql('') \r",
+									"        \r",
+									"        pm.expect(entry).to.have.property('manufacturer')\r",
+									"        pm.expect(entry.manufacturer).not.to.eql('') \r",
+									"        \r",
+									"        pm.expect(entry).to.have.property('model')\r",
+									"        pm.expect(entry.model).not.to.eql('') \r",
+									"    })\r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/beacon",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"beacon"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT Beacon",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "78152877-f568-45fd-8e8e-86969cf51b3a",
+								"exec": [
+									"// OK response test",
+									"pm.test(\"response is ok\", () => {",
+									"    pm.response.to.have.status(200)",
+									"    pm.response.to.not.be.error",
+									"})",
+									"",
+									"// Response has body test",
+									"pm.test(\"response has body\", () => {",
+									"    pm.response.to.have.body",
+									"})",
+									"",
+									"const jsonObject = JSON.parse(responseBody)",
+									"",
+									"// Response has expected properties test",
+									"pm.test(\"response has expected properties\", () => {",
+									"    pm.expect(jsonObject).to.have.property('beaconId')",
+									"    pm.expect(jsonObject.beaconId).to.eql(pm.environment.get('beaconId'))",
+									"",
+									"    pm.expect(jsonObject).to.have.property('beaconMacAddress')",
+									"    pm.expect(jsonObject.beaconMacAddress).to.eql('222222222') ",
+									"    ",
+									"    pm.expect(jsonObject).to.have.property('uidNamespaceId')",
+									"    pm.expect(jsonObject.uidNamespaceId).to.eql('4')    ",
+									"    ",
+									"    pm.expect(jsonObject).to.have.property('uidInstanceId')",
+									"    pm.expect(jsonObject.uidInstanceId).to.eql('3')  ",
+									"    ",
+									"    pm.expect(jsonObject).to.have.property('iBeaconUuid')",
+									"    pm.expect(jsonObject.iBeaconUuid).to.eql('3') ",
+									"    ",
+									"    pm.expect(jsonObject).to.have.property('iBeaconMajor')",
+									"    pm.expect(jsonObject.iBeaconMajor).to.eql('3') ",
+									"    ",
+									"    pm.expect(jsonObject).to.have.property('iBeaconMinor')",
+									"    pm.expect(jsonObject.iBeaconMinor).to.eql('2')",
+									"    ",
+									"    pm.expect(jsonObject).to.have.property('manufacturer')",
+									"    pm.expect(jsonObject.manufacturer).to.eql('Apple')",
+									"    ",
+									"    pm.expect(jsonObject).to.have.property('model')",
+									"    pm.expect(jsonObject.model).to.eql('C4')",
+									"})",
+									"",
+									"{",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"beaconMacAddress\": \"222222222\",\r\n    \"uidNamespaceId\": \"4\",\r\n    \"uidInstanceId\": \"3\",\r\n    \"iBeaconUuid\": \"3\",\r\n    \"iBeaconMajor\": \"3\",\r\n    \"iBeaconMinor\": \"2\",\r\n    \"manufacturer\": \"Apple\",\r\n    \"model\": \"C4\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/beacon/{{beaconId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"beacon",
+								"{{beaconId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "OperatorUser",
+			"item": [
+				{
+					"name": "POST OperatorUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d639ce30-c9d0-4060-b3e6-b3f1cd0ea2e8",
+								"exec": [
+									"// OK response test\r",
+									"pm.test(\"response is ok\", () => {\r",
+									"    pm.response.to.have.status(201)\r",
+									"    pm.response.to.not.be.error\r",
+									"})\r",
+									"\r",
+									"// Response has body test\r",
+									"pm.test(\"response has body\", () => {\r",
+									"    pm.response.to.have.body\r",
+									"})\r",
+									"\r",
+									"const jsonObject = JSON.parse(responseBody)\r",
+									"\r",
+									"// Response has expected properties test\r",
+									"pm.test(\"response has expected properties\", () => {\r",
+									"    pm.expect(jsonObject).to.have.property('operatorId')\r",
+									"    pm.expect(jsonObject.operatorId).to.eql(+pm.environment.get(\"operatorId\"))\r",
+									"\r",
+									"    pm.expect(jsonObject).to.have.property('userId')\r",
+									"    pm.expect(jsonObject.userId).to.eql(+pm.environment.get(\"userId\"))\r",
+									"})\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"operatorId\": {{operatorId}},\r\n    \"userId\": {{userId}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/operator/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"operator",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET OperatorUsers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "291d5a33-5d74-4532-8481-6b067a23c583",
+								"exec": [
+									"// OK response test\r",
+									"pm.test(\"response is ok\", () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"    pm.response.to.not.be.error\r",
+									"})\r",
+									"\r",
+									"// Response has body test\r",
+									"pm.test(\"response has body\", () => {\r",
+									"    pm.response.to.have.body\r",
+									"})\r",
+									"\r",
+									"const jsonObject = JSON.parse(responseBody)\r",
+									"\r",
+									"// Response has expected properties test\r",
+									"pm.test(\"response has expected properties\", () => {\r",
+									"    pm.expect(jsonObject).to.be.an('array')\r",
+									"    \r",
+									"    jsonObject.forEach(entry => {\r",
+									"        pm.expect(entry).to.have.property('operatorId')\r",
+									"        pm.expect(entry.operatorId).to.eql(+pm.environment.get(\"operatorId\"))\r",
+									"    \r",
+									"        pm.expect(entry).to.have.property('userId')\r",
+									"        pm.expect(entry.userId).to.eql(+pm.environment.get(\"userId\"))\r",
+									"    })\r",
+									"})\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/operator/{{operatorId}}/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"operator",
+								"{{operatorId}}",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET UserOperator",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3fe0278b-c8dc-401d-8e7c-b554d383406b",
+								"exec": [
+									"// OK response test\r",
+									"pm.test(\"response is ok\", () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"    pm.response.to.not.be.error\r",
+									"})\r",
+									"\r",
+									"// Response has body test\r",
+									"pm.test(\"response has body\", () => {\r",
+									"    pm.response.to.have.body\r",
+									"})\r",
+									"\r",
+									"const jsonObject = JSON.parse(responseBody)\r",
+									"\r",
+									"// Response has expected properties test\r",
+									"pm.test(\"response has expected properties\", () => {\r",
+									"    pm.expect(jsonObject).to.be.an('array')\r",
+									"    \r",
+									"    jsonObject.forEach(entry => {\r",
+									"        pm.expect(entry).to.have.property('operatorId')\r",
+									"        pm.expect(entry.operatorId).to.eql(+pm.environment.get(\"operatorId\"))\r",
+									"    \r",
+									"        pm.expect(entry).to.have.property('userId')\r",
+									"        pm.expect(entry.userId).to.eql(+pm.environment.get(\"userId\"))\r",
+									"    })\r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/operator/user/{{userId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"operator",
+								"user",
+								"{{userId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET OperatorsUsers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f79b5959-cbad-455c-a679-d1e897e695a1",
+								"exec": [
+									"// OK response test\r",
+									"pm.test(\"response is ok\", () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"    pm.response.to.not.be.error\r",
+									"})\r",
+									"\r",
+									"// Response has body test\r",
+									"pm.test(\"response has body\", () => {\r",
+									"    pm.response.to.have.body\r",
+									"})\r",
+									"\r",
+									"const jsonObject = JSON.parse(responseBody)\r",
+									"\r",
+									"// Response has expected properties test\r",
+									"pm.test(\"response has expected properties\", () => {\r",
+									"    pm.expect(jsonObject).to.be.an('array')\r",
+									"    \r",
+									"    jsonObject.forEach(entry => {\r",
+									"        pm.expect(entry).to.have.property('operatorId')\r",
+									"        pm.expect(entry.operatorId).not.to.eql(0)\r",
+									"    \r",
+									"        pm.expect(entry).to.have.property('userId')\r",
+									"        pm.expect(entry.userId).not.to.eql(0)\r",
+									"    })\r",
+									"})\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/operator/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"operator",
+								"user"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "OperatorBeacon",
+			"item": [
+				{
+					"name": "POST OperatorBeacon",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d415f92e-dcba-4487-8be2-a9f18984d585",
+								"exec": [
+									"// OK response test\r",
+									"pm.test(\"response is ok\", () => {\r",
+									"    pm.response.to.have.status(201)\r",
+									"    pm.response.to.not.be.error\r",
+									"})\r",
+									"\r",
+									"// Response has body test\r",
+									"pm.test(\"response has body\", () => {\r",
+									"    pm.response.to.have.body\r",
+									"})\r",
+									"\r",
+									"const jsonObject = JSON.parse(responseBody)\r",
+									"\r",
+									"// Response has expected properties test\r",
+									"pm.test(\"response has expected properties\", () => {\r",
+									"    pm.expect(jsonObject).to.have.property('operatorId')\r",
+									"    pm.expect(jsonObject.operatorId).to.eql(+pm.environment.get(\"operatorId\"))\r",
+									"\r",
+									"    pm.expect(jsonObject).to.have.property('beaconId')\r",
+									"    pm.expect(jsonObject.beaconId).to.eql(+pm.environment.get(\"beaconId\"))\r",
+									"})\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"operatorId\": {{operatorId}},\r\n    \"beaconId\": {{beaconId}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/operator/beacon",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"operator",
+								"beacon"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET OperatorBeacons",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4f82d662-562f-48c3-bb8c-f63b873d14a7",
+								"exec": [
+									"// OK response test\r",
+									"pm.test(\"response is ok\", () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"    pm.response.to.not.be.error\r",
+									"})\r",
+									"\r",
+									"// Response has body test\r",
+									"pm.test(\"response has body\", () => {\r",
+									"    pm.response.to.have.body\r",
+									"})\r",
+									"\r",
+									"const jsonObject = JSON.parse(responseBody)\r",
+									"\r",
+									"// Response has expected properties test\r",
+									"pm.test(\"response has expected properties\", () => {\r",
+									"    pm.expect(jsonObject).to.be.an('array')\r",
+									"    \r",
+									"    jsonObject.forEach(entry => {\r",
+									"        pm.expect(entry).to.have.property('operatorId')\r",
+									"        pm.expect(entry.operatorId).to.eql(+pm.environment.get(\"operatorId\"))\r",
+									"    \r",
+									"        pm.expect(entry).to.have.property('beaconId')\r",
+									"        pm.expect(entry.beaconId).to.eql(+pm.environment.get(\"beaconId\"))\r",
+									"    })\r",
+									"})\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/operator/{{operatorId}}/beacon",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"operator",
+								"{{operatorId}}",
+								"beacon"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET BeaconOperator",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "46b51a3c-e017-4c61-8fcb-9d4fb3e9d1a6",
+								"exec": [
+									"// OK response test\r",
+									"pm.test(\"response is ok\", () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"    pm.response.to.not.be.error\r",
+									"})\r",
+									"\r",
+									"// Response has body test\r",
+									"pm.test(\"response has body\", () => {\r",
+									"    pm.response.to.have.body\r",
+									"})\r",
+									"\r",
+									"const jsonObject = JSON.parse(responseBody)\r",
+									"\r",
+									"// Response has expected properties test\r",
+									"pm.test(\"response has expected properties\", () => {\r",
+									"    pm.expect(jsonObject).to.be.an('array')\r",
+									"    \r",
+									"    jsonObject.forEach(entry => {\r",
+									"        pm.expect(entry).to.have.property('operatorId')\r",
+									"        pm.expect(entry.operatorId).to.eql(+pm.environment.get(\"operatorId\"))\r",
+									"    \r",
+									"        pm.expect(entry).to.have.property('beaconId')\r",
+									"        pm.expect(entry.beaconId).to.eql(+pm.environment.get(\"beaconId\"))\r",
+									"    })\r",
+									"})\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/operator/beacon/{{beaconId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"operator",
+								"beacon",
+								"{{beaconId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET OperatorsBeacons",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2300f7a1-9f95-403f-b870-58caf1daf6e6",
+								"exec": [
+									"// OK response test\r",
+									"pm.test(\"response is ok\", () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"    pm.response.to.not.be.error\r",
+									"})\r",
+									"\r",
+									"// Response has body test\r",
+									"pm.test(\"response has body\", () => {\r",
+									"    pm.response.to.have.body\r",
+									"})\r",
+									"\r",
+									"const jsonObject = JSON.parse(responseBody)\r",
+									"\r",
+									"// Response has expected properties test\r",
+									"pm.test(\"response has expected properties\", () => {\r",
+									"    pm.expect(jsonObject).to.be.an('array')\r",
+									"    \r",
+									"    jsonObject.forEach(entry => {\r",
+									"        pm.expect(entry).to.have.property('operatorId')\r",
+									"        pm.expect(entry.operatorId).not.to.eql(0)\r",
+									"    \r",
+									"        pm.expect(entry).to.have.property('beaconId')\r",
+									"        pm.expect(entry.beaconId).not.to.eql(0)\r",
+									"    })\r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/operator/beacon",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"operator",
+								"beacon"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "OperatorServiceQueue",
+			"item": [
+				{
+					"name": "POST OperatorServiceQueue",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "35782572-0ae7-49dc-9642-8566046b8532",
+								"exec": [
+									"// OK response test",
+									"pm.test(\"response is ok\", () => {",
+									"    pm.response.to.have.status(201)",
+									"    pm.response.to.not.be.error",
+									"})",
+									"",
+									"// Response has body test",
+									"pm.test(\"response has body\", () => {",
+									"    pm.response.to.have.body",
+									"})",
+									"",
+									"const jsonObject = JSON.parse(responseBody)",
+									"",
+									"// Response has expected properties test",
+									"pm.test(\"response has expected properties\", () => {",
+									"    pm.expect(jsonObject).to.have.property('operatorId')",
+									"    pm.expect(jsonObject.operatorId).to.eql(+pm.environment.get(\"operatorId\"))",
+									"",
+									"    pm.expect(jsonObject).to.have.property('serviceQueueId')",
+									"    pm.expect(jsonObject.serviceQueueId).not.to.eql(0)",
+									"    pm.environment.set('serviceQueueId', jsonObject.serviceQueueId);",
+									"",
+									"    pm.expect(jsonObject).to.have.property('serviceQueueDescription')",
+									"    pm.expect(jsonObject.serviceQueueDescription).to.eql(\"Test\")",
+									"",
+									"    pm.expect(jsonObject).to.have.property('serviceQueueTypeId')",
+									"    pm.expect(jsonObject.serviceQueueTypeId).to.eql(+pm.environment.get(\"serviceQueueTypeId\"))",
+									"    ",
+									"    pm.expect(jsonObject).to.have.property('dailyLimit')",
+									"    pm.expect(jsonObject.dailyLimit).to.eql(100)",
+									"})",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"operatorId\": {{operatorId}},\r\n    \"serviceQueueDescription\": \"Test\",\r\n    \"serviceQueueTypeId\": {{serviceQueueTypeId}},\r\n    \"dailyLimit\": 100\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/operator/servicequeue",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"operator",
+								"servicequeue"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET OperatorServiceQueues",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "df405fc7-2bc3-4ada-8e68-7588f8ac438f",
+								"exec": [
+									"// OK response test",
+									"pm.test(\"response is ok\", () => {",
+									"    pm.response.to.have.status(200)",
+									"    pm.response.to.not.be.error",
+									"})",
+									"",
+									"// Response has body test",
+									"pm.test(\"response has body\", () => {",
+									"    pm.response.to.have.body",
+									"})",
+									"",
+									"const jsonObject = JSON.parse(responseBody)",
+									"",
+									"// Response has expected properties test",
+									"pm.test(\"response has expected properties\", () => {",
+									"    pm.expect(jsonObject).to.be.an('array')",
+									"    ",
+									"    jsonObject.forEach(entry => {",
+									"        pm.expect(entry).to.have.property('operatorId')",
+									"        pm.expect(entry.operatorId).to.eql(+pm.environment.get(\"operatorId\"))",
+									"    ",
+									"        pm.expect(entry).to.have.property('serviceQueueId')",
+									"        pm.expect(entry.serviceQueueId).to.eql(pm.environment.get('serviceQueueId'))",
+									"        ",
+									"        pm.expect(entry).to.have.property('serviceQueueDescription')",
+									"        pm.expect(entry.serviceQueueDescription).to.eql(\"Test\")",
+									"    ",
+									"        pm.expect(entry).to.have.property('serviceQueueTypeId')",
+									"        pm.expect(entry.serviceQueueTypeId).to.eql(+pm.environment.get(\"serviceQueueTypeId\"))",
+									"        ",
+									"        pm.expect(entry).to.have.property('dailyLimit')",
+									"        pm.expect(entry.dailyLimit).to.eql(100)",
+									"    })",
+									"})",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/operator/{{operatorId}}/servicequeue",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"operator",
+								"{{operatorId}}",
+								"servicequeue"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET OperatorServiceQueue",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4afbcb5f-75ae-48e5-b662-65666c83dbdc",
+								"exec": [
+									"// OK response test",
+									"pm.test(\"response is ok\", () => {",
+									"    pm.response.to.have.status(200)",
+									"    pm.response.to.not.be.error",
+									"})",
+									"",
+									"// Response has body test",
+									"pm.test(\"response has body\", () => {",
+									"    pm.response.to.have.body",
+									"})",
+									"",
+									"const jsonObject = JSON.parse(responseBody)",
+									"",
+									"// Response has expected properties test",
+									"pm.test(\"response has expected properties\", () => {",
+									"    pm.expect(jsonObject).to.have.property('operatorId')",
+									"    pm.expect(jsonObject.operatorId).to.eql(+pm.environment.get(\"operatorId\"))",
+									"",
+									"    pm.expect(jsonObject).to.have.property('serviceQueueId')",
+									"    pm.expect(jsonObject.serviceQueueId).to.eql(+pm.environment.get(\"serviceQueueId\"))",
+									"",
+									"    pm.expect(jsonObject).to.have.property('serviceQueueDescription')",
+									"    pm.expect(jsonObject.serviceQueueDescription).to.eql(\"Test\")",
+									"",
+									"    pm.expect(jsonObject).to.have.property('serviceQueueTypeId')",
+									"    pm.expect(jsonObject.serviceQueueTypeId).to.eql(+pm.environment.get(\"serviceQueueTypeId\"))",
+									"    ",
+									"    pm.expect(jsonObject).to.have.property('dailyLimit')",
+									"    pm.expect(jsonObject.dailyLimit).to.eql(100)",
+									"})",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/operator/{{operatorId}}/servicequeue/{{serviceQueueId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"operator",
+								"{{operatorId}}",
+								"servicequeue",
+								"{{serviceQueueId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET OperatorsServiceQueues",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c0265cd8-2fea-464b-93a9-f84a52519ad1",
+								"exec": [
+									"// OK response test",
+									"pm.test(\"response is ok\", () => {",
+									"    pm.response.to.have.status(200)",
+									"    pm.response.to.not.be.error",
+									"})",
+									"",
+									"// Response has body test",
+									"pm.test(\"response has body\", () => {",
+									"    pm.response.to.have.body",
+									"})",
+									"",
+									"const jsonObject = JSON.parse(responseBody)",
+									"",
+									"// Response has expected properties test",
+									"pm.test(\"response has expected properties\", () => {",
+									"    pm.expect(jsonObject).to.be.an('array')",
+									"    ",
+									"    jsonObject.forEach(entry => {",
+									"        pm.expect(entry).to.have.property('operatorId')",
+									"        pm.expect(entry.operatorId).not.to.eql(0)",
+									"    ",
+									"        pm.expect(entry).to.have.property('serviceQueueId')",
+									"        pm.expect(entry.serviceQueueId).not.to.eql(0)",
+									"        ",
+									"        pm.expect(entry).to.have.property('serviceQueueDescription')",
+									"        pm.expect(entry.serviceQueueDescription).not.to.eql('')",
+									"    ",
+									"        pm.expect(entry).to.have.property('serviceQueueTypeId')",
+									"        pm.expect(entry.serviceQueueTypeId).not.to.eql(0)",
+									"        ",
+									"        pm.expect(entry).to.have.property('dailyLimit')",
+									"    })",
+									"})",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/operator/servicequeue",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"operator",
+								"servicequeue"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT OperatorServiceQueue",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "011e5312-dd8f-4f82-927d-80a4c84974b8",
+								"exec": [
+									"// OK response test",
+									"pm.test(\"response is ok\", () => {",
+									"    pm.response.to.have.status(200)",
+									"    pm.response.to.not.be.error",
+									"})",
+									"",
+									"// Response has body test",
+									"pm.test(\"response has body\", () => {",
+									"    pm.response.to.have.body",
+									"})",
+									"",
+									"const jsonObject = JSON.parse(responseBody)",
+									"",
+									"// Response has expected properties test",
+									"pm.test(\"response has expected properties\", () => {",
+									"    pm.expect(jsonObject).to.be.an('array')",
+									"    ",
+									"    jsonObject.forEach(entry => {",
+									"        pm.expect(entry).to.have.property('operatorId')",
+									"        pm.expect(entry.operatorId).to.eql(+pm.environment.get(\"operatorId\"))",
+									"    ",
+									"        pm.expect(entry).to.have.property('serviceQueueId')",
+									"        pm.expect(entry.serviceQueueId).to.eql(pm.environment.get('serviceQueueId'))",
+									"        ",
+									"        pm.expect(entry).to.have.property('serviceQueueDescription')",
+									"        pm.expect(entry.serviceQueueDescription).to.eql(\"Updated\")",
+									"    ",
+									"        pm.expect(entry).to.have.property('serviceQueueTypeId')",
+									"        pm.expect(entry.serviceQueueTypeId).to.eql(+pm.environment.get(\"serviceQueueTypeId\"))",
+									"        ",
+									"        pm.expect(entry).to.have.property('dailyLimit')",
+									"        pm.expect(entry.dailyLimit).to.eql(0)",
+									"    })",
+									"})",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"serviceQueueDescription\": \"Updated\",\r\n    \"serviceQueueTypeId\": {{serviceQueueTypeId}},\r\n    \"dailyLimit\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/operator/{{operatorId}}/servicequeue/{{serviceQueueId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"operator",
+								"{{operatorId}}",
+								"servicequeue",
+								"{{serviceQueueId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "ServiceQueueDesk",
+			"item": [
+				{
+					"name": "POST ServiceQueueDesk",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c52cc073-8bfa-4ca2-b098-e1f0ab03d371",
+								"exec": [
+									"// OK response test",
+									"pm.test(\"response is ok\", () => {",
+									"    pm.response.to.have.status(201)",
+									"    pm.response.to.not.be.error",
+									"})",
+									"",
+									"// Response has body test",
+									"pm.test(\"response has body\", () => {",
+									"    pm.response.to.have.body",
+									"})",
+									"",
+									"const jsonObject = JSON.parse(responseBody)",
+									"",
+									"// Response has expected properties test",
+									"pm.test(\"response has expected properties\", () => {",
+									"    pm.expect(jsonObject).to.have.property('operatorId')",
+									"    pm.expect(jsonObject.operatorId).to.eql(+pm.environment.get(\"operatorId\"))",
+									"",
+									"    pm.expect(jsonObject).to.have.property('serviceQueueId')",
+									"    pm.expect(jsonObject.serviceQueueId).to.eql(+pm.environment.get('serviceQueueId'))",
+									"",
+									"    pm.expect(jsonObject).to.have.property('deskId')",
+									"    pm.expect(jsonObject.deskId).to.eql(+pm.environment.get(\"deskId\"))",
+									"",
+									"    pm.expect(jsonObject).to.have.property('deskDescription')",
+									"    pm.expect(jsonObject.deskDescription).to.eql(\"test\")",
+									"})",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"operatorId\": {{operatorId}},\r\n    \"serviceQueueId\": {{serviceQueueId}},\r\n    \"deskId\": {{deskId}},\r\n    \"deskDescription\": \"test\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/operator/servicequeue/desk",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"operator",
+								"servicequeue",
+								"desk"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET ServiceQueueDesks",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "da4f4727-b3d6-44c3-af05-251da6682121",
+								"exec": [
+									"// OK response test",
+									"pm.test(\"response is ok\", () => {",
+									"    pm.response.to.have.status(200)",
+									"    pm.response.to.not.be.error",
+									"})",
+									"",
+									"// Response has body test",
+									"pm.test(\"response has body\", () => {",
+									"    pm.response.to.have.body",
+									"})",
+									"",
+									"const jsonObject = JSON.parse(responseBody)",
+									"",
+									"// Response has expected properties test",
+									"pm.test(\"response has expected properties\", () => {",
+									"    pm.expect(jsonObject).to.be.an('array')",
+									"    ",
+									"    jsonObject.forEach(entry => {",
+									"        pm.expect(entry).to.have.property('operatorId')",
+									"        pm.expect(entry.operatorId).to.eql(+pm.environment.get(\"operatorId\"))",
+									"    ",
+									"        pm.expect(entry).to.have.property('serviceQueueId')",
+									"        pm.expect(entry.serviceQueueId).to.eql( pm.environment.get('serviceQueueId'))",
+									"    ",
+									"        pm.expect(entry).to.have.property('deskId')",
+									"        pm.expect(entry.deskId).to.eql(1)",
+									"    ",
+									"        pm.expect(entry).to.have.property('deskDescription')",
+									"        pm.expect(entry.deskDescription).to.eql(\"test\")",
+									"    })",
+									"})",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/operator/{{operatorId}}/servicequeue/{{serviceQueueId}}/desk",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"operator",
+								"{{operatorId}}",
+								"servicequeue",
+								"{{serviceQueueId}}",
+								"desk"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET ServiceQueuesDesks",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d1e0c093-efc6-471b-aef5-c6219be7734c",
+								"exec": [
+									"// OK response test",
+									"pm.test(\"response is ok\", () => {",
+									"    pm.response.to.have.status(200)",
+									"    pm.response.to.not.be.error",
+									"})",
+									"",
+									"// Response has body test",
+									"pm.test(\"response has body\", () => {",
+									"    pm.response.to.have.body",
+									"})",
+									"",
+									"const jsonObject = JSON.parse(responseBody)",
+									"",
+									"// Response has expected properties test",
+									"pm.test(\"response has expected properties\", () => {",
+									"    pm.expect(jsonObject).to.be.an('array')",
+									"    ",
+									"    jsonObject.forEach(entry => {",
+									"        pm.expect(entry).to.have.property('operatorId')",
+									"        pm.expect(entry.operatorId).not.to.eql(0)",
+									"    ",
+									"        pm.expect(entry).to.have.property('serviceQueueId')",
+									"        pm.expect(entry.serviceQueueId).not.to.eql(0)",
+									"    ",
+									"        pm.expect(entry).to.have.property('deskId')",
+									"        pm.expect(entry.deskId).not.to.eql(0)",
+									"    ",
+									"        pm.expect(entry).to.have.property('deskDescription')",
+									"        pm.expect(entry.deskDescription).not.to.eql('')",
+									"    })",
+									"})",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/operator/servicequeue/desk",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"operator",
+								"servicequeue",
+								"desk"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT ServiceQueueDesk",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "167d36dc-b33e-44db-9827-2696421e1494",
+								"exec": [
+									"// OK response test",
+									"pm.test(\"response is ok\", () => {",
+									"    pm.response.to.have.status(200)",
+									"    pm.response.to.not.be.error",
+									"})",
+									"",
+									"// Response has body test",
+									"pm.test(\"response has body\", () => {",
+									"    pm.response.to.have.body",
+									"})",
+									"",
+									"const jsonObject = JSON.parse(responseBody)",
+									"",
+									"// Response has expected properties test",
+									"pm.test(\"response has expected properties\", () => {",
+									"    pm.expect(jsonObject).to.be.an('array')",
+									"    ",
+									"    jsonObject.forEach(entry => {",
+									"        pm.expect(entry).to.have.property('operatorId')",
+									"        pm.expect(entry.operatorId).to.eql(+pm.environment.get(\"operatorId\"))",
+									"    ",
+									"        pm.expect(entry).to.have.property('serviceQueueId')",
+									"        pm.expect(entry.serviceQueueId).to.eql(+pm.environment.get('serviceQueueId'))",
+									"    ",
+									"        pm.expect(entry).to.have.property('deskId')",
+									"        pm.expect(entry.deskId).to.eql(1)",
+									"    ",
+									"        pm.expect(entry).to.have.property('deskDescription')",
+									"        pm.expect(entry.deskDescription).to.eql(\"updated\")",
+									"    })",
+									"})",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"deskDescription\": \"updated\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/operator/{{operatorId}}/servicequeue/{{serviceQueueId}}/desk/{{deskId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"operator",
+								"{{operatorId}}",
+								"servicequeue",
+								"{{serviceQueueId}}",
+								"desk",
+								"{{deskId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "ServiceQueueDeskUser",
+			"item": [
+				{
+					"name": "POST ServiceQueueDeskUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "12712be6-abe4-4e7e-9d91-e6ac8a29f882",
+								"exec": [
+									"// OK response test",
+									"pm.test(\"response is ok\", () => {",
+									"    pm.response.to.have.status(201)",
+									"    pm.response.to.not.be.error",
+									"})",
+									"",
+									"// Response has body test",
+									"pm.test(\"response has body\", () => {",
+									"    pm.response.to.have.body",
+									"})",
+									"",
+									"const jsonObject = JSON.parse(responseBody)",
+									"",
+									"// Response has expected properties test",
+									"pm.test(\"response has expected properties\", () => {",
+									"    pm.expect(jsonObject).to.have.property('operatorId')",
+									"    pm.expect(jsonObject.operatorId).to.eql(+pm.environment.get(\"operatorId\"))",
+									"",
+									"    pm.expect(jsonObject).to.have.property('serviceQueueId')",
+									"    pm.expect(jsonObject.serviceQueueId).to.eql(+pm.environment.get('serviceQueueId'))",
+									"",
+									"    pm.expect(jsonObject).to.have.property('deskId')",
+									"    pm.expect(jsonObject.deskId).to.eql(+pm.environment.get(\"deskId\"))",
+									"",
+									"    pm.expect(jsonObject).to.have.property('userId')",
+									"    pm.expect(jsonObject.userId).to.eql(+pm.environment.get(\"userId\"))",
+									"    ",
+									"    pm.expect(jsonObject).to.have.property('date')",
+									"    pm.expect(entry.date).not.to.eql(pm.environment.get('date'))",
+									"})",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"operatorId\": {{operatorId}},\n\t\"serviceQueueId\": {{serviceQueueId}},\n\t\"deskId\": {{deskId}},\n\t\"userId\": {{userId}},\n\t\"date\": {{date}}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/operator/servicequeue/desk/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"operator",
+								"servicequeue",
+								"desk",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET ServiceDeskUsers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ff75184e-58ac-4b3c-80a8-6bb3efa1d84e",
+								"exec": [
+									"// OK response test",
+									"pm.test(\"response is ok\", () => {",
+									"    pm.response.to.have.status(200)",
+									"    pm.response.to.not.be.error",
+									"})",
+									"",
+									"// Response has body test",
+									"pm.test(\"response has body\", () => {",
+									"    pm.response.to.have.body",
+									"})",
+									"",
+									"const jsonObject = JSON.parse(responseBody)",
+									"",
+									"// Response has expected properties test",
+									"pm.test(\"response has expected properties\", () => {",
+									"    pm.expect(jsonObject).to.be.an('array')",
+									"    ",
+									"    jsonObject.forEach(entry => {",
+									"        pm.expect(entry).to.have.property('operatorId')",
+									"        pm.expect(entry.operatorId).to.eql(+pm.environment.get(\"operatorId\"))",
+									"    ",
+									"        pm.expect(entry).to.have.property('serviceQueueId')",
+									"        pm.expect(entry.serviceQueueId).to.eql(+pm.environment.get('serviceQueueId'))",
+									"    ",
+									"        pm.expect(entry).to.have.property('deskId')",
+									"        pm.expect(entry.deskId).to.eql(+pm.environment.get(\"deskId\"))",
+									"    ",
+									"        pm.expect(entry).to.have.property('userId')",
+									"        pm.expect(entry.userId).to.eql(+pm.environment.get(\"userId\"))",
+									"        ",
+									"        pm.expect(entry).to.have.property('date')",
+									"        pm.expect(entry.date).not.to.eql(pm.environment.get('date'))",
+									"    })",
+									"})",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/operator/{{operatorId}}/servicequeue/{{serviceQueueId}}/desk/{{deskId}}/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"operator",
+								"{{operatorId}}",
+								"servicequeue",
+								"{{serviceQueueId}}",
+								"desk",
+								"{{deskId}}",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET ServiceDeskUsersByDate",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "efd77d08-9c85-4d4c-ad62-9d06469faa34",
+								"exec": [
+									"// OK response test",
+									"pm.test(\"response is ok\", () => {",
+									"    pm.response.to.have.status(200)",
+									"    pm.response.to.not.be.error",
+									"})",
+									"",
+									"// Response has body test",
+									"pm.test(\"response has body\", () => {",
+									"    pm.response.to.have.body",
+									"})",
+									"",
+									"const jsonObject = JSON.parse(responseBody)",
+									"",
+									"// Response has expected properties test",
+									"pm.test(\"response has expected properties\", () => {",
+									"    pm.expect(jsonObject).to.be.an('array')",
+									"    ",
+									"    jsonObject.forEach(entry => {",
+									"        pm.expect(entry).to.have.property('operatorId')",
+									"        pm.expect(entry.operatorId).to.eql(+pm.environment.get(\"operatorId\"))",
+									"    ",
+									"        pm.expect(entry).to.have.property('serviceQueueId')",
+									"        pm.expect(entry.serviceQueueId).to.eql(+pm.environment.get('serviceQueueId'))",
+									"    ",
+									"        pm.expect(entry).to.have.property('deskId')",
+									"        pm.expect(entry.deskId).to.eql(+pm.environment.get(\"deskId\"))",
+									"    ",
+									"        pm.expect(entry).to.have.property('userId')",
+									"        pm.expect(entry.userId).to.eql(+pm.environment.get(\"userId\"))",
+									"        ",
+									"        pm.expect(entry).to.have.property('date')",
+									"        pm.expect(entry.date).not.to.eql(pm.environment.get('date'))",
+									"    })",
+									"})",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/operator/{{operatorId}}/servicequeue/{{serviceQueueId}}/desk/{{deskId}}/user?{{date}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"operator",
+								"{{operatorId}}",
+								"servicequeue",
+								"{{serviceQueueId}}",
+								"desk",
+								"{{deskId}}",
+								"user"
+							],
+							"query": [
+								{
+									"key": "{{date}}",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET ServiceDeskUserDates",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ac29b2b9-ab57-4351-ba9b-8ae7df1aa8b1",
+								"exec": [
+									"// OK response test",
+									"pm.test(\"response is ok\", () => {",
+									"    pm.response.to.have.status(200)",
+									"    pm.response.to.not.be.error",
+									"})",
+									"",
+									"// Response has body test",
+									"pm.test(\"response has body\", () => {",
+									"    pm.response.to.have.body",
+									"})",
+									"",
+									"const jsonObject = JSON.parse(responseBody)",
+									"",
+									"// Response has expected properties test",
+									"pm.test(\"response has expected properties\", () => {",
+									"    pm.expect(jsonObject).to.be.an('array')",
+									"    ",
+									"    jsonObject.forEach(entry => {",
+									"        pm.expect(entry).to.have.property('operatorId')",
+									"        pm.expect(entry.operatorId).to.eql(+pm.environment.get(\"operatorId\"))",
+									"    ",
+									"        pm.expect(entry).to.have.property('serviceQueueId')",
+									"        pm.expect(entry.serviceQueueId).to.eql(+pm.environment.get('serviceQueueId'))",
+									"    ",
+									"        pm.expect(entry).to.have.property('deskId')",
+									"        pm.expect(entry.deskId).to.eql(+pm.environment.get(\"deskId\"))",
+									"    ",
+									"        pm.expect(entry).to.have.property('userId')",
+									"        pm.expect(entry.userId).to.eql(+pm.environment.get(\"userId\"))",
+									"        ",
+									"        pm.expect(entry).to.have.property('date')",
+									"        pm.expect(entry.date).not.to.eql(pm.environment.get('date'))",
+									"    })",
+									"})",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/operator/{{operatorId}}/servicequeue/{{serviceQueueId}}/desk/{{deskId}}/user/{{userId}}?{{date}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"operator",
+								"{{operatorId}}",
+								"servicequeue",
+								"{{serviceQueueId}}",
+								"desk",
+								"{{deskId}}",
+								"user",
+								"{{userId}}"
+							],
+							"query": [
+								{
+									"key": "{{date}}",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET UserServiceDesks",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a03029ba-587d-4bc6-86b7-b2378ad98b1a",
+								"exec": [
+									"// OK response test",
+									"pm.test(\"response is ok\", () => {",
+									"    pm.response.to.have.status(200)",
+									"    pm.response.to.not.be.error",
+									"})",
+									"",
+									"// Response has body test",
+									"pm.test(\"response has body\", () => {",
+									"    pm.response.to.have.body",
+									"})",
+									"",
+									"const jsonObject = JSON.parse(responseBody)",
+									"",
+									"// Response has expected properties test",
+									"pm.test(\"response has expected properties\", () => {",
+									"    pm.expect(jsonObject).to.be.an('array')",
+									"    ",
+									"    jsonObject.forEach(entry => {",
+									"        pm.expect(entry).to.have.property('operatorId')",
+									"        pm.expect(entry.operatorId).to.eql(+pm.environment.get(\"operatorId\"))",
+									"    ",
+									"        pm.expect(entry).to.have.property('serviceQueueId')",
+									"        pm.expect(entry.serviceQueueId).to.eql(+pm.environment.get('serviceQueueId'))",
+									"    ",
+									"        pm.expect(entry).to.have.property('deskId')",
+									"        pm.expect(entry.deskId).to.eql(+pm.environment.get(\"deskId\"))",
+									"    ",
+									"        pm.expect(entry).to.have.property('userId')",
+									"        pm.expect(entry.userId).to.eql(+pm.environment.get(\"userId\"))",
+									"        ",
+									"        pm.expect(entry).to.have.property('date')",
+									"        pm.expect(entry.date).not.to.eql(pm.environment.get('date'))",
+									"    })",
+									"})",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/operator/servicequeue/desk/user/{{userId}}?{{date}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"operator",
+								"servicequeue",
+								"desk",
+								"user",
+								"{{userId}}"
+							],
+							"query": [
+								{
+									"key": "{{date}}",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "AttendanceStatus",
+			"item": [
+				{
+					"name": "POST AttendanceStatus",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ff9e9761-669b-46f4-8a01-0c9aed33a0be",
+								"exec": [
+									"// OK response test",
+									"pm.test(\"response is ok\", () => {",
+									"    pm.response.to.have.status(201)",
+									"    pm.response.to.not.be.error",
+									"})",
+									"",
+									"// Response has body test",
+									"pm.test(\"response has body\", () => {",
+									"    pm.response.to.have.body",
+									"})",
+									"",
+									"const jsonObject = JSON.parse(responseBody)",
+									"",
+									"// Response has expected properties test",
+									"pm.test(\"response has expected properties\", () => {",
+									"    pm.expect(jsonObject).to.have.property('attendanceStatusId')",
+									"    pm.expect(jsonObject.attendanceStatusId).to.eql(+pm.environment.get(\"attendanceStatusId\"))",
+									"",
+									"    pm.expect(jsonObject).to.have.property('languageId')",
+									"    pm.expect(jsonObject.languageId).to.eql(+pm.environment.get('languageId'))",
+									"",
+									"    pm.expect(jsonObject).to.have.property('attendanceStatusDescription')",
+									"    pm.expect(jsonObject.attendanceStatusDescription).to.eql(\"test\")",
+									"})",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"attendanceStatusId\": {{attendanceStatusId}},\r\n    \"languageId\": {{languageId}},\r\n    \"attendanceStatusDescription\": \"test\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/attendancestatus",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"attendancestatus"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET AttendanceStatus",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0f641e63-e5b7-484d-b25f-f2be0a632202",
+								"exec": [
+									"// OK response test",
+									"pm.test(\"response is ok\", () => {",
+									"    pm.response.to.have.status(200)",
+									"    pm.response.to.not.be.error",
+									"})",
+									"",
+									"// Response has body test",
+									"pm.test(\"response has body\", () => {",
+									"    pm.response.to.have.body",
+									"})",
+									"",
+									"const jsonObject = JSON.parse(responseBody)",
+									"",
+									"// Response has expected properties test",
+									"pm.test(\"response has expected properties\", () => {",
+									"    pm.expect(jsonObject).to.have.property('attendanceStatusId')",
+									"    pm.expect(jsonObject.attendanceStatusId).to.eql(+pm.environment.get(\"attendanceStatusId\"))",
+									"",
+									"    pm.expect(jsonObject).to.have.property('languageId')",
+									"    pm.expect(jsonObject.languageId).to.eql(+pm.environment.get('languageId'))",
+									"",
+									"    pm.expect(jsonObject).to.have.property('attendanceStatusDescription')",
+									"    pm.expect(jsonObject.attendanceStatusDescription).to.eql(\"test\")",
+									"})",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/attendancestatus/{{attendanceStatusId}}?languageId={{languageId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"attendancestatus",
+								"{{attendanceStatusId}}"
+							],
+							"query": [
+								{
+									"key": "languageId",
+									"value": "{{languageId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET AttendanceStatus",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ddd19c55-7302-4073-99ad-08ddd77960ed",
+								"exec": [
+									"// OK response test",
+									"pm.test(\"response is ok\", () => {",
+									"    pm.response.to.have.status(200)",
+									"    pm.response.to.not.be.error",
+									"})",
+									"",
+									"// Response has body test",
+									"pm.test(\"response has body\", () => {",
+									"    pm.response.to.have.body",
+									"})",
+									"",
+									"const jsonObject = JSON.parse(responseBody)",
+									"",
+									"// Response has expected properties test",
+									"pm.test(\"response has expected properties\", () => {",
+									"    pm.expect(jsonObject).to.be.an('array')",
+									"    ",
+									"    jsonObject.forEach(entry => {",
+									"        pm.expect(entry).to.have.property('attendanceStatusId')",
+									"        pm.expect(entry.attendanceStatusId).to.eql(+pm.environment.get(\"attendanceStatusId\"))",
+									"    ",
+									"        pm.expect(entry).to.have.property('languageId')",
+									"        pm.expect(entry.languageId).to.eql(+pm.environment.get('languageId'))",
+									"    ",
+									"        pm.expect(entry).to.have.property('attendanceStatusDescription')",
+									"        pm.expect(entry.attendanceStatusDescription).to.eql(\"test\")",
+									"    })",
+									"})",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/attendancestatus?languageId={{languageId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"attendancestatus"
+							],
+							"query": [
+								{
+									"key": "languageId",
+									"value": "{{languageId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT AttendanceStatus",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b806c571-59fc-41ad-8fe2-82a182ef6644",
+								"exec": [
+									"// OK response test",
+									"pm.test(\"response is ok\", () => {",
+									"    pm.response.to.have.status(200)",
+									"    pm.response.to.not.be.error",
+									"})",
+									"",
+									"// Response has body test",
+									"pm.test(\"response has body\", () => {",
+									"    pm.response.to.have.body",
+									"})",
+									"",
+									"const jsonObject = JSON.parse(responseBody)",
+									"",
+									"// Response has expected properties test",
+									"pm.test(\"response has expected properties\", () => {",
+									"    pm.expect(jsonObject).to.have.property('attendanceStatusId')",
+									"    pm.expect(jsonObject.attendanceStatusId).to.eql(+pm.environment.get(\"attendanceStatusId\"))",
+									"",
+									"    pm.expect(jsonObject).to.have.property('languageId')",
+									"    pm.expect(jsonObject.languageId).to.eql(+pm.environment.get('languageId'))",
+									"",
+									"    pm.expect(jsonObject).to.have.property('attendanceStatusDescription')",
+									"    pm.expect(jsonObject.attendanceStatusDescription).to.eql(\"updated\")",
+									"})",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"languageId\": {{languageId}},\r\n    \"attendanceStatusDescription\": \"updated\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/attendancestatus/{{attendanceStatusId}}?languageId={{languageId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"attendancestatus",
+								"{{attendanceStatusId}}"
+							],
+							"query": [
+								{
+									"key": "languageId",
+									"value": "{{languageId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Attendance",
+			"item": [
+				{
+					"name": "POST Attendance",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/attendance",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"attendance"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Attendance",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/attendance/{{attendanceId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"attendance",
+								"{{attendanceId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Attendances",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/attendance",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"attendance"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT Attendance",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/attendance/{{attendanceId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"attendance",
+								"{{attendanceId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "AttendanceClassification",
+			"item": [
+				{
+					"name": "POST AttendanceClassification",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/attendance/classification",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"attendance",
+								"classification"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET AttendanceClassification",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/attendance/{{attendanceId}}/classification",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"attendance",
+								"{{attendanceId}}",
+								"classification"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET AttendanceClassifications",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/attendance/classification",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"attendance",
+								"classification"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Clean up",
+			"item": [
+				{
+					"name": "DELETE UserProfile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "187cb928-5833-4fca-9b0a-d356e7e724e5",
+								"exec": [
+									"pm.test(\"response is ok\", () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"    pm.response.to.not.be.error\r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/userprofile/{{userProfileId}}?languageId={{languageId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"userprofile",
+								"{{userProfileId}}"
+							],
+							"query": [
+								{
+									"key": "languageId",
+									"value": "{{languageId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE ServiceQueueType",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2f4d47cd-5a0a-4dcb-8357-792a3db2449b",
+								"exec": [
+									"pm.test(\"response is ok\", () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"    pm.response.to.not.be.error\r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/servicequeuetype/{{serviceQueueTypeId}}?languageId={{languageId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"servicequeuetype",
+								"{{serviceQueueTypeId}}"
+							],
+							"query": [
+								{
+									"key": "languageId",
+									"value": "{{languageId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE Language",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "010e9080-1534-46cb-970a-28dbbe0c2259",
+								"exec": [
+									"pm.test(\"response is ok\", () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"    pm.response.to.not.be.error\r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/language/{{languageId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"language",
+								"{{languageId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a8b99985-a9d6-449d-b927-8a92d7850818",
+								"exec": [
+									"pm.test(\"response is ok\", () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"    pm.response.to.not.be.error\r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/user/{{userId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"user",
+								"{{userId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE Operator",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f0008f1d-b25a-4c57-b25f-94e1b1c6cb4e",
+								"exec": [
+									"// OK response test\r",
+									"pm.test(\"response is ok\", () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"    pm.response.to.not.be.error\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/operator/{{operatorId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"operator",
+								"{{operatorId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE Client",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "28c65e58-f5d4-4caf-86fc-a64077871688",
+								"exec": [
+									"// OK response test\r",
+									"pm.test(\"response is ok\", () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"    pm.response.to.not.be.error\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/client/{{clientId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"client",
+								"{{clientId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE Beacon",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "71c433ee-dde7-4355-b908-ab7a1b9a869d",
+								"exec": [
+									"// OK response test\r",
+									"pm.test(\"response is ok\", () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"    pm.response.to.not.be.error\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/beacon/{{beaconId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"beacon",
+								"{{beaconId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE OperatorUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8e0fe5c1-6c12-4f23-88af-b80020a5a346",
+								"exec": [
+									"// OK response test\r",
+									"pm.test(\"response is ok\", () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"    pm.response.to.not.be.error\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/operator/{{operatorId}}/user/{{userId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"operator",
+								"{{operatorId}}",
+								"user",
+								"{{userId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE OperatorBeacon",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "122e30e3-f120-4a5a-893a-488b778a19f5",
+								"exec": [
+									"// OK response test\r",
+									"pm.test(\"response is ok\", () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"    pm.response.to.not.be.error\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/operator/{{operatorId}}/beacon/{{beaconId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"operator",
+								"{{operatorId}}",
+								"beacon",
+								"{{beaconId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE OperatorServiceQueue",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "30d68983-be90-4013-888d-98a967d0137b",
+								"exec": [
+									"// OK response test\r",
+									"pm.test(\"response is ok\", () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"    pm.response.to.not.be.error\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/operator/{{operatorId}}/servicequeue/{{serviceQueueId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"operator",
+								"{{operatorId}}",
+								"servicequeue",
+								"{{serviceQueueId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE ServiceQueueDesk",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "525d7446-59cb-49a5-a904-95ac11355389",
+								"exec": [
+									"// OK response test\r",
+									"pm.test(\"response is ok\", () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"    pm.response.to.not.be.error\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/operator/{{operatorId}}/servicequeue/{{serviceQueueId}}/desk/{{deskId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"operator",
+								"{{operatorId}}",
+								"servicequeue",
+								"{{serviceQueueId}}",
+								"desk",
+								"{{deskId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE ServiceQueueDeskUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1365f55e-439c-40a1-874d-98787194899a",
+								"exec": [
+									"// OK response test\r",
+									"pm.test(\"response is ok\", () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"    pm.response.to.not.be.error\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/operator/{{operatorId}}/servicequeue/{{serviceQueueId}}/desk/{{deskId}}/user/{{userId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"operator",
+								"{{operatorId}}",
+								"servicequeue",
+								"{{serviceQueueId}}",
+								"desk",
+								"{{deskId}}",
+								"user",
+								"{{userId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete AttendanceStatus",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b52151af-da87-49ba-bd40-3952b82da652",
+								"exec": [
+									"// OK response test\r",
+									"pm.test(\"response is ok\", () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"    pm.response.to.not.be.error\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/attendancestatus/{{attendanceStatusId}}?languageId={{languageId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"attendancestatus",
+								"{{attendanceStatusId}}"
+							],
+							"query": [
+								{
+									"key": "languageId",
+									"value": "{{languageId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE Attendance",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/attendance/{{attendanceId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"attendance",
+								"{{attendanceId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE AttendanceClassification",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/iqueue/attendance/{{attendanceId}}/classification",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"iqueue",
+								"attendance",
+								"{{attendanceId}}",
+								"classification"
 							]
 						}
 					},

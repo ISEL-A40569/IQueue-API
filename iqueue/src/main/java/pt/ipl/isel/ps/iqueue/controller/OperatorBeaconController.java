@@ -5,9 +5,9 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pt.ipl.isel.ps.iqueue.model.OperatorBeacon;
-import pt.ipl.isel.ps.iqueue.model.OperatorUser;
 import pt.ipl.isel.ps.iqueue.repository.OperatorBeaconRepository;
 
+@RestController
 public class OperatorBeaconController {
 
     @Autowired
@@ -18,7 +18,7 @@ public class OperatorBeaconController {
     }
 
     @GetMapping(value = "/api/iqueue/operator/{operatorId}/beacon", headers = {"Accept=application/json"})
-    public ResponseEntity getOperatorUsers(@PathVariable int operatorId) {
+    public ResponseEntity getOperatorBeacons(@PathVariable int operatorId) {
         try {
             return ResponseEntity.ok(operatorBeaconRepository.getOperatorBeacons(operatorId));
         } catch (EmptyResultDataAccessException emptyResultDataAccessException) {
@@ -30,7 +30,7 @@ public class OperatorBeaconController {
     }
 
     @GetMapping(value = "/api/iqueue/operator/beacon/{beaconId}", headers = {"Accept=application/json"})
-    public ResponseEntity getUserOperator(@PathVariable int beaconId) {
+    public ResponseEntity getBeaconOperator(@PathVariable int beaconId) {
         try {
             return ResponseEntity.ok(operatorBeaconRepository.getBeaconOperator(beaconId));
         } catch (EmptyResultDataAccessException emptyResultDataAccessException) {

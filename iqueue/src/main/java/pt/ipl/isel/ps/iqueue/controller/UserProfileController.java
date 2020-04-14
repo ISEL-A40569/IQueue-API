@@ -49,7 +49,7 @@ public class UserProfileController {
                 return ResponseEntity
                         .status(201)
                         .header("Location", "/api/iqueue/userprofile/" + userProfile.getUserProfileId())
-                        .build();
+                        .body(userProfile);
             }
             else {
                 return ResponseEntity.status(409).build();
@@ -78,7 +78,7 @@ public class UserProfileController {
         userProfile.setUserProfileId(userProfileId);
         try {
             if (userProfileRepository.update(userProfile)) {
-                return ResponseEntity.ok().build();
+                return ResponseEntity.ok().body(userProfile);
             }
             else {
                 return ResponseEntity.status(404).build();

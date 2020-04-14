@@ -40,9 +40,9 @@ public class OperatorServiceQueueRepository {
     }
 
     public boolean add(OperatorServiceQueue operatorServiceQueue) {
-        String insertQueryTemplate = "exec InsertOperatorServiceQueue ?, ?, ?, ?, ?";
+        String insertQueryTemplate = "exec InsertOperatorServiceQueue ?, ?, ?, ?";
         return jdbcTemplate.update(insertQueryTemplate, operatorServiceQueue.getOperatorId(),
-                operatorServiceQueue.getServiceQueueId(), operatorServiceQueue.getServiceQueueDescription(),
+                operatorServiceQueue.getServiceQueueDescription(),
                 operatorServiceQueue.getServiceQueueTypeId(), operatorServiceQueue.getDailyLimit()) == 1;
     }
 

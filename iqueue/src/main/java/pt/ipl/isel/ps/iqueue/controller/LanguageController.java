@@ -9,12 +9,12 @@ import pt.ipl.isel.ps.iqueue.repository.LanguageRepository;
 
 @RestController
 @RequestMapping("/api/iqueue/language")
-public class LanguagesController {
+public class LanguageController {
 
     @Autowired
     private final LanguageRepository languageRepository;
 
-    public LanguagesController(LanguageRepository languageRepository) {
+    public LanguageController(LanguageRepository languageRepository) {
         this.languageRepository = languageRepository;
     }
 
@@ -49,7 +49,7 @@ public class LanguagesController {
                 return ResponseEntity
                         .status(201)
                         .header("Location", "/api/iqueue/language/" + language.getLanguageId())
-                        .build();
+                        .body(language);
             }
             else {
                 return ResponseEntity.status(409).build();
@@ -59,7 +59,7 @@ public class LanguagesController {
         }
     }
 
-    @DeleteMapping(value = "{languageId}", headers = {"Accept=application/json"})
+    @DeleteMapping(value = "{languageId}")
     public ResponseEntity remove(@PathVariable int languageId) {
         try {
             if (languageRepository.remove(languageId)) {
@@ -78,7 +78,7 @@ public class LanguagesController {
         language.setLanguageId(languageId);
         try {
             if (languageRepository.update(language)) {
-                return ResponseEntity.ok().build();
+                return ResponseEntity.ok(language);
             }
             else {
                 return ResponseEntity.status(404).build();

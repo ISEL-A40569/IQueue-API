@@ -177,7 +177,7 @@ as
 begin transaction set transaction isolation level serializable
 begin try
 insert into [User] values (@userName, @email, @phoneNumber, @address, @userProfileId)
-
+select scope_identity()
 commit
 end try
 begin catch
@@ -408,11 +408,11 @@ exec sp_executesql @query, @params, @operatorId = @operatorId, @serviceQueueId =
 
 go
 
-create or alter procedure InsertServiceQueueDesk @operatorId int, @serviceQueueId int, @deskId int
+create or alter procedure InsertServiceQueueDesk @operatorId int, @serviceQueueId int, @deskId int, @deskDescription varchar(50)
 as
 begin transaction set transaction isolation level serializable
 begin try
-insert into ServiceQueueDesk values(@operatorId, @serviceQueueId, @deskId)
+insert into ServiceQueueDesk values(@operatorId, @serviceQueueId, @deskId, @deskDescription)
 commit
 end try
 begin catch
@@ -428,6 +428,22 @@ begin try
 delete ServiceQueueDesk where operatorId = @operatorId and
 							serviceQueueId = @serviceQueueId and
 							deskId = @deskId
+commit
+end try
+begin catch
+rollback
+end catch
+
+go
+
+create or alter procedure UpdateServiceQueueDesk @operatorId int, @serviceQueueId int, @deskId int, @deskDescription varchar(50)
+as
+begin transaction set transaction isolation level serializable
+begin try
+update ServiceQueueDesk set deskDescription = @deskDescription
+where operatorId = @operatorId and
+	  serviceQueueId = @serviceQueueId and
+      deskId = @deskId
 commit
 end try
 begin catch
@@ -637,7 +653,8 @@ create or alter procedure InsertOperator @operatorDescription varchar(100), @ema
 as
 begin transaction set transaction isolation level serializable
 begin try
-insert into Operator  values(@operatorDescription, @email, @phoneNumber, @address)
+insert into Operator values(@operatorDescription, @email, @phoneNumber, @address)
+select scope_identity()
 commit
 end try
 begin catch
@@ -701,6 +718,7 @@ as
 begin transaction set transaction isolation level serializable
 begin try
 insert into Client values(@clientName, @email)
+select scope_identity()
 commit
 end try
 begin catch
@@ -763,6 +781,7 @@ begin transaction set transaction isolation level serializable
 begin try
 insert into Beacon values(@beaconMacAddress, @uidNamespaceId, @uidInstanceId, @ibeaconUuid, @ibeaconMajor, @ibeaconMinor,
 @manufacturer, @model)
+select scope_identity()
 commit
 end try
 begin catch
@@ -964,6 +983,7 @@ as
 begin transaction set transaction isolation level serializable
 begin try
 insert into Attendance values(@operatorId, @serviceQueueId, @deskId, @clientId, @startWaitingTime, null, null, null, 1, @attendanceUserId)
+select scope_identity()
 commit
 end try
 begin catch

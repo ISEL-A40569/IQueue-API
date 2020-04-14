@@ -2,12 +2,14 @@ package pt.ipl.isel.ps.iqueue.repository;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Component;
 import pt.ipl.isel.ps.iqueue.model.Attendance;
 import pt.ipl.isel.ps.iqueue.repository.rowmapper.AttendanceRowMapper;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Component
 public class AttendanceRepository extends Repository<Attendance> {
 
     public AttendanceRepository(JdbcTemplate jdbcTemplate, AttendanceRowMapper attendanceRowMapper) {
@@ -31,10 +33,10 @@ public class AttendanceRepository extends Repository<Attendance> {
     }
 
     @Override
-    public boolean add(Attendance attendance) {
+    public int add(Attendance attendance) {
         return jdbcTemplate.update(insertQueryTemplate, attendance.getOperatorId(),
                 attendance.getServiceQueueId(), attendance.getDeskId(), attendance.getClientId(),
-                attendance.getStartWaitingTime(), attendance.getAttendanceUserId()) == 1;
+                attendance.getStartWaitingTime(), attendance.getAttendanceUserId());
     }
 
     @Override

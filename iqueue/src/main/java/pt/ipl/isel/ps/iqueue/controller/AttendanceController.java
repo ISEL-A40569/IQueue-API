@@ -25,7 +25,7 @@ public class AttendanceController extends Controller<Attendance> {
 
     @PostMapping(headers = {"Accept=application/json", "Content-Type=application/json"})
     public ResponseEntity add(@RequestBody  Attendance attendance) {
-        return super.add(attendance);
+        return super.add(attendance, "/api/iqueue/attendance");
     }
 
     @DeleteMapping(value = "{attendanceId}")

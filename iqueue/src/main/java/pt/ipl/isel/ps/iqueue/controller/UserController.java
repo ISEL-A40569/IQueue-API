@@ -44,12 +44,14 @@ public class UserController {
 
     @PostMapping(headers = {"Accept=application/json", "Content-Type=application/json"})
     public ResponseEntity add(@RequestBody User user) {
+        int insertdUserId = userRepository.add(user);
+        user.setUserId(insertdUserId);
         try {
-            if (userRepository.add(user)) {
+            if (insertdUserId != 0) {
                 return ResponseEntity
                         .status(201)
-                        .header("Location", "/api/iqueue/user/" + user.getUserId())
-                        .build();
+                        .header("Location", "/api/iqueue/user/" + insertdUserId)
+                        .body(user);
             }
             else {
                 return ResponseEntity.status(409).build();
@@ -74,10 +76,11 @@ public class UserController {
     }
 
     @PutMapping(value = "{userId}", headers = {"Accept=application/json", "Content-Type=application/json"})
-    public ResponseEntity update(@RequestBody User user) {
+    public ResponseEntity update(@PathVariable int userId, @RequestBody User user) {
+        user.setUserId(userId);
         try {
             if (userRepository.update(user)) {
-                return ResponseEntity.ok().build();
+                return ResponseEntity.ok(user);
             }
             else {
                 return ResponseEntity.status(404).build();

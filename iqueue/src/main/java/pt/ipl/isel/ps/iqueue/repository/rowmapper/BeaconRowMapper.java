@@ -11,7 +11,7 @@ import java.sql.SQLException;
 public class BeaconRowMapper implements RowMapper<Beacon> {
     @Override
     public Beacon mapRow(ResultSet rs, int rowNum) throws SQLException {
-        return new Beacon(rs.findColumn("beaconId"),
+        return new Beacon(rs.getInt("beaconId"),
                 rs.getString("beaconMacAddress"),
                 rs.getString("uidNamespaceId"),
                 rs.getString("uidInstanceId"),

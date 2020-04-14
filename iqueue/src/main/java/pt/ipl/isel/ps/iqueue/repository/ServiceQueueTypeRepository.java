@@ -35,9 +35,10 @@ public class ServiceQueueTypeRepository extends Repository<ServiceQueueType>{
         throw new UnsupportedOperationException();
     }
 
-    public boolean add(ServiceQueueType serviceQueueType) {
+    public int add(ServiceQueueType serviceQueueType) {
         return jdbcTemplate.update(insertQueryTemplate, serviceQueueType.getServiceQueueTypeId(),
-                serviceQueueType.getLanguageId(), serviceQueueType.getServiceQueueTypeDescription()) == 1;
+                serviceQueueType.getLanguageId(), serviceQueueType.getServiceQueueTypeDescription()) == 1 ?
+                serviceQueueType.getServiceQueueTypeId() : 0;
     }
 
     @Override
