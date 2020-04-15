@@ -3799,9 +3799,80 @@
 			"item": [
 				{
 					"name": "POST Attendance",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1bd691f2-da75-4bd7-92da-db4f56d3d58f",
+								"exec": [
+									"// OK response test",
+									"pm.test(\"response is ok\", () => {",
+									"    pm.response.to.have.status(201)",
+									"    pm.response.to.not.be.error",
+									"})",
+									"",
+									"// Response has body test",
+									"pm.test(\"response has body\", () => {",
+									"    pm.response.to.have.body",
+									"})",
+									"",
+									"const jsonObject = JSON.parse(responseBody)",
+									"",
+									"// Response has expected properties test",
+									"pm.test(\"response has expected properties\", () => {",
+									"    pm.expect(jsonObject).to.have.property('attendanceId')",
+									"    pm.expect(jsonObject.attendanceId).not.to.eql(0)",
+									"    pm.environment.set(\"attendanceId\", jsonObject.attendanceId)",
+									"",
+									"    pm.expect(jsonObject).to.have.property('operatorId')",
+									"    pm.expect(jsonObject.operatorId).to.eql(+pm.environment.get('operatorId'))",
+									"",
+									"    pm.expect(jsonObject).to.have.property('serviceQueueId')",
+									"    pm.expect(jsonObject.serviceQueueId).to.eql(+pm.environment.get('serviceQueueId'))",
+									"    ",
+									"    pm.expect(jsonObject).to.have.property('deskId')",
+									"    pm.expect(jsonObject.deskId).to.eql(+pm.environment.get('deskId'))",
+									"",
+									"    pm.expect(jsonObject).to.have.property('clientId')",
+									"    pm.expect(jsonObject.clientId).to.eql(+pm.environment.get('clientId'))",
+									"    ",
+									"    pm.expect(jsonObject).to.have.property('startWaitingTime')",
+									"    pm.expect(jsonObject.clientId).to.eql(\"2020-04-10T20:00:00\")",
+									"    ",
+									"    pm.expect(jsonObject).to.have.property('attendanceStatusId')",
+									"    pm.expect(jsonObject.attendanceStatusId).to.eql(+pm.environment.get('attendanceStatusId'))",
+									"    ",
+									"    pm.expect(jsonObject).to.have.property('attendanceUserId')",
+									"    pm.expect(jsonObject.attendanceUserId).to.eql(+pm.environment.get('userId'))",
+									"    ",
+									"    pm.expect(jsonObject).to.have.property('endWaitingTime')",
+									"    pm.expect(jsonObject.clientId).to.eql(null)",
+									"    ",
+									"    pm.expect(jsonObject).to.have.property('startAttendanceTime')",
+									"    pm.expect(jsonObject.clientId).to.eql(null)",
+									"    ",
+									"    pm.expect(jsonObject).to.have.property('endAttendanceTime')",
+									"    pm.expect(jsonObject.clientId).to.eql(null)",
+									"})",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"operatorId\": {{operatorId}},\n\t\"serviceQueueId\": {{serviceQueueId}},\n\t\"deskId\": {{deskId}},\n\t\"clientId\": {{clientId}},\n\t\"startWaitingTime\": \"2020-04-10T20:00:00\",\n\t\"attendanceStatusId\": {{attendanceStatusId}},\n\t\"attendanceUserId\": {{userId}}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "http://localhost:8080/api/iqueue/attendance",
 							"protocol": "http",
@@ -3820,6 +3891,67 @@
 				},
 				{
 					"name": "GET Attendance",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5b570175-0a9a-414a-b4c9-af6fb78373f9",
+								"exec": [
+									"// OK response test",
+									"pm.test(\"response is ok\", () => {",
+									"    pm.response.to.have.status(200)",
+									"    pm.response.to.not.be.error",
+									"})",
+									"",
+									"// Response has body test",
+									"pm.test(\"response has body\", () => {",
+									"    pm.response.to.have.body",
+									"})",
+									"",
+									"const jsonObject = JSON.parse(responseBody)",
+									"",
+									"// Response has expected properties test",
+									"pm.test(\"response has expected properties\", () => {",
+									"    pm.expect(jsonObject).to.have.property('attendanceId')",
+									"    pm.expect(jsonObject.attendanceId).to.eql(+pm.environment.get(\"attendanceId\"))",
+									"",
+									"    pm.expect(jsonObject).to.have.property('operatorId')",
+									"    pm.expect(jsonObject.operatorId).to.eql(+pm.environment.get('operatorId'))",
+									"",
+									"    pm.expect(jsonObject).to.have.property('serviceQueueId')",
+									"    pm.expect(jsonObject.serviceQueueId).to.eql(+pm.environment.get('serviceQueueId'))",
+									"    ",
+									"    pm.expect(jsonObject).to.have.property('deskId')",
+									"    pm.expect(jsonObject.deskId).to.eql(+pm.environment.get('deskId'))",
+									"",
+									"    pm.expect(jsonObject).to.have.property('clientId')",
+									"    pm.expect(jsonObject.clientId).to.eql(+pm.environment.get('clientId'))",
+									"    ",
+									"    pm.expect(jsonObject).to.have.property('startWaitingTime')",
+									"    pm.expect(jsonObject.startWaitingTime).to.eql(\"2020-04-10T20:00:00\")",
+									"    ",
+									"    pm.expect(jsonObject).to.have.property('attendanceStatusId')",
+									"    pm.expect(jsonObject.attendanceStatusId).to.eql(+pm.environment.get('attendanceStatusId'))",
+									"    ",
+									"    pm.expect(jsonObject).to.have.property('attendanceUserId')",
+									"    pm.expect(jsonObject.attendanceUserId).to.eql(pm.environment.get('userId'))",
+									"    ",
+									"    pm.expect(jsonObject).to.have.property('endWaitingTime')",
+									"    pm.expect(jsonObject.endWaitingTime).to.eql(null)",
+									"    ",
+									"    pm.expect(jsonObject).to.have.property('startAttendanceTime')",
+									"    pm.expect(jsonObject.startAttendanceTime).to.eql(null)",
+									"    ",
+									"    pm.expect(jsonObject).to.have.property('endAttendanceTime')",
+									"    pm.expect(jsonObject.endAttendanceTime).to.eql(null)",
+									"})",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -3842,6 +3974,70 @@
 				},
 				{
 					"name": "GET Attendances",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "80e7d633-2d3b-4148-b573-c910796e244c",
+								"exec": [
+									"// OK response test",
+									"pm.test(\"response is ok\", () => {",
+									"    pm.response.to.have.status(200)",
+									"    pm.response.to.not.be.error",
+									"})",
+									"",
+									"// Response has body test",
+									"pm.test(\"response has body\", () => {",
+									"    pm.response.to.have.body",
+									"})",
+									"",
+									"const jsonObject = JSON.parse(responseBody)",
+									"",
+									"// Response has expected properties test",
+									"pm.test(\"response has expected properties\", () => {",
+									"    pm.expect(jsonObject).to.be.an('array')",
+									"    ",
+									"    jsonObject.forEach(entry => {",
+									"        pm.expect(entry).to.have.property('attendanceId')",
+									"        pm.expect(entry.attendanceId).not.to.eql(0)",
+									"    ",
+									"        pm.expect(entry).to.have.property('operatorId')",
+									"        pm.expect(entry.operatorId).not.to.eql(0)",
+									"    ",
+									"        pm.expect(entry).to.have.property('serviceQueueId')",
+									"        pm.expect(entry.serviceQueueId).not.to.eql(0)",
+									"        ",
+									"        pm.expect(entry).to.have.property('deskId')",
+									"        pm.expect(entry.deskId).not.to.eql(0)",
+									"    ",
+									"        pm.expect(entry).to.have.property('clientId')",
+									"        pm.expect(entry.clientId).not.to.eql(0)",
+									"        ",
+									"        pm.expect(entry).to.have.property('startWaitingTime')",
+									"        pm.expect(entry.startWaitingTime).not.to.eql('')",
+									"        ",
+									"        pm.expect(entry).to.have.property('attendanceStatusId')",
+									"        pm.expect(entry.attendanceStatusId).not.to.eql(0)",
+									"        ",
+									"        pm.expect(entry).to.have.property('attendanceUserId')",
+									"        pm.expect(entry.attendanceUserId).not.to.eql(0)",
+									"        ",
+									"        pm.expect(entry).to.have.property('endWaitingTime')",
+									"        pm.expect(entry.endWaitingTime).not.to.eql('')",
+									"        ",
+									"        pm.expect(entry).to.have.property('startAttendanceTime')",
+									"        pm.expect(entry.startAttendanceTime).not.to.eql('')",
+									"        ",
+									"        pm.expect(entry).to.have.property('endAttendanceTime')",
+									"        pm.expect(entry.endAttendanceTime).not.to.eql('')",
+									"    })",
+									"})",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -3863,9 +4059,79 @@
 				},
 				{
 					"name": "PUT Attendance",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7d03ddcd-1852-4435-bcbb-d7b716494387",
+								"exec": [
+									"// OK response test",
+									"pm.test(\"response is ok\", () => {",
+									"    pm.response.to.have.status(200)",
+									"    pm.response.to.not.be.error",
+									"})",
+									"",
+									"// Response has body test",
+									"pm.test(\"response has body\", () => {",
+									"    pm.response.to.have.body",
+									"})",
+									"",
+									"const jsonObject = JSON.parse(responseBody)",
+									"",
+									"// Response has expected properties test",
+									"pm.test(\"response has expected properties\", () => {",
+									"    pm.expect(jsonObject).to.have.property('attendanceId')",
+									"    pm.expect(jsonObject.attendanceId).to.eql(+pm.environment.get(\"attendanceId\"))",
+									"",
+									"    pm.expect(jsonObject).to.have.property('operatorId')",
+									"    pm.expect(jsonObject.operatorId).to.eql(+pm.environment.get('operatorId'))",
+									"",
+									"    pm.expect(jsonObject).to.have.property('serviceQueueId')",
+									"    pm.expect(jsonObject.serviceQueueId).to.eql(+pm.environment.get('serviceQueueId'))",
+									"    ",
+									"    pm.expect(jsonObject).to.have.property('deskId')",
+									"    pm.expect(jsonObject.deskId).to.eql(+pm.environment.get('deskId'))",
+									"",
+									"    pm.expect(jsonObject).to.have.property('clientId')",
+									"    pm.expect(jsonObject.clientId).to.eql(+pm.environment.get('clientId'))",
+									"    ",
+									"    pm.expect(jsonObject).to.have.property('startWaitingTime')",
+									"    pm.expect(jsonObject.startWaitingTime).to.eql(\"2020-04-10T20:00:00\")",
+									"    ",
+									"    pm.expect(jsonObject).to.have.property('attendanceStatusId')",
+									"    pm.expect(jsonObject.attendanceStatusId).to.eql(+pm.environment.get('attendanceStatusId'))",
+									"    ",
+									"    pm.expect(jsonObject).to.have.property('attendanceUserId')",
+									"    pm.expect(jsonObject.attendanceUserId).to.eql(pm.environment.get('userId'))",
+									"    ",
+									"    pm.expect(jsonObject).to.have.property('endWaitingTime')",
+									"    pm.expect(jsonObject.endWaitingTime).to.eql(\"2020-04-10T20:10:00\")",
+									"    ",
+									"    pm.expect(jsonObject).to.have.property('startAttendanceTime')",
+									"    pm.expect(jsonObject.startAttendanceTime).to.eql(\"2020-04-10T20:10:00\")",
+									"    ",
+									"    pm.expect(jsonObject).to.have.property('endAttendanceTime')",
+									"    pm.expect(jsonObject.endAttendanceTime).to.eql(\"2020-04-10T20:15:00\")",
+									"})",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "PUT",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"endWaitingTime\": \"2020-04-10T20:10:00\",\n\t\"startAttendanceTime\": \"2020-04-10T20:10:00\",\n\t\"endAttendanceTime\": \"2020-04-10T20:15:00\",\n\t\"attendanceStatusId\": {{attendanceStatusId}}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "http://localhost:8080/api/iqueue/attendance/{{attendanceId}}",
 							"protocol": "http",
@@ -3891,9 +4157,58 @@
 			"item": [
 				{
 					"name": "POST AttendanceClassification",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "485e4f97-3c6b-4c33-93bc-f17e37368fff",
+								"exec": [
+									"// OK response test",
+									"pm.test(\"response is ok\", () => {",
+									"    pm.response.to.have.status(201)",
+									"    pm.response.to.not.be.error",
+									"})",
+									"",
+									"// Response has body test",
+									"pm.test(\"response has body\", () => {",
+									"    pm.response.to.have.body",
+									"})",
+									"",
+									"const jsonObject = JSON.parse(responseBody)",
+									"",
+									"// Response has expected properties test",
+									"pm.test(\"response has expected properties\", () => {",
+									"    pm.expect(jsonObject).to.have.property('attendanceId')",
+									"    pm.expect(jsonObject.attendanceId).to.eql(+pm.environment.get(\"attendanceId\"))",
+									"",
+									"    pm.expect(jsonObject).to.have.property('classificationCreationTime')",
+									"    pm.expect(jsonObject.classificationCreationTime).to.eql(\"2020-04-10T20:17:05\")",
+									"",
+									"    pm.expect(jsonObject).to.have.property('rate')",
+									"    pm.expect(jsonObject.rate).to.eql(5)",
+									"    ",
+									"    pm.expect(jsonObject).to.have.property('observations')",
+									"    pm.expect(jsonObject.observations).to.eql(\"test\")",
+									"})",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"attendanceId\": {{attendanceId}},\n\t\"classificationCreationTime\": \"2020-04-10T20:17:05\",\n\t\"rate\": 5,\n\t\"observations\": \"test\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "http://localhost:8080/api/iqueue/attendance/classification",
 							"protocol": "http",
@@ -3913,6 +4228,46 @@
 				},
 				{
 					"name": "GET AttendanceClassification",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b11c3b98-2680-4e0b-a172-1ecaee405566",
+								"exec": [
+									"// OK response test",
+									"pm.test(\"response is ok\", () => {",
+									"    pm.response.to.have.status(200)",
+									"    pm.response.to.not.be.error",
+									"})",
+									"",
+									"// Response has body test",
+									"pm.test(\"response has body\", () => {",
+									"    pm.response.to.have.body",
+									"})",
+									"",
+									"const jsonObject = JSON.parse(responseBody)",
+									"",
+									"// Response has expected properties test",
+									"pm.test(\"response has expected properties\", () => {",
+									"    pm.expect(jsonObject).to.have.property('attendanceId')",
+									"    pm.expect(jsonObject.attendanceId).to.eql(+pm.environment.get(\"attendanceId\"))",
+									"",
+									"    pm.expect(jsonObject).to.have.property('classificationCreationTime')",
+									"    pm.expect(jsonObject.classificationCreationTime).to.eql(\"2020-04-10T20:17:05\")",
+									"",
+									"    pm.expect(jsonObject).to.have.property('rate')",
+									"    pm.expect(jsonObject.rate).to.eql(5)",
+									"    ",
+									"    pm.expect(jsonObject).to.have.property('observations')",
+									"    pm.expect(jsonObject.observations).to.eql(\"test\")",
+									"})",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -3936,6 +4291,50 @@
 				},
 				{
 					"name": "GET AttendanceClassifications",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8bec4204-0834-426a-8837-1a520115b997",
+								"exec": [
+									"// OK response test",
+									"pm.test(\"response is ok\", () => {",
+									"    pm.response.to.have.status(201)",
+									"    pm.response.to.not.be.error",
+									"})",
+									"",
+									"// Response has body test",
+									"pm.test(\"response has body\", () => {",
+									"    pm.response.to.have.body",
+									"})",
+									"",
+									"const jsonObject = JSON.parse(responseBody)",
+									"",
+									"// Response has expected properties test",
+									"pm.test(\"response has expected properties\", () => {",
+									"    pm.expect(jsonObject).to.be.an('array')",
+									"    ",
+									"    jsonObject.forEach(entry => {",
+									"        pm.expect(entry).to.have.property('attendanceId')",
+									"        pm.expect(entry.attendanceId).not.to.eql(0)",
+									"    ",
+									"        pm.expect(entry).to.have.property('classificationCreationTime')",
+									"        pm.expect(entry.classificationCreationTime).not.to.eql(\"\")",
+									"    ",
+									"        pm.expect(entry).to.have.property('rate')",
+									"        pm.expect(entry.rate).not.to.eql(0)",
+									"        ",
+									"        pm.expect(entry).to.have.property('observations')",
+									"        pm.expect(entry.observations).not.to.eql(\"\")",
+									"    })",
+									"})",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -4492,6 +4891,22 @@
 				},
 				{
 					"name": "DELETE Attendance",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "fd575eba-a7d3-4a30-955b-c0c7f68a5e77",
+								"exec": [
+									"// OK response test\r",
+									"pm.test(\"response is ok\", () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"    pm.response.to.not.be.error\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "DELETE",
 						"header": [],
@@ -4514,6 +4929,22 @@
 				},
 				{
 					"name": "DELETE AttendanceClassification",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0f76e8ef-70b9-4309-9661-87018992294c",
+								"exec": [
+									"// OK response test\r",
+									"pm.test(\"response is ok\", () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"    pm.response.to.not.be.error\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "DELETE",
 						"header": [],

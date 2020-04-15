@@ -33,7 +33,7 @@ public class AttendanceController extends Controller<Attendance> {
         return super.remove(attendanceId);
     }
 
-    @PostMapping(value = "{attendanceId}", headers = {"Accept=application/json", "Content-Type=application/json"})
+    @PutMapping(value = "{attendanceId}", headers = {"Accept=application/json", "Content-Type=application/json"})
     public ResponseEntity update(@PathVariable int attendanceId, @RequestBody  Attendance attendance) {
         attendance.setAttendanceId(attendanceId);
         return super.update(attendance);

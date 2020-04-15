@@ -14,8 +14,8 @@ public class AttendanceRepository extends Repository<Attendance> {
 
     public AttendanceRepository(JdbcTemplate jdbcTemplate, AttendanceRowMapper attendanceRowMapper) {
         super(jdbcTemplate, attendanceRowMapper,
-                "exec SelectAttendance ?, ?, ?, ?, ?, ?", "exec InsertAttendance ?, ?, ?, ?, ?, ?",
-                "exec DeleteAttendance ?","exec UpdateAttendance ?, ?, ?, ?");
+                "exec SelectAttendance ?, ?, ?, ?, ?, ?", "exec InsertAttendance ?, ?, ?, ?, ?, ?, ?",
+                "exec DeleteAttendance ?","exec UpdateAttendance ?, ?, ?, ?, ?");
     }
 
     @Override
@@ -36,7 +36,8 @@ public class AttendanceRepository extends Repository<Attendance> {
     public int add(Attendance attendance) {
         return jdbcTemplate.update(insertQueryTemplate, attendance.getOperatorId(),
                 attendance.getServiceQueueId(), attendance.getDeskId(), attendance.getClientId(),
-                attendance.getStartWaitingTime(), attendance.getAttendanceUserId());
+                attendance.getStartWaitingTime(), attendance.getAttendanceStatusId(),
+                attendance.getAttendanceUserId());
     }
 
     @Override
@@ -46,8 +47,8 @@ public class AttendanceRepository extends Repository<Attendance> {
 
     @Override
     public boolean update(Attendance attendance) {
-        return jdbcTemplate.update(updateQueryTemplate, attendance.getEndWaitingTime(),
-                attendance.getStartAttendanceTime(), attendance.getEndAttendanceTime(),
-                attendance.getAttendanceStatusId()) == 1;
+        return jdbcTemplate.update(updateQueryTemplate, attendance.getAttendanceId(),
+                attendance.getEndWaitingTime(), attendance.getStartAttendanceTime(),
+                attendance.getEndAttendanceTime(), attendance.getAttendanceStatusId()) == 1;
     }
 }

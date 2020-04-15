@@ -20,15 +20,15 @@ public class ServiceQueueDeskUserController {
         this.serviceQueueDeskUserRepository = serviceQueueDeskUserRepository;
     }
 
-    @GetMapping(value = "/api/iqueue/operator/{operadorId}/servicequeue/{serviceQueueId}/desk/{deskId}/user",
+    @GetMapping(value = "/api/iqueue/operator/{operatorId}/servicequeue/{serviceQueueId}/desk/{deskId}/user",
             headers = {"Accept=application/json"})
-    public ResponseEntity getDeskUsers(@PathVariable int operadorId, @PathVariable int serviceQueueId,
+    public ResponseEntity getDeskUsers(@PathVariable int operatorId, @PathVariable int serviceQueueId,
                                   @PathVariable int deskId, @RequestParam(required = false) LocalDateTime date) {
         try {
             if (date == null) {
-                return ResponseEntity.ok(serviceQueueDeskUserRepository.getDeskUsers(operadorId, serviceQueueId, deskId));
+                return ResponseEntity.ok(serviceQueueDeskUserRepository.getDeskUsers(operatorId, serviceQueueId, deskId));
             } else {
-                return ResponseEntity.ok(serviceQueueDeskUserRepository.getDeskUsersByDate(operadorId, serviceQueueId, deskId, date));
+                return ResponseEntity.ok(serviceQueueDeskUserRepository.getDeskUsersByDate(operatorId, serviceQueueId, deskId, date));
             }
         } catch (EmptyResultDataAccessException emptyResultDataAccessException) {
             return ResponseEntity.status(404).build();
@@ -38,12 +38,12 @@ public class ServiceQueueDeskUserController {
         }
     }
 
-    @GetMapping(value = "/api/iqueue/operator/{operadorId}/servicequeue/{serviceQueueId}/desk/{deskId}/user/{userId}",
+    @GetMapping(value = "/api/iqueue/operator/{operatorId}/servicequeue/{serviceQueueId}/desk/{deskId}/user/{userId}",
             headers = {"Accept=application/json"})
-    public ResponseEntity getDeskUserDates(@PathVariable int operadorId, @PathVariable int serviceQueueId,
-                                       @PathVariable int deskid, @PathVariable int userId) {
+    public ResponseEntity getDeskUserDates(@PathVariable int operatorId, @PathVariable int serviceQueueId,
+                                       @PathVariable int deskId, @PathVariable int userId) {
         try {
-            return ResponseEntity.ok(serviceQueueDeskUserRepository.getDeskUserDates(operadorId, serviceQueueId, deskid, userId));
+            return ResponseEntity.ok(serviceQueueDeskUserRepository.getDeskUserDates(operatorId, serviceQueueId, deskId, userId));
         } catch (EmptyResultDataAccessException emptyResultDataAccessException) {
             return ResponseEntity.status(404).build();
         }

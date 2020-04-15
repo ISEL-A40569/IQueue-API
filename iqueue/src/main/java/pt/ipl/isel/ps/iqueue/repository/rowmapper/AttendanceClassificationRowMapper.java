@@ -8,13 +8,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 
+import static pt.ipl.isel.ps.iqueue.utils.SQLTimestampToLocalDateTimeConverter.convertSQLTimestampToLocalDateTime;
+
 @Component
 public class AttendanceClassificationRowMapper implements RowMapper<AttendanceClassification> {
 
     @Override
     public AttendanceClassification mapRow(ResultSet rs, int rowNum) throws SQLException {
         return new AttendanceClassification(rs.getInt("attendanceId"),
-                LocalDateTime.parse(rs.getDate("classificationCreationTime").toString()),
+                convertSQLTimestampToLocalDateTime(rs.getTimestamp("classificationCreationTime")),
                 rs.getInt("rate"),
                 rs.getString("observations"));
     }

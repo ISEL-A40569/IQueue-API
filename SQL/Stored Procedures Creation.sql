@@ -978,11 +978,11 @@ set @params = '@attendanceId int, @operatorId int, @serviceQueueId int, @deskId 
 go
 
 create or alter procedure InsertAttendance @operatorId int, @serviceQueueId int, @deskId int, @clientId int,
-@startWaitingTime datetime, @attendanceUserId int
+@startWaitingTime datetime, @attendanceStatusId int, @attendanceUserId int
 as
 begin transaction set transaction isolation level serializable
 begin try
-insert into Attendance values(@operatorId, @serviceQueueId, @deskId, @clientId, @startWaitingTime, null, null, null, 1, @attendanceUserId)
+insert into Attendance values(@operatorId, @serviceQueueId, @deskId, @clientId, @startWaitingTime, null, null, null, @attendanceStatusId, @attendanceUserId)
 select scope_identity()
 commit
 end try

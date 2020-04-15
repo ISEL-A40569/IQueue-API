@@ -30,7 +30,7 @@ public class AttendanceClassificationRepository extends Repository<AttendanceCla
 
     @Override
     public int add(AttendanceClassification attendanceClassification) {
-        return jdbcTemplate.update(insertQueryTemplate, attendanceClassification.getAttendanceId(),
+        return jdbcTemplate.update(insertQueryTemplate, attendanceClassification.getAttendanceId(), // TODO: Classification table!?
                 attendanceClassification.getClassificationCreationTime(),
                 attendanceClassification.getRate(),
                 attendanceClassification.getObservations()) == 1 ? attendanceClassification.getAttendanceId() : 0;

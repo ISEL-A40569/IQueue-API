@@ -69,7 +69,7 @@ public class Controller<T> {
     protected ResponseEntity update(T t) {
         try {
             if (repository.update(t)) {
-                return ResponseEntity.ok().build();
+                return ResponseEntity.ok().body(t);
             }
             else {
                 return ResponseEntity.status(404).build();
