@@ -31,24 +31,24 @@ public class OperatorServiceQueueRepository {
         return jdbcTemplate.queryForObject(getQueryTemplate, new Object[]{operatorId, serviceQueueId}, operatorServiceQueueRowMapper);
     }
 
-    public OperatorServiceQueue getOperatorServiceQueues(int operatorId) {
-        return jdbcTemplate.queryForObject(getQueryTemplate, new Object[]{operatorId, null}, operatorServiceQueueRowMapper);
+    public List<OperatorServiceQueue> getOperatorServiceQueues(int operatorId) {
+        return jdbcTemplate.query(getQueryTemplate, new Object[]{operatorId, null}, operatorServiceQueueRowMapper);
     }
 
     public List<OperatorServiceQueue> getAll() {
         return jdbcTemplate.query(getQueryTemplate, new Object[]{null, null}, operatorServiceQueueRowMapper);
     }
 
-    public boolean add(OperatorServiceQueue operatorServiceQueue) {
+    public int add(OperatorServiceQueue operatorServiceQueue) {
         String insertQueryTemplate = "exec InsertOperatorServiceQueue ?, ?, ?, ?";
-        return jdbcTemplate.update(insertQueryTemplate, operatorServiceQueue.getOperatorId(),
+        return jdbcTemplate.queryForObject(insertQueryTemplate, new Object[]{operatorServiceQueue.getOperatorId(),
                 operatorServiceQueue.getServiceQueueDescription(),
-                operatorServiceQueue.getServiceQueueTypeId(), operatorServiceQueue.getDailyLimit()) == 1;
+                operatorServiceQueue.getServiceQueueTypeId(), operatorServiceQueue.getDailyLimit()}, Integer.class);
     }
 
-    public boolean remove(int languageId,  int serviceQueueId) {
+    public boolean remove(int operatorId,  int serviceQueueId) {
         String deleteQueryTemplate = "exec DeleteOperatorServiceQueue ?, ?";
-        return jdbcTemplate.update(deleteQueryTemplate, languageId, serviceQueueId) == 1;
+        return jdbcTemplate.update(deleteQueryTemplate, operatorId, serviceQueueId) == 1;
     }
 
     public boolean update(OperatorServiceQueue operatorServiceQueue) {

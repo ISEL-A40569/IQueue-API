@@ -15,7 +15,7 @@ public class BeaconRepository extends Repository<Beacon> {
         super(jdbcTemplate, beaconRowMapper, "exec SelectBeacon ?",
                 "exec InsertBeacon ?, ?, ?, ?, ?, ?, ?, ?",
                 "exec DeleteBeacon ?",
-                "exec UpdateBeacon ?, ?, ?, ?, ?, ?, ?, ?, ?");
+                "exec UpdateBeacon ?, ?, ?, ?, ?, ?, ?, ?");
     }
 
     @Override
@@ -30,11 +30,11 @@ public class BeaconRepository extends Repository<Beacon> {
 
     @Override
     public int add(Beacon beacon) {
-        return jdbcTemplate.update(insertQueryTemplate, beacon.getBeaconMacAddress(),
+        return jdbcTemplate.queryForObject(insertQueryTemplate, new Object[]{beacon.getBeaconMacAddress(),
                 beacon.getUidNamespaceId(), beacon.getUidInstanceId(),
                 beacon.getiBeaconUuid(), beacon.getiBeaconMajor(),
                 beacon.getiBeaconMinor(), beacon.getManufacturer(),
-                beacon.getModel());
+                beacon.getModel()}, Integer.class);
     }
 
     @Override
@@ -44,8 +44,8 @@ public class BeaconRepository extends Repository<Beacon> {
 
     @Override
     public boolean update(Beacon beacon) {
-        return jdbcTemplate.update(insertQueryTemplate, beacon.getBeaconId(),
-                beacon.getBeaconMacAddress(), beacon.getUidNamespaceId(),
+        return jdbcTemplate.update(updateQueryTemplate, beacon.getBeaconId(),
+                beacon.getUidNamespaceId(),
                 beacon.getUidInstanceId(), beacon.getiBeaconUuid(),
                 beacon.getiBeaconMajor(), beacon.getiBeaconMinor(),
                 beacon.getManufacturer(), beacon.getModel()) == 1;

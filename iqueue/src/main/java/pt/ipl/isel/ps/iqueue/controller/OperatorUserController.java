@@ -59,9 +59,9 @@ public class OperatorUserController {
             if (operatorUserRepository.add(operatorUser)) {
                 return ResponseEntity
                         .status(201)
-//                        .header("Location", "/api/iqueue/operator/" + operatorUser.getOperatorId() +
-//                                "/user/" + operatorUser.getUserId())
-                        .build();
+                        .header("Location", "/api/iqueue/operator/" + operatorUser.getOperatorId() +
+                                "/user/" + operatorUser.getUserId())
+                        .body(operatorUser);
             }
             else {
                 return ResponseEntity.status(409).build();

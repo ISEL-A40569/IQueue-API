@@ -408,11 +408,12 @@ exec sp_executesql @query, @params, @operatorId = @operatorId, @serviceQueueId =
 
 go
 
-create or alter procedure InsertServiceQueueDesk @operatorId int, @serviceQueueId int, @deskId int, @deskDescription varchar(50)
+create or alter procedure InsertServiceQueueDesk  @operatorId int, @serviceQueueId int, @deskDescription varchar(50)
 as
 begin transaction set transaction isolation level serializable
 begin try
-insert into ServiceQueueDesk values(@operatorId, @serviceQueueId, @deskId, @deskDescription)
+insert into ServiceQueueDesk values( @operatorId, @serviceQueueId, @deskDescription)
+select scope_identity()
 commit
 end try
 begin catch
@@ -421,29 +422,41 @@ end catch
 
 go
 
-create or alter procedure DeleteServiceQueueDesk @operatorId int, @serviceQueueId int, @deskId int
-as
-begin transaction set transaction isolation level serializable
-begin try
-delete ServiceQueueDesk where operatorId = @operatorId and
-							serviceQueueId = @serviceQueueId and
-							deskId = @deskId
-commit
-end try
-begin catch
-rollback
-end catch
-
-go
-
-create or alter procedure UpdateServiceQueueDesk @operatorId int, @serviceQueueId int, @deskId int, @deskDescription varchar(50)
+create or alter procedure UpdateServiceQueueDesk  @deskId int, @deskDescription varchar(50)
 as
 begin transaction set transaction isolation level serializable
 begin try
 update ServiceQueueDesk set deskDescription = @deskDescription
-where operatorId = @operatorId and
-	  serviceQueueId = @serviceQueueId and
-      deskId = @deskId
+where deskId = @deskId
+commit
+end try
+begin catch
+rollback
+end catch
+
+go
+
+create or alter procedure DeleteServiceQueueDesk @operatorId int, @serviceQueueId int, @deskId int 
+as
+begin transaction set transaction isolation level serializable
+begin try
+delete ServiceQueueDesk where deskId = @deskId and
+operatorId = @operatorId and
+serviceQueueId = @serviceQueueId
+commit
+end try
+begin catch
+rollback
+end catch
+
+go
+
+create or alter procedure UpdateServiceQueueDesk @deskId int, @deskDescription varchar(50)--, @operatorId int, @serviceQueueId int,
+as
+begin transaction set transaction isolation level serializable
+begin try
+update ServiceQueueDesk set deskDescription = @deskDescription
+where deskId = @deskId
 commit
 end try
 begin catch
@@ -530,12 +543,13 @@ exec sp_executesql @query, @params, @operatorId = @operatorId, @serviceQueueId =
 
 go
 
-create or alter procedure InsertOperatorServiceQueue @serviceQueueId int, @serviceQueueDescription varchar(100),
+create or alter procedure InsertOperatorServiceQueue @operatorId int, @serviceQueueDescription varchar(100),
 													@serviceQueueTypeId int, @dailyLimit int
 as
 begin transaction set transaction isolation level serializable
 begin try
-insert into OperatorServiceQueue values(@serviceQueueId, @serviceQueueDescription, @serviceQueueTypeId, @dailyLimit)
+insert into OperatorServiceQueue values(@operatorId, @serviceQueueDescription, @serviceQueueTypeId, @dailyLimit)
+select scope_identity()
 commit
 end try
 begin catch
@@ -567,7 +581,7 @@ update OperatorServiceQueue set serviceQueueDescription = @serviceQueueDescripti
 								serviceQueueTypeId = @serviceQueueTypeId, 
 								dailyLimit = @dailyLimit
 where operatorId = @operatorId and
-	serviceQueueId = @serviceQueueId
+	  serviceQueueId = @serviceQueueId
 commit
 end try
 begin catch
@@ -854,6 +868,7 @@ as
 begin transaction set transaction isolation level serializable
 begin try
 insert into AttendanceStatus values(@attendanceStatusId, @languageId, @attendanceStatusDescription)
+select scope_identity()
 commit
 end try
 begin catch
@@ -918,6 +933,19 @@ as
 begin transaction set transaction isolation level serializable
 begin try
 insert into AttendanceClassification values(@attendanceId, @classificationCreationTime, @rate, @observations)
+commit
+end try
+begin catch
+rollback
+end catch
+
+go
+
+create or alter procedure DeleteAttendanceClassification @attendanceId int
+as
+begin transaction set transaction isolation level serializable
+begin try
+delete AttendanceClassification where attendanceId = @attendanceId
 commit
 end try
 begin catch

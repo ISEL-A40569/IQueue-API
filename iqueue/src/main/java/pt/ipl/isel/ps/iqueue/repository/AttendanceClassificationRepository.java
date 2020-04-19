@@ -15,7 +15,8 @@ public class AttendanceClassificationRepository extends Repository<AttendanceCla
         super(jdbcTemplate, attendanceClassificationRowMapper,
                 "exec SelectAttendanceClassification ?",
                 "exec InsertAttendanceClassification ?, ?, ?, ?",
-               null, null);
+                "exec DeleteAttendanceClassification ?",
+                null);
     }
 
     @Override
@@ -37,9 +38,9 @@ public class AttendanceClassificationRepository extends Repository<AttendanceCla
     }
 
     @Override
-    public boolean remove(int id) {
-        throw new UnsupportedOperationException();
-    }     // TODO: DELETE function
+    public boolean remove(int attendanceId) {
+        return jdbcTemplate.update(removeQueryTemplate, attendanceId) == 1;
+    }
 
     @Override
     public boolean update(AttendanceClassification attendanceClassification) {

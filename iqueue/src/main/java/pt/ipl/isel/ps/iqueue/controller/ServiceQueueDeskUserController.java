@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import pt.ipl.isel.ps.iqueue.model.ServiceQueueDeskUser;
 import pt.ipl.isel.ps.iqueue.repository.ServiceQueueDeskUserRepository;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @RestController
@@ -23,7 +24,7 @@ public class ServiceQueueDeskUserController {
     @GetMapping(value = "/api/iqueue/operator/{operatorId}/servicequeue/{serviceQueueId}/desk/{deskId}/user",
             headers = {"Accept=application/json"})
     public ResponseEntity getDeskUsers(@PathVariable int operatorId, @PathVariable int serviceQueueId,
-                                  @PathVariable int deskId, @RequestParam(required = false) LocalDateTime date) {
+                                  @PathVariable int deskId, @RequestParam(required = false) String date) {
         try {
             if (date == null) {
                 return ResponseEntity.ok(serviceQueueDeskUserRepository.getDeskUsers(operatorId, serviceQueueId, deskId));
@@ -53,7 +54,7 @@ public class ServiceQueueDeskUserController {
     }
 
     @GetMapping(value = "/api/iqueue/operator/servicequeue/desk/user/{userId}", headers = {"Accept=application/json"})
-    public ResponseEntity getUserDesks(@PathVariable int userId, @RequestParam(required = false) LocalDateTime date) {
+    public ResponseEntity getUserDesks(@PathVariable int userId, @RequestParam(required = false) String date) {
         try {
             if (date == null) {
                 return ResponseEntity.ok(serviceQueueDeskUserRepository.getUserDesks(userId));
@@ -74,10 +75,10 @@ public class ServiceQueueDeskUserController {
             if (serviceQueueDeskUserRepository.add(serviceQueueDeskUser)) {
                 return ResponseEntity
                         .status(201)
-//                        .header("Location", "/api/iqueue/operator/" + serviceQueueDeskUser.getOperatorId() +
-//                                "/servicequeue/" + serviceQueueDeskUser.getServiceQueueId() +
-//                                "/desk/" + serviceQueueDeskUser.getDeskId() +
-//                                "/user/" + serviceQueueDeskUser.getUserId())
+                        .header("Location", "/api/iqueue/operator/" + serviceQueueDeskUser.getOperatorId() +
+                                "/servicequeue/" + serviceQueueDeskUser.getServiceQueueId() +
+                                "/desk/" + serviceQueueDeskUser.getDeskId() +
+                                "/user/" + serviceQueueDeskUser.getUserId())
                         .body(serviceQueueDeskUser);
             }
             else {
@@ -90,7 +91,7 @@ public class ServiceQueueDeskUserController {
 
     @DeleteMapping("/api/iqueue/operator/{operadorId}/servicequeue/{serviceQueueId}/desk/{deskId}/user/{userId}")
     public ResponseEntity remove(@PathVariable int operadorId, @PathVariable int serviceQueueId, @PathVariable int deskId,
-                                       @PathVariable int userId, @RequestParam(required = false) LocalDateTime date) {
+                                       @PathVariable int userId, @RequestParam(required = false) String date) {
         try {
             if (serviceQueueDeskUserRepository.remove(operadorId, serviceQueueId, deskId, userId, date)) {
                 return ResponseEntity.ok().build();

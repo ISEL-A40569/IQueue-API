@@ -34,10 +34,10 @@ public class AttendanceRepository extends Repository<Attendance> {
 
     @Override
     public int add(Attendance attendance) {
-        return jdbcTemplate.update(insertQueryTemplate, attendance.getOperatorId(),
+        return jdbcTemplate.queryForObject(insertQueryTemplate, new Object[]{attendance.getOperatorId(),
                 attendance.getServiceQueueId(), attendance.getDeskId(), attendance.getClientId(),
                 attendance.getStartWaitingTime(), attendance.getAttendanceStatusId(),
-                attendance.getAttendanceUserId());
+                attendance.getAttendanceUserId()}, Integer.class);
     }
 
     @Override

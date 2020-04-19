@@ -17,10 +17,10 @@ public class ServiceQueueDeskController {
         this.serviceQueueDeskRepository = serviceQueueDeskRepository;
     }
 
-    @GetMapping(value = "/api/iqueue/operator/{operadorId}/servicequeue/{serviceQueueId}/desk", headers = {"Accept=application/json"})
-    public ResponseEntity getServiceQueueDesks(@PathVariable int operadorId, @PathVariable int serviceQueueId) {
+    @GetMapping(value = "/api/iqueue/operator/{operatorId}/servicequeue/{serviceQueueId}/desk", headers = {"Accept=application/json"})
+    public ResponseEntity getServiceQueueDesks(@PathVariable int operatorId, @PathVariable int serviceQueueId) {
         try {
-            return ResponseEntity.ok(serviceQueueDeskRepository.getServiceQueueDesks(operadorId, serviceQueueId));
+            return ResponseEntity.ok(serviceQueueDeskRepository.getServiceQueueDesks(operatorId, serviceQueueId));
         } catch (EmptyResultDataAccessException emptyResultDataAccessException) {
             return ResponseEntity.status(404).build();
         }
@@ -44,13 +44,15 @@ public class ServiceQueueDeskController {
     @PostMapping(value = "/api/iqueue/operator/servicequeue/desk", headers = {"Accept=application/json", "Content-Type=application/json"})
     public ResponseEntity add(@RequestBody ServiceQueueDesk serviceQueueDesk) {
         try {
-            if (serviceQueueDeskRepository.add(serviceQueueDesk)) {
+            int insertedId = serviceQueueDeskRepository.add(serviceQueueDesk);
+            if (insertedId != 0) {
+                serviceQueueDesk.setDeskId(insertedId);
                 return ResponseEntity
                         .status(201)
-//                        .header("Location", "/api/iqueue/operator/" + serviceQueueDesk.getOperatorId() +
-//                                "/servicequeue/" + serviceQueueDesk.getServiceQueueId() +
-//                                "/desk/" + serviceQueueDesk.getDeskId())
-                        .build();
+                        .header("Location", "/api/iqueue/operator/" + serviceQueueDesk.getOperatorId() +
+                                "/servicequeue/" + serviceQueueDesk.getServiceQueueId() +
+                                "/desk/" + insertedId)
+                        .body(serviceQueueDesk);
             }
             else {
                 return ResponseEntity.status(409).build();
@@ -60,11 +62,11 @@ public class ServiceQueueDeskController {
         }
     }
 
-    @DeleteMapping(value = "/api/iqueue/operator/{operadorId}/servicequeue/{serviceQueueId}/desk")
-    public ResponseEntity remove(@PathVariable int operadorId, @PathVariable int serviceQueueId,
+    @DeleteMapping(value = "/api/iqueue/operator/{operatorId}/servicequeue/{serviceQueueId}/desk/{deskId}")
+    public ResponseEntity remove(@PathVariable int operatorId, @PathVariable int serviceQueueId,
                                  @PathVariable int deskId) {
         try {
-            if (serviceQueueDeskRepository.remove(operadorId, serviceQueueId, deskId)) {
+            if (serviceQueueDeskRepository.remove(operatorId, serviceQueueId, deskId)) {
                 return ResponseEntity.ok().build();
             }
             else {
@@ -75,7 +77,20 @@ public class ServiceQueueDeskController {
         }
     }
 
-    // TODO: UPDATE function
+    @PutMapping(value = "/api/iqueue/operator/servicequeue/desk/{deskId}")
+    public ResponseEntity update(@PathVariable int deskId, @RequestBody ServiceQueueDesk serviceQueueDesk) {
+        try {
+            serviceQueueDesk.setDeskId(deskId);
+            if (serviceQueueDeskRepository.update(serviceQueueDesk)) {
+                return ResponseEntity.ok().body(serviceQueueDesk);
+            }
+            else {
+                return ResponseEntity.status(404).build();
+            }
+        } catch (Exception exception) {
+            return ResponseEntity.status(500).build();
+        }
+    }
 
 }
 

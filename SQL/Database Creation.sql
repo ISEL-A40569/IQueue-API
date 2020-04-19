@@ -1,3 +1,11 @@
+drop database iqueuedb
+
+go
+
+create database iqueuedb
+
+go
+
 use iqueuedb
 
 go
@@ -81,12 +89,11 @@ foreign key(languageId) references [Language](languageId)
 go
 
 create table OperatorServiceQueue(
-operatorId int references Operator(operatorId),
-serviceQueueId int identity ,
+serviceQueueId int identity primary key,
+operatorId int references Operator(operatorId) not null,
 serviceQueueDescription varchar(100) not null,
 serviceQueueTypeId int not null,
 dailyLimit int,
-primary key(operatorId, serviceQueueId),
 )
 
 go 
@@ -110,42 +117,40 @@ foreign key(languageId) references [Language](languageId)
 go
 
 create table ServiceQueueDesk(
-operatorId int,
-serviceQueueId int,
-deskId int,
+deskId int identity primary key,
+operatorId int references Operator(operatorId),
+serviceQueueId int references OperatorServiceQueue(serviceQueueId),
 deskDescription varchar(50),
-primary key(operatorId, serviceQueueId, deskId),
-foreign key(operatorId, serviceQueueId) references OperatorServiceQueue(operatorId, serviceQueueId)
 )
 
 go
 
 create table ServiceQueueDeskUser(
-operatorId int,
+operatorId int references Operator(operatorId),
 serviceQueueId int,
 deskId int,
 userId int,
 [date] date,
 primary key(operatorId, serviceQueueId, deskId, userId, [date]),
-foreign key(operatorId, serviceQueueId) references OperatorServiceQueue(operatorId, serviceQueueId),
-foreign key(userId) references [User](userId)
+foreign key(serviceQueueId) references OperatorServiceQueue(serviceQueueId),
+foreign key(userId) references [User](userId),
+foreign key(deskId) references ServiceQueueDesk(deskId)
 )
 
 go
 
 create table Attendance(
 attendanceId int identity primary key,
-operatorId int not null,
-serviceQueueId int not null,
-deskId int not null,
+operatorId int references Operator(operatorId) not null,
+serviceQueueId int references OperatorServiceQueue(serviceQueueId) not null,
+deskId int references ServiceQueueDesk(deskId) not null,
 clientId int references Client(clientId) not null,
 startWaitingTime datetime not null,
 endWaitingTime datetime,
 startAttendanceTime datetime,
 endAttendanceTime datetime,
 attendanceStatusId int not null,
-attendanceUserId int not null references [User](userId),
-foreign key(operatorId, serviceQueueId, deskId) references ServiceQueueDesk(operatorId, serviceQueueId, deskId)
+attendanceUserId int references [User](userId) not null,
 )
 
 go

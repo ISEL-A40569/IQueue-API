@@ -17,6 +17,6 @@ public class ServiceQueueDeskUserRowMapper implements RowMapper<ServiceQueueDesk
                 rs.getInt("serviceQueueId"),
                 rs.getInt("deskId"),
                 rs.getInt("userId"),
-                LocalDate.parse(rs.getDate("date").toString()));
+                rs.getDate("date").toLocalDate());
     }
 }

@@ -59,9 +59,9 @@ public class OperatorBeaconController {
             if (operatorBeaconRepository.add(operatorBeacon)) {
                 return ResponseEntity
                         .status(201)
-//                        .header("Location", "/api/iqueue/operator/" + operatorBeacon.getOperatorId() +
-//                                "/beacon/" + operatorBeacon.getBeaconId())
-                        .build();
+                        .header("Location", "/api/iqueue/operator/" + operatorBeacon.getOperatorId() +
+                                "/beacon/" + operatorBeacon.getBeaconId())
+                        .body(operatorBeacon);
             }
             else {
                 return ResponseEntity.status(409).build();

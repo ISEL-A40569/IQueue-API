@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import pt.ipl.isel.ps.iqueue.model.ServiceQueueDeskUser;
 import pt.ipl.isel.ps.iqueue.repository.rowmapper.ServiceQueueDeskUserRowMapper;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class ServiceQueueDeskUserRepository  {
         null, null}, serviceQueueDeskUserRowMapper);
     }
 
-    public List<ServiceQueueDeskUser> getDeskUsersByDate(int operatorId, int serviceQueueId, int deskId, LocalDateTime date) {
+    public List<ServiceQueueDeskUser> getDeskUsersByDate(int operatorId, int serviceQueueId, int deskId, String date) {
         String getQueryTemplate = "exec SelectServiceQueueDeskUser ?, ?, ?, ?, ?";
         return jdbcTemplate.query(getQueryTemplate, new Object[]{operatorId, serviceQueueId, deskId,
                 null, date}, serviceQueueDeskUserRowMapper);
@@ -50,7 +51,7 @@ public class ServiceQueueDeskUserRepository  {
                 userId, null}, serviceQueueDeskUserRowMapper);
     }
 
-    public List<ServiceQueueDeskUser> getUserDesksByDate(int userId, LocalDateTime date) {
+    public List<ServiceQueueDeskUser> getUserDesksByDate(int userId, String date) {
         String getQueryTemplate = "exec SelectServiceQueueDeskUser ?, ?, ?, ?, ?";
         return jdbcTemplate.query(getQueryTemplate, new Object[]{null, null, null,
                 userId, date}, serviceQueueDeskUserRowMapper);
@@ -58,20 +59,14 @@ public class ServiceQueueDeskUserRepository  {
 
     public boolean add(ServiceQueueDeskUser serviceQueueDeskUser) {
         String insertQueryTemplate = "exec InsertServiceQueueDeskUser ?, ?, ?, ?, ?";
-        int update = 0;
-        try {
-            update = jdbcTemplate.update(insertQueryTemplate, serviceQueueDeskUser.getOperatorId(),
+        return jdbcTemplate.update(insertQueryTemplate, serviceQueueDeskUser.getOperatorId(),
                     serviceQueueDeskUser.getServiceQueueId(),
                     serviceQueueDeskUser.getDeskId(),
                     serviceQueueDeskUser.getUserId(),
-                    serviceQueueDeskUser.getDate());
-        } catch (Exception e) {
-            System.out.printf("");
-        }
-        return update == 1;
+                    serviceQueueDeskUser.getDate()) == 1;
     }
 
-    public boolean remove(int operadorId, int serviceQueueId, int deskId, int userId, LocalDateTime date) {
+    public boolean remove(int operadorId, int serviceQueueId, int deskId, int userId, String date) {
         String removeQueryTemplate = "exec DeleteServiceQueueDeskUser ?, ?, ?, ?, ?";
         return jdbcTemplate.update(removeQueryTemplate, operadorId, serviceQueueId, deskId, userId, date) == 1;
     }

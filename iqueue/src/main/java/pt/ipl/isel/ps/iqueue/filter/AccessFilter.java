@@ -18,7 +18,9 @@ public class AccessFilter extends OncePerRequestFilter {
         response.addHeader("Access-Control-Allow-Origin", "*");
         response.addHeader("Access-Control-Allow-Headers", "Authorization");
         response.addHeader("Access-Control-Allow-Headers", "Content-Type");
-        response.addHeader("Content-Type", "application/json");
+
+        if (request.getMethod() != "DELETE")
+            response.addHeader("Content-Type", "application/json");
 
         filterChain.doFilter(request, response);
     }

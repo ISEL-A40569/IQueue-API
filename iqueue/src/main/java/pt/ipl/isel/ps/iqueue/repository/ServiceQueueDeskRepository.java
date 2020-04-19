@@ -32,10 +32,10 @@ public class ServiceQueueDeskRepository {
         return jdbcTemplate.query(getQueryTemplate, new Object[]{null, null}, serviceQueueDeskRowMapper);
     }
 
-    public boolean add(ServiceQueueDesk serviceQueueDesk) {
+    public int add(ServiceQueueDesk serviceQueueDesk) {
         String insertQueryTemplate = "exec InsertServiceQueueDesk ?, ?, ?";
-        return jdbcTemplate.update(insertQueryTemplate, serviceQueueDesk.getOperatorId(),
-                serviceQueueDesk.getServiceQueueId(), serviceQueueDesk.getDeskId()) == 1;
+        return jdbcTemplate.queryForObject(insertQueryTemplate, new Object[]{serviceQueueDesk.getOperatorId(),
+                serviceQueueDesk.getServiceQueueId(), serviceQueueDesk.getDeskDescription()}, Integer.class);
     }
 
     public boolean remove(int operatorId, int serviceQueueId, int deskId) {
@@ -43,5 +43,8 @@ public class ServiceQueueDeskRepository {
         return jdbcTemplate.update(removeQueryTemplate, operatorId, serviceQueueId, deskId) == 1;
     }
 
-    // TODO: UPDATE function
-}
+    public boolean update(ServiceQueueDesk serviceQueueDesk) {
+        String updateQueryTemplate = "exec UpdateServiceQueueDesk ?, ?";
+        return jdbcTemplate.update(updateQueryTemplate, serviceQueueDesk.getDeskId(),
+                serviceQueueDesk.getDeskDescription()) == 1;
+    }}

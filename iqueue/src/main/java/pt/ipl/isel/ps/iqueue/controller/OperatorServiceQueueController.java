@@ -17,7 +17,7 @@ public class OperatorServiceQueueController {
         this.operatorServiceQueueRepository = operatorServiceQueueRepository;
     }
 
-    @GetMapping(value = "/api/iqueue/operator/{operadorId}/servicequeue", headers = {"Accept=application/json"})
+    @GetMapping(value = "/api/iqueue/operator/{operatorId}/servicequeue", headers = {"Accept=application/json"})
     public ResponseEntity getOperatorServiceQueues(@PathVariable int operatorId) {
         try {
             return ResponseEntity.ok(operatorServiceQueueRepository.getOperatorServiceQueues(operatorId));
@@ -29,7 +29,7 @@ public class OperatorServiceQueueController {
         }
     }
 
-    @GetMapping(value = "/api/iqueue/operator/{operadorId}/servicequeue/{serviceQueueId}", headers = {"Accept=application/json"})
+    @GetMapping(value = "/api/iqueue/operator/{operatorId}/servicequeue/{serviceQueueId}", headers = {"Accept=application/json"})
     public ResponseEntity getOperatorServiceQueue(@PathVariable int operatorId, @PathVariable int serviceQueueId) {
         try {
             return ResponseEntity.ok(operatorServiceQueueRepository.getOperatorServiceQueue(operatorId, serviceQueueId));
@@ -56,11 +56,13 @@ public class OperatorServiceQueueController {
     @PostMapping(value = "/api/iqueue/operator/servicequeue", headers = {"Accept=application/json", "Content-Type=application/json"})
     public ResponseEntity add(@RequestBody OperatorServiceQueue operatorServiceQueue) {
         try {
-            if (operatorServiceQueueRepository.add(operatorServiceQueue)) {
+            int insertedId = operatorServiceQueueRepository.add(operatorServiceQueue);
+            operatorServiceQueue.setServiceQueueId(insertedId);
+            if (insertedId != 0) {
                 return ResponseEntity
                         .status(201)
-//                        .header("Location", "/api/iqueue/operator/" + operatorServiceQueue.getOperatorId() +
-//                                "/servicequeue/" + operatorServiceQueue.getServiceQueueId())
+                        .header("Location", "/api/iqueue/operator/" + operatorServiceQueue.getOperatorId() +
+                                "/servicequeue/" + insertedId)
                         .body(operatorServiceQueue);
             }
             else {
@@ -93,7 +95,7 @@ public class OperatorServiceQueueController {
         operatorServiceQueue.setServiceQueueId(serviceQueueId);
         try {
             if (operatorServiceQueueRepository.update(operatorServiceQueue)) {
-                return ResponseEntity.ok().build();
+                return ResponseEntity.ok().body(operatorServiceQueue);
             } else {
                 return ResponseEntity.status(404).build();
             }
