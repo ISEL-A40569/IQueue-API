@@ -1,4 +1,4 @@
-drop database iqueuedb
+drop database if exists iqueuedb
 
 go
 
@@ -33,7 +33,7 @@ userName varchar(100) not null,
 email varchar(100) not null,
 phoneNumber int,
 [address] varchar(200),
-userProfileId int not null,
+userProfileId int not null
 )
 
 go
@@ -43,7 +43,7 @@ operatorId int identity primary key,
 operatorDescription varchar(100) not null,
 email varchar(100),
 phoneNumber int,
-[address] varchar(200),
+[address] varchar(200)
 )
 
 go
@@ -51,7 +51,7 @@ go
 create table OperatorUser(
 operatorId int references Operator(operatorId),
 userId int  references [User](userId),
-primary key(operatorId, userId),
+primary key(operatorId, userId)
 )
 
 go
@@ -60,10 +60,10 @@ create table Beacon(
 beaconId int identity primary key,
 beaconMacAddress varchar(12) unique not null,
 uidNamespaceId varchar(10) not null,
-uidInstanceId varchar(6) not null,
+uidInstanceId varchar(6) unique not null,
 ibeaconUuid varchar(32) not null,
-ibeaconMajor int not null,
-ibeaconMinor int not null,
+ibeaconMajor int unique not null,
+ibeaconMinor int unique not null,
 manufacturer varchar(50) not null,
 model varchar(50) not null
 )
@@ -73,7 +73,7 @@ go
 create table OperatorBeacon(
 operatorId int references Operator(operatorId), 
 beaconId int references Beacon(beaconId),
-primary key(operatorId, beaconId),
+primary key(operatorId, beaconId)
 )
 
 go
@@ -93,7 +93,7 @@ serviceQueueId int identity primary key,
 operatorId int references Operator(operatorId) not null,
 serviceQueueDescription varchar(100) not null,
 serviceQueueTypeId int not null,
-dailyLimit int,
+dailyLimit int
 )
 
 go 
@@ -120,7 +120,7 @@ create table ServiceQueueDesk(
 deskId int identity primary key,
 operatorId int references Operator(operatorId),
 serviceQueueId int references OperatorServiceQueue(serviceQueueId),
-deskDescription varchar(50),
+deskDescription varchar(50)
 )
 
 go
@@ -150,7 +150,7 @@ endWaitingTime datetime,
 startAttendanceTime datetime,
 endAttendanceTime datetime,
 attendanceStatusId int not null,
-attendanceUserId int references [User](userId) not null,
+attendanceUserId int references [User](userId) not null
 )
 
 go
@@ -159,7 +159,7 @@ create table AttendanceClassification(
 attendanceId int primary key references Attendance,
 classificationCreationTime datetime not null,
 rate int not null,
-observations varchar(200),
+observations varchar(200)
 )
 
 go

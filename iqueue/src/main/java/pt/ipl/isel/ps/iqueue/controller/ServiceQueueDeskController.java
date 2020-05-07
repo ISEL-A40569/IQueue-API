@@ -17,6 +17,18 @@ public class ServiceQueueDeskController {
         this.serviceQueueDeskRepository = serviceQueueDeskRepository;
     }
 
+    @GetMapping(value = "/api/iqueue/operator/servicequeue/desk/{deskId}", headers = {"Accept=application/json"})
+    public ResponseEntity getServiceQueueDesk(@PathVariable int deskId) {
+        try {
+            return ResponseEntity.ok(serviceQueueDeskRepository.getServiceQueueDesk(deskId));
+        } catch (EmptyResultDataAccessException emptyResultDataAccessException) {
+            return ResponseEntity.status(404).build();
+        }
+        catch (Exception exception) {
+            return ResponseEntity.status(500).build();
+        }
+    }
+
     @GetMapping(value = "/api/iqueue/operator/{operatorId}/servicequeue/{serviceQueueId}/desk", headers = {"Accept=application/json"})
     public ResponseEntity getServiceQueueDesks(@PathVariable int operatorId, @PathVariable int serviceQueueId) {
         try {

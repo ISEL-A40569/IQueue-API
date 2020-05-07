@@ -17,19 +17,23 @@ public class ServiceQueueDeskRepository {
     @Autowired
     private final RowMapper<ServiceQueueDesk> serviceQueueDeskRowMapper;
 
-    private final String getQueryTemplate = "exec SelectServiceQueueDesk ?, ?";
+    private final String getQueryTemplate = "exec SelectServiceQueueDesk ?, ?, ?";
 
     public ServiceQueueDeskRepository(JdbcTemplate jdbcTemplate, ServiceQueueDeskRowMapper serviceQueueDeskRowMapper) {
         this.jdbcTemplate = jdbcTemplate;
         this.serviceQueueDeskRowMapper = serviceQueueDeskRowMapper;
     }
 
+    public ServiceQueueDesk getServiceQueueDesk(int deskId) {
+        return jdbcTemplate.queryForObject(getQueryTemplate, new Object[]{null, null, deskId}, serviceQueueDeskRowMapper);
+    }
+
     public List<ServiceQueueDesk> getServiceQueueDesks(int operatorId, int serviceQueueId) {
-        return jdbcTemplate.query(getQueryTemplate, new Object[]{operatorId, serviceQueueId}, serviceQueueDeskRowMapper);
+        return jdbcTemplate.query(getQueryTemplate, new Object[]{operatorId, serviceQueueId, null}, serviceQueueDeskRowMapper);
     }
 
     public List<ServiceQueueDesk> getAll() {
-        return jdbcTemplate.query(getQueryTemplate, new Object[]{null, null}, serviceQueueDeskRowMapper);
+        return jdbcTemplate.query(getQueryTemplate, new Object[]{null, null, null}, serviceQueueDeskRowMapper);
     }
 
     public int add(ServiceQueueDesk serviceQueueDesk) {

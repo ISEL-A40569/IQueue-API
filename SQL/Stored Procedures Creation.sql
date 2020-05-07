@@ -389,7 +389,7 @@ go
 
 -- ServiceQueueDesk SPs
 
-create or alter procedure SelectServiceQueueDesk @operatorId int, @serviceQueueId int
+create or alter procedure SelectServiceQueueDesk @operatorId int, @serviceQueueId int, @deskId int
 as
 
 declare @query nvarchar(max),
@@ -397,14 +397,20 @@ declare @query nvarchar(max),
 
 set @query = 'select * from ServiceQueueDesk'
 
-set @params = '@operatorId int, @serviceQueueId int'
+set @params = '@operatorId int, @serviceQueueId int, @deskId int'
 
 if @operatorId is not null and @serviceQueueId is not null
 begin
 	set @query = @query + ' where operatorId = @operatorId and serviceQueueId = @serviceQueueId'
+
 end
 
-exec sp_executesql @query, @params, @operatorId = @operatorId, @serviceQueueId = @serviceQueueId
+	if @deskId is not null
+	begin
+		set @query = @query + ' where deskId = @deskId'
+	end
+
+exec sp_executesql @query, @params, @operatorId = @operatorId, @serviceQueueId = @serviceQueueId, @deskId = @deskId
 
 go
 
