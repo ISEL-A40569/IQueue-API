@@ -59,12 +59,12 @@
 							"raw": "{\n\t\"languageId\": {{languageId}},\n\t\"languageDescription\": \"Chinese\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/language",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/language",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -108,15 +108,18 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/language/{{languageId}}",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/language/{{languageId}}",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -165,15 +168,30 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "secret",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "user",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/language",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/language",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -229,12 +247,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/language/{{languageId}}",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/language/{{languageId}}",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -302,12 +320,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/userprofile",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/userprofile",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -359,12 +377,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/userprofile/{{userProfileId}}?languageId={{languageId}}",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/userprofile/{{userProfileId}}?languageId={{languageId}}",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -426,12 +444,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/userprofile?languageId={{languageId}}",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/userprofile?languageId={{languageId}}",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -497,12 +515,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/userprofile/{{userProfileId}}",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/userprofile/{{userProfileId}}",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -583,12 +601,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/user",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/user",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -649,12 +667,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/user/{{userId}}",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/user/{{userId}}",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -719,12 +737,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/user",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/user",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -797,12 +815,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/user/{{userId}}",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/user/{{userId}}",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -870,12 +888,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/servicequeuetype",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/servicequeuetype",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -926,12 +944,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/servicequeuetype/{{serviceQueueTypeId}}?languageId={{languageId}}",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/servicequeuetype/{{serviceQueueTypeId}}?languageId={{languageId}}",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -993,12 +1011,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/servicequeuetype?languageId=1",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/servicequeuetype?languageId={{languageId}}",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -1007,7 +1025,7 @@
 							"query": [
 								{
 									"key": "languageId",
-									"value": "1"
+									"value": "{{languageId}}"
 								}
 							]
 						}
@@ -1064,12 +1082,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/servicequeuetype/{{serviceQueueTypeId}}",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/servicequeuetype/{{serviceQueueTypeId}}",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -1145,12 +1163,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/operator",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/operator",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -1214,12 +1232,12 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/operator/{{operatorId}}",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/operator/{{operatorId}}",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -1278,15 +1296,30 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "secret",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "user",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/operator",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/operator",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -1354,12 +1387,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/operator/{{operatorId}}",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/operator/{{operatorId}}",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -1429,12 +1462,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/client",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/client",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -1485,12 +1518,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/client/{{clientId}}",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/client/{{clientId}}",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -1546,12 +1579,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/client",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/client",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -1612,12 +1645,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/client/{{clientId}}",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/client/{{clientId}}",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -1704,12 +1737,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/beacon",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/beacon",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -1779,12 +1812,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/beacon/{{beaconId}}",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/beacon/{{beaconId}}",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -1859,12 +1892,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/beacon",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/beacon",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -1946,12 +1979,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/beacon/{{beaconId}}",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/beacon/{{beaconId}}",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -2017,12 +2050,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/operator/user",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/operator/user",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -2077,12 +2110,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/operator/{{operatorId}}/user",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/operator/{{operatorId}}/user",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -2137,12 +2170,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/operator/user/{{userId}}",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/operator/user/{{userId}}",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -2198,12 +2231,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/operator/user",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/operator/user",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -2269,12 +2302,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/operator/beacon",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/operator/beacon",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -2329,12 +2362,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/operator/{{operatorId}}/beacon",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/operator/{{operatorId}}/beacon",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -2388,12 +2421,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/operator/beacon/{{beaconId}}",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/operator/beacon/{{beaconId}}",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -2448,12 +2481,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/operator/beacon",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/operator/beacon",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -2528,12 +2561,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/operator/servicequeue",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/operator/servicequeue",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -2596,12 +2629,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/operator/{{operatorId}}/servicequeue",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/operator/{{operatorId}}/servicequeue",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -2661,12 +2694,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/operator/{{operatorId}}/servicequeue/{{serviceQueueId}}",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/operator/{{operatorId}}/servicequeue/{{serviceQueueId}}",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -2730,12 +2763,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/operator/servicequeue",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/operator/servicequeue",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -2804,12 +2837,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/operator/{{operatorId}}/servicequeue/{{serviceQueueId}}",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/operator/{{operatorId}}/servicequeue/{{serviceQueueId}}",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -2884,12 +2917,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/operator/servicequeue/desk",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/operator/servicequeue/desk",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -2951,12 +2984,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/operator/{{operatorId}}/servicequeue/{{serviceQueueId}}/desk",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/operator/{{operatorId}}/servicequeue/{{serviceQueueId}}/desk",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -3020,18 +3053,81 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/operator/servicequeue/desk",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/operator/servicequeue/desk",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
 								"operator",
 								"servicequeue",
 								"desk"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get ServiceQueueDesk",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "03b5d21b-ea57-491c-bb50-10d49de425ea",
+								"exec": [
+									"// OK response test",
+									"pm.test(\"response is ok\", () => {",
+									"    pm.response.to.have.status(200)",
+									"    pm.response.to.not.be.error",
+									"})",
+									"",
+									"// Response has body test",
+									"pm.test(\"response has body\", () => {",
+									"    pm.response.to.have.body",
+									"})",
+									"",
+									"const jsonObject = JSON.parse(responseBody)",
+									"",
+									"// Response has expected properties test",
+									"pm.test(\"response has expected properties\", () => {",
+									"    pm.expect(jsonObject).to.have.property('operatorId')",
+									"    pm.expect(jsonObject.operatorId).not.to.eql(0)",
+									"    ",
+									"    pm.expect(jsonObject).to.have.property('serviceQueueId')",
+									"    pm.expect(jsonObject.serviceQueueId).not.to.eql(0)",
+									"    ",
+									"    pm.expect(jsonObject).to.have.property('deskId')",
+									"    pm.expect(jsonObject.deskId).not.to.eql(0)",
+									"    ",
+									"    pm.expect(jsonObject).to.have.property('deskDescription')",
+									"    pm.expect(jsonObject.deskDescription).to.eql('test')",
+									"})",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:8443/api/iqueue/operator/servicequeue/desk/{{deskId}}",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8443",
+							"path": [
+								"api",
+								"iqueue",
+								"operator",
+								"servicequeue",
+								"desk",
+								"{{deskId}}"
 							]
 						}
 					},
@@ -3094,12 +3190,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/operator/servicequeue/desk/{{deskId}}",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/operator/servicequeue/desk/{{deskId}}",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -3176,12 +3272,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/operator/servicequeue/desk/user",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/operator/servicequeue/desk/user",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -3247,12 +3343,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/operator/{{operatorId}}/servicequeue/{{serviceQueueId}}/desk/{{deskId}}/user",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/operator/{{operatorId}}/servicequeue/{{serviceQueueId}}/desk/{{deskId}}/user",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -3321,12 +3417,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/operator/{{operatorId}}/servicequeue/{{serviceQueueId}}/desk/{{deskId}}/user?date={{date}}",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/operator/{{operatorId}}/servicequeue/{{serviceQueueId}}/desk/{{deskId}}/user?date={{date}}",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -3401,12 +3497,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/operator/{{operatorId}}/servicequeue/{{serviceQueueId}}/desk/{{deskId}}/user/{{userId}}",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/operator/{{operatorId}}/servicequeue/{{serviceQueueId}}/desk/{{deskId}}/user/{{userId}}",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -3476,12 +3572,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/operator/servicequeue/desk/user/{{userId}}?date={{date}}",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/operator/servicequeue/desk/user/{{userId}}?date={{date}}",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -3558,12 +3654,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/attendancestatus",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/attendancestatus",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -3615,12 +3711,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/attendancestatus/{{attendanceStatusId}}?languageId={{languageId}}",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/attendancestatus/{{attendanceStatusId}}?languageId={{languageId}}",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -3683,12 +3779,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/attendancestatus?languageId={{languageId}}",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/attendancestatus?languageId={{languageId}}",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -3755,12 +3851,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/attendancestatus/{{attendanceStatusId}}?languageId={{languageId}}",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/attendancestatus/{{attendanceStatusId}}?languageId={{languageId}}",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -3860,12 +3956,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/attendance",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/attendance",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -3942,12 +4038,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/attendance/{{attendanceId}}",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/attendance/{{attendanceId}}",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -4028,12 +4124,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/attendance",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/attendance",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -4119,12 +4215,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/attendance/{{attendanceId}}",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/attendance/{{attendanceId}}",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -4196,12 +4292,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/attendance/classification",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/attendance/classification",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -4258,12 +4354,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/attendance/{{attendanceId}}/classification",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/attendance/{{attendanceId}}/classification",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -4325,12 +4421,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/attendance/classification",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/attendance/classification",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -4369,12 +4465,12 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/attendance/{{attendanceId}}/classification",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/attendance/{{attendanceId}}/classification",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -4408,12 +4504,12 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/attendance/{{attendanceId}}",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/attendance/{{attendanceId}}",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -4443,15 +4539,30 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "secret",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "user",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/attendancestatus/{{attendanceStatusId}}?languageId={{languageId}}",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/attendancestatus/{{attendanceStatusId}}?languageId={{languageId}}",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -4490,12 +4601,12 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/operator/{{operatorId}}/servicequeue/{{serviceQueueId}}/desk/{{deskId}}/user/{{userId}}?date={{date}}",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/operator/{{operatorId}}/servicequeue/{{serviceQueueId}}/desk/{{deskId}}/user/{{userId}}?date={{date}}",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -4540,12 +4651,12 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/operator/{{operatorId}}/servicequeue/{{serviceQueueId}}/desk/{{deskId}}",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/operator/{{operatorId}}/servicequeue/{{serviceQueueId}}/desk/{{deskId}}",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -4582,12 +4693,12 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/operator/{{operatorId}}/servicequeue/{{serviceQueueId}}",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/operator/{{operatorId}}/servicequeue/{{serviceQueueId}}",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -4622,12 +4733,12 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/operator/{{operatorId}}/beacon/{{beaconId}}",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/operator/{{operatorId}}/beacon/{{beaconId}}",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -4662,14 +4773,13 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/operator/{{operatorId}}/user/{{userId}}",
-							"protocol": "http",
+							"raw": "https://localhost:8443api/iqueue/operator/{{operatorId}}/user/{{userId}}",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443api",
 							"path": [
-								"api",
 								"iqueue",
 								"operator",
 								"{{operatorId}}",
@@ -4702,12 +4812,12 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/user/{{userId}}",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/user/{{userId}}",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -4740,12 +4850,12 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/operator/{{operatorId}}",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/operator/{{operatorId}}",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -4778,12 +4888,12 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/client/{{clientId}}",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/client/{{clientId}}",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -4816,12 +4926,12 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/beacon/{{beaconId}}",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/beacon/{{beaconId}}",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -4854,12 +4964,12 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/userprofile/{{userProfileId}}?languageId={{languageId}}",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/userprofile/{{userProfileId}}?languageId={{languageId}}",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -4898,12 +5008,12 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/servicequeuetype/{{serviceQueueTypeId}}?languageId={{languageId}}",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/servicequeuetype/{{serviceQueueTypeId}}?languageId={{languageId}}",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",
@@ -4942,12 +5052,12 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/iqueue/language/{{languageId}}",
-							"protocol": "http",
+							"raw": "https://localhost:8443/api/iqueue/language/{{languageId}}",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8443",
 							"path": [
 								"api",
 								"iqueue",

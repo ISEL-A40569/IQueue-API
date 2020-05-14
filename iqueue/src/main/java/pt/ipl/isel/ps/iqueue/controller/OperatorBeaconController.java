@@ -74,9 +74,12 @@ public class OperatorBeaconController {
     @DeleteMapping("/api/iqueue/operator/{operatorId}/beacon/{beaconId}")
     public ResponseEntity remove(@PathVariable int operatorId, @PathVariable int beaconId) {
         try {
-            return ResponseEntity.ok(operatorBeaconRepository.remove(operatorId, beaconId));
-        } catch (EmptyResultDataAccessException emptyResultDataAccessException) {
-            return ResponseEntity.status(404).build();
+            if (operatorBeaconRepository.remove(operatorId, beaconId)) {
+                return ResponseEntity.ok().build();
+            }
+            else {
+                return ResponseEntity.status(404).build();
+            }
         }
         catch (Exception exception) {
             return ResponseEntity.status(500).build();

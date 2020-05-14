@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import pt.ipl.isel.ps.iqueue.model.Operator;
 import pt.ipl.isel.ps.iqueue.repository.OperatorRepository;
 
+@CrossOrigin(origins = "https://localhost:4200", maxAge = 3600)
 @RestController
 @RequestMapping("/api/iqueue/operator")
 public class OperatorController {
