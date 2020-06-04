@@ -1,91 +1,75 @@
 package pt.ipl.isel.ps.iqueue.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pt.ipl.isel.ps.iqueue.model.UserProfile;
 import pt.ipl.isel.ps.iqueue.repository.UserProfileRepository;
 
+import java.util.stream.Collectors;
+
 @RestController
 @RequestMapping("/api/iqueue/userprofile")
-public class UserProfileController {
+public class UserProfileController extends Controller<UserProfile> {
 
     @Autowired
     private final UserProfileRepository userProfileRepository;
 
     public UserProfileController(UserProfileRepository userProfileRepository) {
+        super(userProfileRepository);
         this.userProfileRepository = userProfileRepository;
     }
 
     @GetMapping(value = "{userProfileId}", headers = {"Accept=application/json"})
     public ResponseEntity getByIds(@PathVariable int userProfileId, @RequestParam int languageId) {
-        try {
-            return ResponseEntity.ok(userProfileRepository.getByIds(userProfileId, languageId));
-        } catch (EmptyResultDataAccessException emptyResultDataAccessException) {
-            return ResponseEntity.status(404).build();
-        }
-        catch (Exception exception) {
-            return ResponseEntity.status(500).build();
-        }
+        return super.getSome(userProfileRepository
+                .findAll()
+                .stream()
+                .filter(userProfile -> userProfile.getUserProfileIds().getUserProfileId() == userProfileId
+                        && userProfile.getUserProfileIds().getLanguageId() == languageId)
+//                .distinct() // TODO: this shouldn't be necessary, verify why there are duplicates
+                .collect(Collectors.toList())
+        );
     }
 
     @GetMapping(headers = {"Accept=application/json"})
     public ResponseEntity getAll(@RequestParam int languageId) {
-        try {
-            return ResponseEntity.ok(userProfileRepository.getAll(languageId));
-        } catch (EmptyResultDataAccessException emptyResultDataAccessException) {
-            return ResponseEntity.status(404).build();
-        }
-        catch (Exception exception) {
-            return ResponseEntity.status(500).build();
-        }
+        return super.getSome(userProfileRepository
+                .findAll()
+                .stream()
+                .filter(userProfile -> userProfile.getUserProfileIds().getLanguageId() == languageId)
+//                .distinct() // TODO: this shouldn't be necessary, verify why there are duplicates
+                .collect(Collectors.toList())
+        );
     }
 
     @PostMapping(headers = {"Accept=application/json", "Content-Type=application/json"})
     public ResponseEntity add(@RequestBody UserProfile userProfile) {
-        try {
-            if (userProfileRepository.add(userProfile)) {
-                return ResponseEntity
-                        .status(201)
-                        .header("Location", "/api/iqueue/userprofile/" + userProfile.getUserProfileId())
-                        .body(userProfile);
-            }
-            else {
-                return ResponseEntity.status(409).build();
-            }
-        } catch (Exception exception) {
-            return ResponseEntity.status(500).build();
-        }
+        UserProfile createdUserProfile = userProfileRepository.save(userProfile);
+        return super.add(createdUserProfile, "/api/iqueue/userprofile/" + createdUserProfile
+                .getUserProfileIds().getUserProfileId());
     }
 
     @DeleteMapping(value = "{userProfileId}")
-    public ResponseEntity remove(@PathVariable int userProfileId,  @RequestParam int languageId) {
-        try {
-            if (userProfileRepository.remove(userProfileId, languageId)) {
-                return ResponseEntity.ok().build();
-            }
-            else {
-                return ResponseEntity.status(404).build();
-            }
-        } catch (Exception exception) {
-            return ResponseEntity.status(500).build();
-        }
+    public ResponseEntity remove(@PathVariable int userProfileId, @RequestParam int languageId) {
+        return super.remove(userProfileRepository
+                .findAll()
+                .stream()
+                .filter(userProfile -> userProfile.getUserProfileIds().getUserProfileId() == userProfileId
+                        && userProfile.getUserProfileIds().getLanguageId() == languageId)
+                .findFirst()
+        );
     }
 
     @PutMapping(value = "{userProfileId}", headers = {"Accept=application/json", "Content-Type=application/json"})
-    public ResponseEntity update(@PathVariable int userProfileId, @RequestBody UserProfile userProfile) {
-        userProfile.setUserProfileId(userProfileId);
-        try {
-            if (userProfileRepository.update(userProfile)) {
-                return ResponseEntity.ok().body(userProfile);
-            }
-            else {
-                return ResponseEntity.status(404).build();
-            }
-        } catch (Exception exception) {
-            return ResponseEntity.status(500).build();
-        }
+    public ResponseEntity update(@PathVariable int userProfileId, @RequestBody UserProfile newUserProfile) {
+        return super.update(userProfileRepository
+                        .findAll()
+                        .stream()
+                        .filter(userProfile -> userProfile.getUserProfileIds().getUserProfileId() == userProfileId
+                                && userProfile.getUserProfileIds().getLanguageId() == userProfile.getUserProfileIds().getLanguageId())
+                        .findFirst(),
+                newUserProfile);
     }
 
 }

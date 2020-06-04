@@ -1056,21 +1056,4 @@ rollback
 end catch
 
 
--- Create Parameters Data
-exec InsertLanguage 1, 'English'
-
-exec InsertUserProfile 1, 1, 'Master'
-exec InsertUserProfile 2, 1, 'Manager'
-exec InsertUserProfile 3, 1, 'Service'
-
-exec InsertServiceQueueType 1, 1, 'Single Desk No Antecipation'
-exec InsertServiceQueueType 2, 1, 'Multi Desk No Antecipation'
-exec InsertServiceQueueType 3, 1, 'Single Desk With Antecipation'
-exec InsertServiceQueueType 4, 1, 'Multi Desk With Antecipation'
-
-exec InsertAttendanceStatus 1, 1, 'Waiting'
-exec InsertAttendanceStatus 2, 1, 'In Attendance'
-exec InsertAttendanceStatus 3, 1, 'Done'
-exec InsertAttendanceStatus 4, 1, 'Quit'
-exec InsertAttendanceStatus 5, 1, 'No Show'
 

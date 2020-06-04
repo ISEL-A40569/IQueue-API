@@ -28,12 +28,19 @@ foreign key(languageId) references [Language](languageId)
 go
 
 create table [User](
-userId int identity primary key,
+userId int primary key,
 userName varchar(100) not null,
 email varchar(100) not null,
-phoneNumber int,
+telephoneNumber int,
 [address] varchar(200),
-userProfileId int not null
+userProfileId int not null,
+)
+
+go
+
+create table UserCredentials(
+userId int primary key references [User](userId),
+[password] varchar(128) not null
 )
 
 go
@@ -59,11 +66,8 @@ go
 create table Beacon(
 beaconId int identity primary key,
 beaconMacAddress varchar(12) unique not null,
-uidNamespaceId varchar(10) not null,
-uidInstanceId varchar(6) unique not null,
-ibeaconUuid varchar(32) not null,
-ibeaconMajor int unique not null,
-ibeaconMinor int unique not null,
+namespaceId varchar(10) not null,
+instanceId varchar(6) unique not null,
 manufacturer varchar(50) not null,
 model varchar(50) not null
 )
@@ -88,7 +92,7 @@ foreign key(languageId) references [Language](languageId)
 
 go
 
-create table OperatorServiceQueue(
+create table ServiceQueue(
 serviceQueueId int identity primary key,
 operatorId int references Operator(operatorId) not null,
 serviceQueueDescription varchar(100) not null,
@@ -97,14 +101,6 @@ dailyLimit int
 )
 
 go 
-
-create table Client(
-clientId int identity primary key,
-clientName varchar(100) not null,
-email varchar(100) not null
-)
-
-go
 
 create table AttendanceStatus(
 attendanceStatusId int,
@@ -118,49 +114,94 @@ go
 
 create table ServiceQueueDesk(
 deskId int identity primary key,
-operatorId int references Operator(operatorId),
-serviceQueueId int references OperatorServiceQueue(serviceQueueId),
+serviceQueueId int references ServiceQueue(serviceQueueId),
 deskDescription varchar(50)
 )
 
 go
 
-create table ServiceQueueDeskUser(
-operatorId int references Operator(operatorId),
-serviceQueueId int,
-deskId int,
-userId int,
-[date] date,
-primary key(operatorId, serviceQueueId, deskId, userId, [date]),
-foreign key(serviceQueueId) references OperatorServiceQueue(serviceQueueId),
-foreign key(userId) references [User](userId),
-foreign key(deskId) references ServiceQueueDesk(deskId)
+create table DeskUser(
+deskId int references ServiceQueueDesk(deskId),
+userId int references [User](userId),
+primary key(deskId, userId)
 )
 
 go
 
 create table Attendance(
 attendanceId int identity primary key,
-operatorId int references Operator(operatorId) not null,
-serviceQueueId int references OperatorServiceQueue(serviceQueueId) not null,
 deskId int references ServiceQueueDesk(deskId) not null,
-clientId int references Client(clientId) not null,
-startWaitingTime datetime not null,
-endWaitingTime datetime,
-startAttendanceTime datetime,
+clientId int references [User](userId) not null,
+startWaitingDateTime datetime not null,
+startAttendanceDateTime datetime,
 endAttendanceTime datetime,
-attendanceStatusId int not null,
-attendanceUserId int references [User](userId) not null
+attendanceStatusId int not null
 )
 
 go
 
 create table AttendanceClassification(
 attendanceId int primary key references Attendance,
-classificationCreationTime datetime not null,
+classificationCreationDateTime datetime not null,
 rate int not null,
 observations varchar(200)
 )
 
 go
+
+create table [Log](
+logId int identity primary key,
+logCreationDateTime datetime not null,
+requestMethod varchar(6) not null,
+requestUri varchar(256) not null,
+requestHeaders varchar(1024) not null,
+requestBody varchar(1024) not null,
+responseStatus int not null,
+responseHeaders varchar(1024) not null,
+responseBody varchar(1024) not null,
+)
+
+go
+
+-- Create Parameters Data
+begin transaction
+insert into Language values(1, 'English')
+insert into Language values(2, 'Português')
+
+insert into UserProfile values(1, 1, 'Master')
+insert into UserProfile values(2, 1, 'Manager')
+insert into UserProfile values(3, 1, 'Service')
+insert into UserProfile values(4, 1, 'Client')
+insert into UserProfile values(1, 2, 'Administrador')
+insert into UserProfile values(2, 2, 'Gerente')
+insert into UserProfile values(3, 2, 'Serviço')
+insert into UserProfile values(4, 2, 'Cliente')
+
+insert into ServiceQueueType values(1, 1, 'Single Desk No Antecipation')
+insert into ServiceQueueType values(2, 1, 'Multi Desk No Antecipation')
+insert into ServiceQueueType values(3, 1, 'Single Desk With Antecipation')
+insert into ServiceQueueType values(4, 1, 'Multi Desk With Antecipation')
+insert into ServiceQueueType values(1, 2, 'Balcão Único Sem Antecipação')
+insert into ServiceQueueType values(2, 2, 'Múltiplos Balcão Sem Antecipação')
+insert into ServiceQueueType values(3, 2, 'Balcão Único Com Antecipação')
+insert into ServiceQueueType values(4, 2, 'Múltiplos Balcão Com Antecipação')
+
+insert into AttendanceStatus values(1, 1, 'Waiting')
+insert into AttendanceStatus values(2, 1, 'In Attendance')
+insert into AttendanceStatus values(3, 1, 'Done')
+insert into AttendanceStatus values(4, 1, 'Quit')
+insert into AttendanceStatus values(5, 1, 'No Show')
+insert into AttendanceStatus values(1, 2, 'Em Espera')
+insert into AttendanceStatus values(2, 2, 'Em Atendimento')
+insert into AttendanceStatus values(3, 2, 'Concluído')
+insert into AttendanceStatus values(4, 2, 'Desistência')
+insert into AttendanceStatus values(5, 2, 'Falta')
+
+insert into [User] values(1, 'Administrator', 'admin@email.com', null, null, 1)
+insert into UserCredentials values(1, '$2a$10$7FSwcv.GcqzRXI3o6UB/X.U1xAnKGVDpk18KUY3D2JzLP./qUZBkC')
+
+commit
+
+--select * from [Log]
+
 

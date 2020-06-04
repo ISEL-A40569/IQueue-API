@@ -19,17 +19,15 @@ public class AccessFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         // Set common Response Headers values:
         response.addHeader("Access-Control-Allow-Origin", "*");
-//        response.addHeader("Access-Control-Allow-Headers", "Authorization");
-//        response.addHeader("Access-Control-Allow-Headers", "Content-Type");
         response.addHeader("Access-Control-Allow-Methods", "*");
+        response.setHeader("Access-Control-Allow-Headers", "Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin");
         response.setHeader("Access-Control-Allow-Credentials", "true");
-        response.setHeader("Access-Control-Allow-Headers", "Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
 
         if (request.getMethod() != HttpMethod.DELETE.name())
             response.addHeader("Content-Type", "application/json");
 
-        if (HttpMethod.OPTIONS.name().equalsIgnoreCase(request.getMethod()))
-            response.setStatus(HttpServletResponse.SC_OK);
+        if (request.getMethod() != HttpMethod.OPTIONS.name())
+            response.setStatus(200);
 
         filterChain.doFilter(request, response);
 

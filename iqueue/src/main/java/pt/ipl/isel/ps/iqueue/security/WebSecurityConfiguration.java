@@ -24,11 +24,10 @@ class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.OPTIONS).permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .httpBasic()
-                .authenticationEntryPoint(basicAuthenticationEntryPoint);
+                .antMatchers(HttpMethod.OPTIONS).permitAll();
+//                .anyRequest().authenticated()
+//                .and()
+//                .httpBasic().authenticationEntryPoint(basicAuthenticationEntryPoint);
     }
 
     @Autowired
