@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pt.ipl.isel.ps.iqueue.model.AttendanceClassification;
+import pt.ipl.isel.ps.iqueue.dao.AttendanceClassificationDao;
 import pt.ipl.isel.ps.iqueue.repository.AttendanceClassificationRepository;
 
 @RestController
@@ -42,7 +42,7 @@ public class AttendanceClassificationController {
     }
 
     @PostMapping(value = "/api/iqueue/attendance/classification", headers = {"Accept=application/json", "Content-Type=application/json"})
-    public ResponseEntity add(@RequestBody AttendanceClassification attendanceClassification) {
+    public ResponseEntity add(@RequestBody AttendanceClassificationDao attendanceClassification) {
         try {
             if (attendanceClassificationRepository.add(attendanceClassification) != 0) {
                 return ResponseEntity

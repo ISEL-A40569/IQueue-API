@@ -1,11 +1,10 @@
 package pt.ipl.isel.ps.iqueue.model;
 
-public class Language {
-    private int languageId;
-    private String languageDescription;
+import javax.persistence.Column;
 
-    public Language() {
-    }
+public class Language {
+    private final int languageId;
+    private final String languageDescription;
 
     public Language(int languageId, String languageDescription) {
         this.languageId = languageId;
@@ -16,12 +15,7 @@ public class Language {
         return languageId;
     }
 
-    public void setLanguageId(int languageId) {
-        this.languageId = languageId;
-    }
-
     public String getLanguageDescription() {
         return languageDescription;
     }
-
 }

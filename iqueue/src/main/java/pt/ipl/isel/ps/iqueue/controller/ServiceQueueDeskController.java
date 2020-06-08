@@ -4,16 +4,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pt.ipl.isel.ps.iqueue.model.ServiceQueueDesk;
-import pt.ipl.isel.ps.iqueue.repository.ServiceQueueDeskRepository;
+import pt.ipl.isel.ps.iqueue.dao.DeskDao;
+import pt.ipl.isel.ps.iqueue.repository.DeskRepository;
 
 @RestController
 public class ServiceQueueDeskController {
 
     @Autowired
-    final private ServiceQueueDeskRepository serviceQueueDeskRepository;
+    final private DeskRepository serviceQueueDeskRepository;
 
-    public ServiceQueueDeskController(ServiceQueueDeskRepository serviceQueueDeskRepository) {
+    public ServiceQueueDeskController(DeskRepository serviceQueueDeskRepository) {
         this.serviceQueueDeskRepository = serviceQueueDeskRepository;
     }
 
@@ -54,7 +54,7 @@ public class ServiceQueueDeskController {
     }
 
     @PostMapping(value = "/api/iqueue/operator/servicequeue/desk", headers = {"Accept=application/json", "Content-Type=application/json"})
-    public ResponseEntity add(@RequestBody ServiceQueueDesk serviceQueueDesk) {
+    public ResponseEntity add(@RequestBody DeskDao serviceQueueDesk) {
         try {
             int insertedId = serviceQueueDeskRepository.add(serviceQueueDesk);
             if (insertedId != 0) {
@@ -90,7 +90,7 @@ public class ServiceQueueDeskController {
     }
 
     @PutMapping(value = "/api/iqueue/operator/servicequeue/desk/{deskId}")
-    public ResponseEntity update(@PathVariable int deskId, @RequestBody ServiceQueueDesk serviceQueueDesk) {
+    public ResponseEntity update(@PathVariable int deskId, @RequestBody DeskDao serviceQueueDesk) {
         try {
             serviceQueueDesk.setDeskId(deskId);
             if (serviceQueueDeskRepository.update(serviceQueueDesk)) {

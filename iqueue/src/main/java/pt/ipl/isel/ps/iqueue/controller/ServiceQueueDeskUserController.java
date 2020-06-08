@@ -4,20 +4,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pt.ipl.isel.ps.iqueue.model.ServiceQueueDeskUser;
-import pt.ipl.isel.ps.iqueue.repository.ServiceQueueDeskUserRepository;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import pt.ipl.isel.ps.iqueue.dao.DeskUserDao;
+import pt.ipl.isel.ps.iqueue.repository.DeskUserRepository;
 
 @RestController
 //@RequestMapping("")
 public class ServiceQueueDeskUserController {
 
     @Autowired
-    final private ServiceQueueDeskUserRepository serviceQueueDeskUserRepository;
+    final private DeskUserRepository serviceQueueDeskUserRepository;
 
-    public ServiceQueueDeskUserController(ServiceQueueDeskUserRepository serviceQueueDeskUserRepository) {
+    public ServiceQueueDeskUserController(DeskUserRepository serviceQueueDeskUserRepository) {
         this.serviceQueueDeskUserRepository = serviceQueueDeskUserRepository;
     }
 
@@ -70,7 +67,7 @@ public class ServiceQueueDeskUserController {
     }
 
     @PostMapping(value = "/api/iqueue/operator/servicequeue/desk/user", headers = {"Accept=application/json", "Content-Type=application/json"})
-    public ResponseEntity add(@RequestBody  ServiceQueueDeskUser serviceQueueDeskUser) {
+    public ResponseEntity add(@RequestBody DeskUserDao serviceQueueDeskUser) {
         try {
             if (serviceQueueDeskUserRepository.add(serviceQueueDeskUser)) {
                 return ResponseEntity

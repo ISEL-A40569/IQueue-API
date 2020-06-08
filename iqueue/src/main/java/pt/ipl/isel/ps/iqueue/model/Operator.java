@@ -1,21 +1,13 @@
 package pt.ipl.isel.ps.iqueue.model;
 
+import javax.persistence.Column;
+
 public class Operator {
-    private int operatorId;
-    private String operatorDescription;
-    private String email;
-    private int phoneNumber;
-    private String address;
-
-    public Operator() {
-    }
-
-    public Operator(String operatorDescription, String email, int phoneNumber, String address) {
-        this.operatorDescription = operatorDescription;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.address = address;
-    }
+    private final int operatorId;
+    private final String operatorDescription;
+    private final String email;
+    private final int phoneNumber;
+    private final String address;
 
     public Operator(int operatorId, String operatorDescription, String email, int phoneNumber, String address) {
         this.operatorId = operatorId;
@@ -27,10 +19,6 @@ public class Operator {
 
     public int getOperatorId() {
         return operatorId;
-    }
-
-    public void setOperatorId(int operatorId) {
-        this.operatorId = operatorId;
     }
 
     public String getOperatorDescription() {

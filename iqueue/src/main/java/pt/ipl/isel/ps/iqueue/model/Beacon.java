@@ -1,39 +1,20 @@
 package pt.ipl.isel.ps.iqueue.model;
 
+import javax.persistence.Column;
+
 public class Beacon {
+    private final int beaconId;
+    private final String beaconMacAddress;
+    private final String namespaceId;
+    private final String instanceId;
+    private final String manufacturer;
+    private final String model;
 
-    private int beaconId;
-    private String beaconMacAddress;
-    private String uidNamespaceId;
-    private String uidInstanceId;
-    private String iBeaconUuid;
-    private String iBeaconMajor;
-    private String iBeaconMinor;
-    private String manufacturer;
-    private String model;
-
-    public Beacon() {
-    }
-
-    public Beacon(String beaconMacAddress, String uidNamespaceId, String uidInstanceId, String iBeaconUuid, String iBeaconMajor, String iBeaconMinor, String manufacturer, String model) {
-        this.beaconMacAddress = beaconMacAddress;
-        this.uidNamespaceId = uidNamespaceId;
-        this.uidInstanceId = uidInstanceId;
-        this.iBeaconUuid = iBeaconUuid;
-        this.iBeaconMajor = iBeaconMajor;
-        this.iBeaconMinor = iBeaconMinor;
-        this.manufacturer = manufacturer;
-        this.model = model;
-    }
-
-    public Beacon(int beaconId, String beaconMacAddress, String uidNamespaceId, String uidInstanceId, String iBeaconUuid, String iBeaconMajor, String iBeaconMinor, String manufacturer, String model) {
+    public Beacon(int beaconId, String beaconMacAddress, String namespaceId, String instanceId, String manufacturer, String model) {
         this.beaconId = beaconId;
         this.beaconMacAddress = beaconMacAddress;
-        this.uidNamespaceId = uidNamespaceId;
-        this.uidInstanceId = uidInstanceId;
-        this.iBeaconUuid = iBeaconUuid;
-        this.iBeaconMajor = iBeaconMajor;
-        this.iBeaconMinor = iBeaconMinor;
+        this.namespaceId = namespaceId;
+        this.instanceId = instanceId;
         this.manufacturer = manufacturer;
         this.model = model;
     }
@@ -42,32 +23,16 @@ public class Beacon {
         return beaconId;
     }
 
-    public void setBeaconId(int beaconId) {
-        this.beaconId = beaconId;
-    }
-
     public String getBeaconMacAddress() {
         return beaconMacAddress;
     }
 
-    public String getUidNamespaceId() {
-        return uidNamespaceId;
+    public String getNamespaceId() {
+        return namespaceId;
     }
 
-    public String getUidInstanceId() {
-        return uidInstanceId;
-    }
-
-    public String getiBeaconUuid() {
-        return iBeaconUuid;
-    }
-
-    public String getiBeaconMajor() {
-        return iBeaconMajor;
-    }
-
-    public String getiBeaconMinor() {
-        return iBeaconMinor;
+    public String getInstanceId() {
+        return instanceId;
     }
 
     public String getManufacturer() {

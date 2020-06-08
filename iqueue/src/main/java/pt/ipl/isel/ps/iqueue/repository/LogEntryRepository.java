@@ -1,7 +1,7 @@
 package pt.ipl.isel.ps.iqueue.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import pt.ipl.isel.ps.iqueue.model.LogEntry;
+import pt.ipl.isel.ps.iqueue.dao.LogEntryDao;
 
-public interface LogEntryRepository extends JpaRepository<LogEntry, Integer> {
+public interface LogEntryRepository extends JpaRepository<LogEntryDao, Integer> {
 }

@@ -2,7 +2,7 @@ package pt.ipl.isel.ps.iqueue.filter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.filter.OncePerRequestFilter;
-import pt.ipl.isel.ps.iqueue.model.LogEntry;
+import pt.ipl.isel.ps.iqueue.dao.LogEntryDao;
 import pt.ipl.isel.ps.iqueue.repository.LogEntryRepository;
 
 import javax.servlet.FilterChain;
@@ -23,7 +23,7 @@ public class LogFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        LogEntry logEntry = new LogEntry();
+        LogEntryDao logEntry = new LogEntryDao();
 
         logEntry.setLogCreationDateTime(LocalDateTime.now());
         logEntry.setRequestMethod(request.getMethod());

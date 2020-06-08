@@ -1,77 +1,51 @@
 package pt.ipl.isel.ps.iqueue.model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
 
-@Entity
-@Table(name = "[User]")
 public class User {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "userId")
-    private int userId;
+    private final int userId;
 
-    @Column(name = "userName")
-    private String userName;
+    private final String userName;
 
-    @Column(name = "email")
-    private String email;
+    private final String email;
 
-    @Column(name = "telephoneNumber")
-    private int telephoneNumber;
+    private final String telephoneNumber;
 
-    @Column(name = "address")
-    private String address;
+    private final String address;
 
-    @Column(name = "userProfileId")
-    private int userProfileId;
+    private final int userProfileId;
+
+    public User(int userId, String userName, String email, String telephoneNumber, String address, int userProfileId) {
+        this.userId = userId;
+        this.userName = userName;
+        this.email = email;
+        this.telephoneNumber = telephoneNumber;
+        this.address = address;
+        this.userProfileId = userProfileId;
+    }
 
     public int getUserId() {
         return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
     }
 
     public String getUserName() {
         return userName;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public int getTelephoneNumber() {
+    public String getTelephoneNumber() {
         return telephoneNumber;
-    }
-
-    public void setTelephoneNumber(int telephoneNumber) {
-        this.telephoneNumber = telephoneNumber;
     }
 
     public String getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
     public int getUserProfileId() {
         return userProfileId;
     }
-
-    public void setUserProfileId(int userProfileId) {
-        this.userProfileId = userProfileId;
-    }
-
 }

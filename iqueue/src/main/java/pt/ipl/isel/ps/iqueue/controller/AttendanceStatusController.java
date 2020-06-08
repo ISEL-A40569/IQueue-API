@@ -1,11 +1,10 @@
 package pt.ipl.isel.ps.iqueue.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.elasticsearch.rest.RestClientProperties;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pt.ipl.isel.ps.iqueue.model.AttendanceStatus;
+import pt.ipl.isel.ps.iqueue.dao.AttendanceStatusDao;
 import pt.ipl.isel.ps.iqueue.repository.AttendanceStatusRepository;
 
 @RestController
@@ -44,12 +43,12 @@ public class AttendanceStatusController {
     }
 
     @PostMapping(headers = {"Accept=application/json", "Content-Type=application/json"})
-    public ResponseEntity add(@RequestBody AttendanceStatus attendanceStatus) {
+    public ResponseEntity add(@RequestBody AttendanceStatusDao attendanceStatus) {
         try {
             if (attendanceStatusRepository.add(attendanceStatus) != 0) {
                 return ResponseEntity
                         .status(201)
-                        .header("Location", "/api/iqueue/attendancestatus/" + attendanceStatus.getAttendanceStatusId())
+                        .header("Location", "/api/iqueue/attendancestatus/" + attendanceStatus.getAttendanceStatusIds())
                         .body(attendanceStatus);
             }
             else {
@@ -76,8 +75,8 @@ public class AttendanceStatusController {
 
     @PutMapping(value = "{attendanceStatusId}", headers = {"Accept=application/json", "Content-Type=application/json"})
     public ResponseEntity udpate(@PathVariable int attendanceStatusId, @RequestParam int languageId,
-                                 @RequestBody AttendanceStatus attendanceStatus) {
-        attendanceStatus.setAttendanceStatusId(attendanceStatusId);
+                                 @RequestBody AttendanceStatusDao attendanceStatus) {
+        attendanceStatus.setAttendanceStatusIds(attendanceStatusId);
         attendanceStatus.setLanguageId(languageId);
         try {
             if (attendanceStatusRepository.update(attendanceStatus)) {

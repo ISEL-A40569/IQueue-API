@@ -1,9 +1,9 @@
 package pt.ipl.isel.ps.iqueue.model;
 
+import javax.persistence.Column;
 import java.time.LocalDateTime;
 
 public class AttendanceClassification {
-
     private final int attendanceId;
     private final LocalDateTime classificationCreationTime;
     private final int rate;

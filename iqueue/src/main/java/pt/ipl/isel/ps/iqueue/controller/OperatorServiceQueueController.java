@@ -4,16 +4,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pt.ipl.isel.ps.iqueue.model.OperatorServiceQueue;
-import pt.ipl.isel.ps.iqueue.repository.OperatorServiceQueueRepository;
+import pt.ipl.isel.ps.iqueue.dao.ServiceQueueDao;
+import pt.ipl.isel.ps.iqueue.repository.ServiceQueueRepository;
 
 @RestController
 public class OperatorServiceQueueController {
 
     @Autowired
-    private final OperatorServiceQueueRepository operatorServiceQueueRepository;
+    private final ServiceQueueRepository operatorServiceQueueRepository;
 
-    public OperatorServiceQueueController(OperatorServiceQueueRepository operatorServiceQueueRepository) {
+    public OperatorServiceQueueController(ServiceQueueRepository operatorServiceQueueRepository) {
         this.operatorServiceQueueRepository = operatorServiceQueueRepository;
     }
 
@@ -54,7 +54,7 @@ public class OperatorServiceQueueController {
     }
 
     @PostMapping(value = "/api/iqueue/operator/servicequeue", headers = {"Accept=application/json", "Content-Type=application/json"})
-    public ResponseEntity add(@RequestBody OperatorServiceQueue operatorServiceQueue) {
+    public ResponseEntity add(@RequestBody ServiceQueueDao operatorServiceQueue) {
         try {
             int insertedId = operatorServiceQueueRepository.add(operatorServiceQueue);
             operatorServiceQueue.setServiceQueueId(insertedId);
@@ -90,7 +90,7 @@ public class OperatorServiceQueueController {
     @PutMapping(value = "/api/iqueue/operator/{operatorId}/servicequeue/{serviceQueueId}",
             headers = {"Accept=application/json", "Content-Type=application/json"})
     public ResponseEntity update(@PathVariable int operatorId, @PathVariable int serviceQueueId,
-                                 @RequestBody OperatorServiceQueue operatorServiceQueue) {
+                                 @RequestBody ServiceQueueDao operatorServiceQueue) {
         operatorServiceQueue.setOperatorId(operatorId);
         operatorServiceQueue.setServiceQueueId(serviceQueueId);
         try {

@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pt.ipl.isel.ps.iqueue.model.OperatorUser;
+import pt.ipl.isel.ps.iqueue.dao.OperatorUserDao;
 import pt.ipl.isel.ps.iqueue.repository.OperatorUserRepository;
 
 @RestController
@@ -54,7 +54,7 @@ public class OperatorUserController {
     }
 
     @PostMapping(value = "/api/iqueue/operator/user", headers = {"Accept=application/json", "Content-Type=application/json"})
-    public ResponseEntity add(@RequestBody OperatorUser operatorUser) {
+    public ResponseEntity add(@RequestBody OperatorUserDao operatorUser) {
         try {
             if (operatorUserRepository.add(operatorUser)) {
                 return ResponseEntity

@@ -1,35 +1,25 @@
 package pt.ipl.isel.ps.iqueue.model;
 
-import pt.ipl.isel.ps.iqueue.model.embedded.UserProfileIds;
-
-import javax.persistence.*;
-
-@Entity
-@Table(name = "UserProfile")
 public class UserProfile {
+    private final int userProfileId;
+    private final int languageId;
+    private final String userProfileDescription;
 
-    @EmbeddedId
-    UserProfileIds userProfileIds;
-
-    @Column(name = "userProfileDescription")
-    private String userProfileDescription;
-
-    public UserProfile() {
-    }
-    
-    public UserProfileIds getUserProfileIds() {
-        return this.userProfileIds;
+    public UserProfile(int userProfileId, int languageId, String userProfileDescription) {
+        this.userProfileId = userProfileId;
+        this.languageId = languageId;
+        this.userProfileDescription = userProfileDescription;
     }
 
-    public void setUserProfileId(UserProfileIds userProfileId) {
-        this.userProfileIds = userProfileId;
+    public int getUserProfileId() {
+        return userProfileId;
+    }
+
+    public int getLanguageId() {
+        return languageId;
     }
 
     public String getUserProfileDescription() {
         return userProfileDescription;
-    }
-
-    public void setUserProfileDescription(String userProfileDescription) {
-        this.userProfileDescription = userProfileDescription;
     }
 }

@@ -4,10 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pt.ipl.isel.ps.iqueue.model.Beacon;
-import pt.ipl.isel.ps.iqueue.model.Operator;
+import pt.ipl.isel.ps.iqueue.dao.BeaconDao;
 import pt.ipl.isel.ps.iqueue.repository.BeaconRepository;
-import pt.ipl.isel.ps.iqueue.repository.Repository;
 
 @RestController
 @RequestMapping("/api/iqueue/beacon")
@@ -45,7 +43,7 @@ public class BeaconController {
     }
 
     @PostMapping(headers = {"Accept=application/json", "Content-Type=application/json"})
-    public ResponseEntity add(@RequestBody Beacon beacon) {
+    public ResponseEntity add(@RequestBody BeaconDao beacon) {
         try {
             int insertedId = beaconRepository.add(beacon);
             if (insertedId != 0) {
@@ -79,7 +77,7 @@ public class BeaconController {
     }
 
     @PutMapping(value = "{beaconId}", headers = {"Accept=application/json", "Content-Type=application/json"})
-    public ResponseEntity update(@PathVariable int beaconId, @RequestBody Beacon beacon) {
+    public ResponseEntity update(@PathVariable int beaconId, @RequestBody BeaconDao beacon) {
         beacon.setBeaconId(beaconId);
         try {
             if (beaconRepository.update(beacon)) {

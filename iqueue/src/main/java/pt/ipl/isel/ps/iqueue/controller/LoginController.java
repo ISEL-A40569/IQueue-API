@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pt.ipl.isel.ps.iqueue.model.UserCredentials;
+import pt.ipl.isel.ps.iqueue.dao.UserCredentialsDao;
 import pt.ipl.isel.ps.iqueue.repository.UserCredentialsRepository;
 import pt.ipl.isel.ps.iqueue.repository.UserRepository;
 
@@ -33,10 +33,10 @@ public class LoginController {
     }
 
     @PostMapping
-    public ResponseEntity login(@RequestBody UserCredentials userCredentials) {
+    public ResponseEntity login(@RequestBody UserCredentialsDao userCredentials) {
         try {
             String encode = bCryptPasswordEncoder.encode(userCredentials.getPassword());
-            Optional<UserCredentials> optionalUserCredentials = userCredentialsRepository.findById(userCredentials.getUserId());
+            Optional<UserCredentialsDao> optionalUserCredentials = userCredentialsRepository.findById(userCredentials.getUserId());
 
             if (!optionalUserCredentials.isPresent())
                 return ResponseEntity.status(404).build();

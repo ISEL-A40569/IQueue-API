@@ -1,49 +1,10 @@
 package pt.ipl.isel.ps.iqueue.repository;
 
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
-import pt.ipl.isel.ps.iqueue.model.AttendanceClassification;
-import pt.ipl.isel.ps.iqueue.repository.rowmapper.AttendanceClassificationRowMapper;
-
-import java.util.List;
+import pt.ipl.isel.ps.iqueue.dao.AttendanceClassificationDao;
 
 @Component
-public class AttendanceClassificationRepository extends Repository<AttendanceClassification> {
+public interface AttendanceClassificationRepository extends JpaRepository<AttendanceClassificationDao, Integer> {
 
-    public AttendanceClassificationRepository(JdbcTemplate jdbcTemplate, AttendanceClassificationRowMapper attendanceClassificationRowMapper) {
-        super(jdbcTemplate, attendanceClassificationRowMapper,
-                "exec SelectAttendanceClassification ?",
-                "exec InsertAttendanceClassification ?, ?, ?, ?",
-                "exec DeleteAttendanceClassification ?",
-                null);
-    }
-
-    @Override
-    public AttendanceClassification getById(int attendanceId) {
-        return jdbcTemplate.queryForObject(getQueryTemplate, new Object[]{attendanceId}, rowMapper);
-    }
-
-    @Override
-    public List<AttendanceClassification> getAll() {
-        return jdbcTemplate.query(getQueryTemplate, new Object[]{null}, rowMapper);
-    }
-
-    @Override
-    public int add(AttendanceClassification attendanceClassification) {
-        return jdbcTemplate.update(insertQueryTemplate, attendanceClassification.getAttendanceId(), // TODO: Classification table!?
-                attendanceClassification.getClassificationCreationTime(),
-                attendanceClassification.getRate(),
-                attendanceClassification.getObservations()) == 1 ? attendanceClassification.getAttendanceId() : 0;
-    }
-
-    @Override
-    public boolean remove(int attendanceId) {
-        return jdbcTemplate.update(removeQueryTemplate, attendanceId) == 1;
-    }
-
-    @Override
-    public boolean update(AttendanceClassification attendanceClassification) {
-        throw new UnsupportedOperationException();
-    }
 }

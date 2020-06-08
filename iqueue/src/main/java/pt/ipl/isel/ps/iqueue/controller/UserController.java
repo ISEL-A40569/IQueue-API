@@ -4,8 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import pt.ipl.isel.ps.iqueue.dao.UserDao;
+import pt.ipl.isel.ps.iqueue.dao.UserCredentialsDao;
 import pt.ipl.isel.ps.iqueue.model.User;
-import pt.ipl.isel.ps.iqueue.model.UserCredentials;
 import pt.ipl.isel.ps.iqueue.repository.UserCredentialsRepository;
 import pt.ipl.isel.ps.iqueue.repository.UserRepository;
 import pt.ipl.isel.ps.iqueue.utils.EmailService;
@@ -44,7 +45,7 @@ public class UserController {
     @GetMapping(value = "{userId}", headers = {"Accept=application/json"})
     public ResponseEntity getById(@PathVariable int userId) {
         try {
-            Optional<User> optionalUser = userRepository.findById(userId);
+            Optional<UserDao> optionalUser = userRepository.findById(userId);
             if (optionalUser.isPresent()) {
                 return ResponseEntity.ok(optionalUser.get());
             } else {
@@ -59,7 +60,7 @@ public class UserController {
     @GetMapping(headers = {"Accept=application/json"})
     public ResponseEntity getAll() {
         try {
-            List<User> userList = userRepository.findAll();
+            List<UserDao> userList = userRepository.findAll();
             if (!userList.isEmpty()) {
                 return ResponseEntity.ok(userList);
             } else {
@@ -74,14 +75,12 @@ public class UserController {
     @PostMapping(headers = {"Accept=application/json", "Content-Type=application/json"})
     public ResponseEntity add(@RequestBody User user) {
         try {
+            UserDao createdUser = userRepository.save(user);
+
             String newPassword = passwordGenerator.generatePassword();
 
-            UserCredentials userCredentials = new UserCredentials();
-            userCredentials.setUserId(user.getUserId());
-            userCredentials.setPassword(bCryptPasswordEncoder.encode(newPassword));
+            UserCredentialsDao userCredentials = new UserCredentialsDao(createdUser.getUserId(), bCryptPasswordEncoder.encode(newPassword));
             userCredentialsRepository.save(userCredentials);
-
-            User createdUser = userRepository.save(user);
 
             emailService.sendEmail(user.getEmail(),
                     "Welcome to IQueue, your password is " + newPassword);
@@ -98,8 +97,9 @@ public class UserController {
     @DeleteMapping(value = "{userId}", headers = {"Accept=application/json"})
     public ResponseEntity remove(@PathVariable int userId) {
         try {
-            Optional<User> optionalUser = userRepository.findById(userId);
+            Optional<UserDao> optionalUser = userRepository.findById(userId);
             if (optionalUser.isPresent()) {
+                userCredentialsRepository.delete(userCredentialsRepository.findById(userId).get());
                 userRepository.delete(optionalUser.get());
                 return ResponseEntity.ok().build();
             } else {
@@ -111,22 +111,27 @@ public class UserController {
     }
 
     @PutMapping(value = "{userId}", headers = {"Accept=application/json", "Content-Type=application/json"})
-    public ResponseEntity update(@PathVariable int userId, @RequestBody User user) {
+    public ResponseEntity update(@PathVariable int userId, @RequestBody UserDao user) {
         try {
-            Optional<User> optionalUser = userRepository.findById(userId);
+            Optional<UserDao> optionalUser = userRepository.findById(userId);
             if (optionalUser.isPresent()) {
                 user.setUserId(userId);
-
-                // TODO: move this to a "Change Password" request
-//                // If password was changed, encrypt the new password
-//                if (user.getPassword() != null && !bCryptPasswordEncoder.matches(user.getPassword(), optionalUser.get().getPassword()))
-//                    user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-
                 userRepository.save(user);
                 return ResponseEntity.ok(user);
             } else {
                 return ResponseEntity.status(404).build();
             }
+        } catch (Exception exception) {
+            return ResponseEntity.status(500).build();
+        }
+    }
+
+    @PutMapping(value = "{userId}/credentials", headers = {"Accept=application/json"})
+    public ResponseEntity changePassword(@PathVariable int userId, @RequestBody UserCredentialsDao newUserCredentials) {
+        try {
+            newUserCredentials.setPassword(bCryptPasswordEncoder.encode(newUserCredentials.getPassword()));
+            userCredentialsRepository.save(newUserCredentials);
+            return ResponseEntity.ok().build();
         } catch (Exception exception) {
             return ResponseEntity.status(500).build();
         }

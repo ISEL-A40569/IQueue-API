@@ -1,17 +1,12 @@
 package pt.ipl.isel.ps.iqueue.repository;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
-import pt.ipl.isel.ps.iqueue.model.User;
+import pt.ipl.isel.ps.iqueue.dao.UserDao;
 import pt.ipl.isel.ps.iqueue.repository.rowmapper.UserRowMapper;
 
-import java.util.List;
-
 @Component
-public interface UserRepository extends JpaRepository<User, Integer> {
+public interface UserRepository extends JpaRepository<UserDao, Integer> {
 
 //    @Autowired
 //    private final JdbcTemplate jdbcTemplate;

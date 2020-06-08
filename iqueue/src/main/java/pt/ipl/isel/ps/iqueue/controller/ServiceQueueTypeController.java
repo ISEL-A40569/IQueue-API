@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pt.ipl.isel.ps.iqueue.model.ServiceQueueType;
+import pt.ipl.isel.ps.iqueue.dao.ServiceQueueTypeDao;
 import pt.ipl.isel.ps.iqueue.repository.ServiceQueueTypeRepository;
 
 @RestController
@@ -43,7 +43,7 @@ public class ServiceQueueTypeController {
     }
 
     @PostMapping(headers = {"Accept=application/json", "Content-Type=application/json"})
-    public ResponseEntity add(@RequestBody ServiceQueueType serviceQueueType) {
+    public ResponseEntity add(@RequestBody ServiceQueueTypeDao serviceQueueType) {
         try {
             if (serviceQueueTypeRepository.add(serviceQueueType) != 0) {
                 return ResponseEntity
@@ -74,7 +74,7 @@ public class ServiceQueueTypeController {
     }
 
     @PutMapping(value = "{serviceQueueTypeId}", headers = {"Accept=application/json", "Content-Type=application/json"})
-    public ResponseEntity update(@PathVariable int serviceQueueTypeId, @RequestBody ServiceQueueType serviceQueueType) {
+    public ResponseEntity update(@PathVariable int serviceQueueTypeId, @RequestBody ServiceQueueTypeDao serviceQueueType) {
         serviceQueueType.setServiceQueueTypeId(serviceQueueTypeId);
         try {
             if (serviceQueueTypeRepository.update(serviceQueueType)) {

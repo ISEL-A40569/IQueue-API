@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pt.ipl.isel.ps.iqueue.model.Attendance;
+import pt.ipl.isel.ps.iqueue.dao.AttendanceDao;
 import pt.ipl.isel.ps.iqueue.repository.AttendanceRepository;
 
 @RestController
@@ -43,7 +43,7 @@ public class AttendanceController {
     }
 
     @PostMapping(headers = {"Accept=application/json", "Content-Type=application/json"})
-    public ResponseEntity add(@RequestBody  Attendance attendance) {
+    public ResponseEntity add(@RequestBody AttendanceDao attendance) {
         try {
             int insertedId = attendanceRepository.add(attendance);
             if (insertedId != 0) {
@@ -76,7 +76,7 @@ public class AttendanceController {
     }
 
     @PutMapping(value = "{attendanceId}", headers = {"Accept=application/json", "Content-Type=application/json"})
-    public ResponseEntity update(@PathVariable int attendanceId, @RequestBody  Attendance attendance) {
+    public ResponseEntity update(@PathVariable int attendanceId, @RequestBody AttendanceDao attendance) {
         attendance.setAttendanceId(attendanceId);
         try {
             if (attendanceRepository.update(attendance)) {

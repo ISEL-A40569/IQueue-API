@@ -2,26 +2,28 @@ package pt.ipl.isel.ps.iqueue.controller;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import pt.ipl.isel.ps.iqueue.mapping.DaoModelMapper;
 
 
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
-public abstract class Controller<T> {
+public abstract class Controller<M, K, D> {
 
-    final private JpaRepository<T, Integer> repository;
+    private final JpaRepository<D, K> repository;
+    private final DaoModelMapper<D, M> daoModelMapper;
 
-    public Controller(JpaRepository<T, Integer> repository) {
+    public Controller(JpaRepository<D, K> repository, DaoModelMapper<D, M> daoModelMapper) {
         this.repository = repository;
+        this.daoModelMapper = daoModelMapper;
     }
 
-    protected ResponseEntity getById(int id) {
+    protected ResponseEntity getById(K id) {
         try {
-            Optional<T> t = repository.findById(id);
+            Optional<D> t = findById(id);
             if (t.isPresent()) {
-                return ResponseEntity.ok(t.get());
+                return ResponseEntity.ok(daoModelMapper.mapDtoToModel(t.get()));
             } else {
                 return ResponseEntity.status(404).build();
             }
@@ -33,9 +35,12 @@ public abstract class Controller<T> {
 
     protected ResponseEntity getAll() {
         try {
-            List<T> tList = repository.findAll();
+            List<D> tList = repository.findAll();
             if (!tList.isEmpty()) {
-                return ResponseEntity.ok(tList);
+                return ResponseEntity.ok(tList.stream()
+                        .map(daoModelMapper::mapDtoToModel)
+                        .collect(Collectors.toList())
+                );
             } else {
                 return ResponseEntity.status(404).build();
             }
@@ -45,10 +50,13 @@ public abstract class Controller<T> {
         }
     }
 
-    protected ResponseEntity getSome(List<T> tList) {
+    protected ResponseEntity getSome(List<D> tList) {
         try {
             if (!tList.isEmpty()) {
-                return ResponseEntity.ok(tList);
+                return ResponseEntity.ok(tList.stream()
+                        .map(daoModelMapper::mapDtoToModel)
+                        .collect(Collectors.toList())
+                );
             } else {
                 return ResponseEntity.status(404).build();
             }
@@ -58,21 +66,24 @@ public abstract class Controller<T> {
         }
     }
 
-    protected ResponseEntity add(T newT, String locationString) {
+    protected abstract ResponseEntity add(M newM);
+
+    protected ResponseEntity add(M newM, String locationString) {
         try {
             return ResponseEntity.status(201)
                     .header("Location", locationString)
-                    .body(newT);
+                    .body(newM);
 
         } catch (Exception exception) {
             return ResponseEntity.status(500).build();
         }
     }
 
-    protected ResponseEntity remove(Optional<T> t) {
+    protected ResponseEntity remove(K id) {
         try {
-            if (t.isPresent()) {
-                repository.delete(t.get());
+            Optional<D> optionalDTo = findById(id);
+            if (optionalDTo.isPresent()) {
+                repository.delete(optionalDTo.get());
                 return ResponseEntity.ok().build();
             } else {
                 return ResponseEntity.status(404).build();
@@ -82,16 +93,21 @@ public abstract class Controller<T> {
         }
     }
 
-    protected ResponseEntity update(Optional<T> oldT, T newT) {
+    protected ResponseEntity update(K id, M newM) {
         try {
-            if (oldT.isPresent()) {
-                repository.save(newT);
-                return ResponseEntity.ok(newT);
+            Optional<D> optionalDTo = findById(id);
+            if (optionalDTo.isPresent()) {
+                repository.save(daoModelMapper.mapModelToDto(newM));
+                return ResponseEntity.ok(newM);
             } else {
                 return ResponseEntity.status(404).build();
             }
         } catch (Exception exception) {
             return ResponseEntity.status(500).build();
         }
+    }
+
+    private Optional<D> findById(K id) {
+        return repository.findById(id);
     }
 }

@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pt.ipl.isel.ps.iqueue.model.Language;
+import pt.ipl.isel.ps.iqueue.dao.LanguageDao;
 import pt.ipl.isel.ps.iqueue.repository.LanguageRepository;
 
 @RestController
@@ -43,7 +43,7 @@ public class LanguageController {
     }
 
     @PostMapping(headers = {"Accept=application/json", "Content-Type=application/json"})
-    public ResponseEntity add(@RequestBody Language language) {
+    public ResponseEntity add(@RequestBody LanguageDao language) {
         try {
             if (languageRepository.add(language)) {
                 return ResponseEntity
@@ -74,7 +74,7 @@ public class LanguageController {
     }
 
     @PutMapping(value = "{languageId}", headers = {"Accept=application/json", "Content-Type=application/json"})
-    public ResponseEntity update(@PathVariable int languageId, @RequestBody Language language) {
+    public ResponseEntity update(@PathVariable int languageId, @RequestBody LanguageDao language) {
         language.setLanguageId(languageId);
         try {
             if (languageRepository.update(language)) {

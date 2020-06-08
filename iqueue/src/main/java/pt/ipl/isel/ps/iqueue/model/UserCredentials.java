@@ -1,30 +1,23 @@
 package pt.ipl.isel.ps.iqueue.model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
 
-@Entity
-@Table(name = "UserCredentials")
 public class UserCredentials {
-    @Id
-    @Column(name = "userId")
-    private int userId;
 
-    @Column(name = "password")
-    private String password;
+    private final int userId;
+
+    private final String password;
+
+    public UserCredentials(int userId, String password) {
+        this.userId = userId;
+        this.password = password;
+    }
 
     public int getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
     public String getPassword() {
         return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 }

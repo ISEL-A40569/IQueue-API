@@ -28,10 +28,10 @@ foreign key(languageId) references [Language](languageId)
 go
 
 create table [User](
-userId int primary key,
+userId int identity primary key,
 userName varchar(100) not null,
 email varchar(100) not null,
-telephoneNumber int,
+telephoneNumber varchar(15),
 [address] varchar(200),
 userProfileId int not null,
 )
@@ -77,6 +77,8 @@ go
 create table OperatorBeacon(
 operatorId int references Operator(operatorId), 
 beaconId int references Beacon(beaconId),
+startDate date not null,
+endDate date,
 primary key(operatorId, beaconId)
 )
 
@@ -112,7 +114,7 @@ foreign key(languageId) references [Language](languageId)
 
 go
 
-create table ServiceQueueDesk(
+create table Desk(
 deskId int identity primary key,
 serviceQueueId int references ServiceQueue(serviceQueueId),
 deskDescription varchar(50)
@@ -121,8 +123,10 @@ deskDescription varchar(50)
 go
 
 create table DeskUser(
-deskId int references ServiceQueueDesk(deskId),
+deskId int references Desk(deskId),
 userId int references [User](userId),
+startDate date not null,
+endDate date,
 primary key(deskId, userId)
 )
 
@@ -130,7 +134,8 @@ go
 
 create table Attendance(
 attendanceId int identity primary key,
-deskId int references ServiceQueueDesk(deskId) not null,
+serviceQueueId int references ServiceQueue(serviceQueueId), not null,
+deskId int references Desk(deskId),
 clientId int references [User](userId) not null,
 startWaitingDateTime datetime not null,
 startAttendanceDateTime datetime,
@@ -197,11 +202,11 @@ insert into AttendanceStatus values(3, 2, 'Concluído')
 insert into AttendanceStatus values(4, 2, 'Desistência')
 insert into AttendanceStatus values(5, 2, 'Falta')
 
-insert into [User] values(1, 'Administrator', 'admin@email.com', null, null, 1)
+insert into [User] values('Administrator', 'admin@email.com', null, null, 1)
 insert into UserCredentials values(1, '$2a$10$7FSwcv.GcqzRXI3o6UB/X.U1xAnKGVDpk18KUY3D2JzLP./qUZBkC')
 
 commit
 
---select * from [Log]
-
+select * from [User] 
+select * from UserCredentials
 

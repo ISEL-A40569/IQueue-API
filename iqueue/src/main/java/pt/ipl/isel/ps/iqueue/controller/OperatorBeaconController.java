@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pt.ipl.isel.ps.iqueue.model.OperatorBeacon;
+import pt.ipl.isel.ps.iqueue.dao.OperatorBeaconDao;
 import pt.ipl.isel.ps.iqueue.repository.OperatorBeaconRepository;
 
 @RestController
@@ -54,7 +54,7 @@ public class OperatorBeaconController {
     }
 
     @PostMapping(value = "/api/iqueue/operator/beacon", headers = {"Accept=application/json", "Content-Type=application/json"})
-    public ResponseEntity add(@RequestBody OperatorBeacon operatorBeacon) {
+    public ResponseEntity add(@RequestBody OperatorBeaconDao operatorBeacon) {
         try {
             if (operatorBeaconRepository.add(operatorBeacon)) {
                 return ResponseEntity

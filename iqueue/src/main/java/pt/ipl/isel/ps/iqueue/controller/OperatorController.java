@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pt.ipl.isel.ps.iqueue.model.Operator;
+import pt.ipl.isel.ps.iqueue.dao.OperatorDao;
 import pt.ipl.isel.ps.iqueue.repository.OperatorRepository;
 
 @CrossOrigin(origins = "https://localhost:4200", maxAge = 3600)
@@ -44,7 +44,7 @@ public class OperatorController {
     }
 
     @PostMapping(headers = {"Accept=application/json", "Content-Type=application/json"})
-    public ResponseEntity add(@RequestBody Operator operator) {
+    public ResponseEntity add(@RequestBody OperatorDao operator) {
         try {
             int insertedId = operatorRepository.add(operator);
             if (insertedId != 0) {
@@ -76,7 +76,7 @@ public class OperatorController {
     }
 
     @PutMapping(value = "{operatorId}", headers = {"Accept=application/json", "Content-Type=application/json"})
-    public ResponseEntity update(@PathVariable int operatorId, @RequestBody Operator operator) {
+    public ResponseEntity update(@PathVariable int operatorId, @RequestBody OperatorDao operator) {
         operator.setOperatorId(operatorId);
         try {
             if (operatorRepository.update(operator)) {
