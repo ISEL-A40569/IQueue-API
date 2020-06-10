@@ -77,8 +77,6 @@ go
 create table OperatorBeacon(
 operatorId int references Operator(operatorId), 
 beaconId int references Beacon(beaconId),
-startDate date not null,
-endDate date,
 primary key(operatorId, beaconId)
 )
 
@@ -125,8 +123,6 @@ go
 create table DeskUser(
 deskId int references Desk(deskId),
 userId int references [User](userId),
-startDate date not null,
-endDate date,
 primary key(deskId, userId)
 )
 

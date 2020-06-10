@@ -1,21 +1,21 @@
 package pt.ipl.isel.ps.iqueue.mapping;
 
+import org.springframework.stereotype.Component;
 import pt.ipl.isel.ps.iqueue.dao.DeskUserDao;
 import pt.ipl.isel.ps.iqueue.dao.embeddable.DeskUserIds;
 import pt.ipl.isel.ps.iqueue.model.DeskUser;
 
+@Component
 public class DeskUserDaoModelMapper implements DaoModelMapper<DeskUserDao, DeskUser> {
     @Override
-    public DeskUser mapDtoToModel(DeskUserDao dao) {
+    public DeskUser mapDaoToModel(DeskUserDao dao) {
         return new DeskUser(dao.getDeskUserIds().getDeskId(),
-                dao.getDeskUserIds().getUserId(),
-                dao.getStartDate(), dao.getEndDate());
+                dao.getDeskUserIds().getUserId());
     }
 
     @Override
-    public DeskUserDao mapModelToDto(DeskUser model) {
+    public DeskUserDao mapModelToDao(DeskUser model) {
         return new DeskUserDao(new DeskUserIds(model.getDeskId(),
-                model.getUserId()), model.getStartDate(),
-                model.getEndDate());
+                model.getUserId()));
     }
 }

@@ -1,9 +1,10 @@
 package pt.ipl.isel.ps.iqueue.dao.embeddable;
 
 import javax.persistence.Embeddable;
+import java.io.Serializable;
 
 @Embeddable
-public class AttendanceStatusIds {
+public class AttendanceStatusIds implements Serializable {
     private int attendanceStatusId;
     private int languageId;
 

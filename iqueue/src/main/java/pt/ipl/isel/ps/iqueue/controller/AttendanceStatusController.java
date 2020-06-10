@@ -1,59 +1,53 @@
 package pt.ipl.isel.ps.iqueue.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pt.ipl.isel.ps.iqueue.dao.AttendanceStatusDao;
+import pt.ipl.isel.ps.iqueue.dao.embeddable.AttendanceStatusIds;
+import pt.ipl.isel.ps.iqueue.mapping.AttendanceStatusDaoModelMapper;
+import pt.ipl.isel.ps.iqueue.model.AttendanceStatus;
 import pt.ipl.isel.ps.iqueue.repository.AttendanceStatusRepository;
+
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/iqueue/attendancestatus")
-public class AttendanceStatusController {
+public class AttendanceStatusController extends Controller<AttendanceStatus, AttendanceStatusIds, AttendanceStatusDao> {
 
     @Autowired
     private final AttendanceStatusRepository attendanceStatusRepository;
 
-    public AttendanceStatusController(AttendanceStatusRepository attendanceStatusRepository) {
+    @Autowired
+    private final AttendanceStatusDaoModelMapper attendanceStatusDaoModelMapper;
+
+    public AttendanceStatusController(AttendanceStatusRepository attendanceStatusRepository, AttendanceStatusDaoModelMapper attendanceStatusDaoModelMapper) {
+        super(attendanceStatusRepository, attendanceStatusDaoModelMapper);
         this.attendanceStatusRepository = attendanceStatusRepository;
+        this.attendanceStatusDaoModelMapper = attendanceStatusDaoModelMapper;
     }
 
     @GetMapping(value = "{attendanceStatusId}", headers = {"Accept=application/json"})
-    public ResponseEntity getByIds(@PathVariable int attendanceStatusId, @RequestParam int languageId) {
-        try {
-            return ResponseEntity.ok(attendanceStatusRepository.getByIds(attendanceStatusId, languageId));
-        } catch (EmptyResultDataAccessException emptyResultDataAccessException) {
-            return ResponseEntity.status(404).build();
-        }
-        catch (Exception exception) {
-            return ResponseEntity.status(500).build();
-        }
+    public ResponseEntity getById(@PathVariable int attendanceStatusId, @RequestParam int languageId) {
+        return super.getById(new AttendanceStatusIds(attendanceStatusId, languageId));
     }
 
     @GetMapping(headers = {"Accept=application/json"})
     public ResponseEntity getByLanguage(@RequestParam int languageId) {
-        try {
-            return ResponseEntity.ok(attendanceStatusRepository.getByLanguage(languageId));
-        } catch (EmptyResultDataAccessException emptyResultDataAccessException) {
-            return ResponseEntity.status(404).build();
-        }
-        catch (Exception exception) {
-            return ResponseEntity.status(500).build();
-        }
+        return super.getSome(attendanceStatusRepository
+                .findAll()
+                .stream()
+                .filter(attendanceStatusDao -> attendanceStatusDao.getAttendanceStatusIds().getLanguageId() == languageId)
+                .collect(Collectors.toList())
+        );
     }
 
     @PostMapping(headers = {"Accept=application/json", "Content-Type=application/json"})
-    public ResponseEntity add(@RequestBody AttendanceStatusDao attendanceStatus) {
+    public ResponseEntity add(@RequestBody AttendanceStatus attendanceStatus) {
         try {
-            if (attendanceStatusRepository.add(attendanceStatus) != 0) {
-                return ResponseEntity
-                        .status(201)
-                        .header("Location", "/api/iqueue/attendancestatus/" + attendanceStatus.getAttendanceStatusIds())
-                        .body(attendanceStatus);
-            }
-            else {
-                return ResponseEntity.status(409).build();
-            }
+            attendanceStatusRepository.save(attendanceStatusDaoModelMapper.mapModelToDao(attendanceStatus));
+
+            return super.add(attendanceStatus, "/api/iqueue/attendancestatus/" + attendanceStatus.getAttendanceStatusId());
         } catch (Exception exception) {
             return ResponseEntity.status(500).build();
         }
@@ -61,32 +55,12 @@ public class AttendanceStatusController {
 
     @DeleteMapping(value = "{attendanceStatusId}")
     public ResponseEntity remove(@PathVariable int attendanceStatusId, @RequestParam int languageId) {
-        try {
-            if (attendanceStatusRepository.remove(attendanceStatusId, languageId)) {
-                return ResponseEntity.ok().build();
-            } else {
-                return ResponseEntity.status(404).build();
-            }
-        }
-        catch (Exception exception) {
-            return ResponseEntity.status(500).build();
-        }
+        return super.remove(new AttendanceStatusIds(attendanceStatusId, languageId));
     }
 
     @PutMapping(value = "{attendanceStatusId}", headers = {"Accept=application/json", "Content-Type=application/json"})
     public ResponseEntity udpate(@PathVariable int attendanceStatusId, @RequestParam int languageId,
-                                 @RequestBody AttendanceStatusDao attendanceStatus) {
-        attendanceStatus.setAttendanceStatusIds(attendanceStatusId);
-        attendanceStatus.setLanguageId(languageId);
-        try {
-            if (attendanceStatusRepository.update(attendanceStatus)) {
-                return ResponseEntity.ok().body(attendanceStatus);
-            } else {
-                return ResponseEntity.status(404).build();
-            }
-        }
-        catch (Exception exception) {
-            return ResponseEntity.status(500).build();
-        }
+                                 @RequestBody AttendanceStatus attendanceStatus) {
+        return super.update(new AttendanceStatusIds(attendanceStatusId, languageId), attendanceStatus);
     }
 }

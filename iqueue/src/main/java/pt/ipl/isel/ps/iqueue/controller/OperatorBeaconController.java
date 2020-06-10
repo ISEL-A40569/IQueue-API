@@ -1,89 +1,73 @@
 package pt.ipl.isel.ps.iqueue.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pt.ipl.isel.ps.iqueue.dao.OperatorBeaconDao;
+import pt.ipl.isel.ps.iqueue.dao.embeddable.OperatorBeaconIds;
+import pt.ipl.isel.ps.iqueue.mapping.OperatorBeaconDaoModelMapper;
+import pt.ipl.isel.ps.iqueue.model.OperatorBeacon;
 import pt.ipl.isel.ps.iqueue.repository.OperatorBeaconRepository;
 
+import java.util.stream.Collectors;
+
 @RestController
-public class OperatorBeaconController {
+@RequestMapping("/api/iqueue/operator")
+public class OperatorBeaconController extends Controller<OperatorBeacon, OperatorBeaconIds, OperatorBeaconDao> {
 
     @Autowired
-    final private OperatorBeaconRepository operatorBeaconRepository;
+    private final OperatorBeaconRepository operatorBeaconRepository;
 
-    public OperatorBeaconController(OperatorBeaconRepository operatorBeaconRepository) {
+    @Autowired
+    private final OperatorBeaconDaoModelMapper operatorBeaconDaoModelMapper;
+
+    public OperatorBeaconController(OperatorBeaconRepository operatorBeaconRepository, OperatorBeaconDaoModelMapper operatorBeaconDaoModelMapper) {
+        super(operatorBeaconRepository, operatorBeaconDaoModelMapper);
         this.operatorBeaconRepository = operatorBeaconRepository;
+        this.operatorBeaconDaoModelMapper = operatorBeaconDaoModelMapper;
     }
 
-    @GetMapping(value = "/api/iqueue/operator/{operatorId}/beacon", headers = {"Accept=application/json"})
+    @GetMapping(value = "{operatorId}/beacon", headers = {"Accept=application/json"})
     public ResponseEntity getOperatorBeacons(@PathVariable int operatorId) {
-        try {
-            return ResponseEntity.ok(operatorBeaconRepository.getOperatorBeacons(operatorId));
-        } catch (EmptyResultDataAccessException emptyResultDataAccessException) {
-            return ResponseEntity.status(404).build();
-        }
-        catch (Exception exception) {
-            return ResponseEntity.status(500).build();
-        }
+        return super.getSome(operatorBeaconRepository
+                .findAll()
+                .stream()
+                .filter(operatorBeaconDao -> operatorBeaconDao.getOperatorBeaconIds().getOperatorId() == operatorId)
+                .collect(Collectors.toList())
+        );
     }
 
-    @GetMapping(value = "/api/iqueue/operator/beacon/{beaconId}", headers = {"Accept=application/json"})
+    @GetMapping(value = "beacon/{beaconId}", headers = {"Accept=application/json"})
     public ResponseEntity getBeaconOperator(@PathVariable int beaconId) {
-        try {
-            return ResponseEntity.ok(operatorBeaconRepository.getBeaconOperator(beaconId));
-        } catch (EmptyResultDataAccessException emptyResultDataAccessException) {
-            return ResponseEntity.status(404).build();
-        }
-        catch (Exception exception) {
-            return ResponseEntity.status(500).build();
-        }
+        return super.getSome(operatorBeaconRepository
+                .findAll()
+                .stream()
+                .filter(operatorBeaconDao -> operatorBeaconDao.getOperatorBeaconIds().getBeaconId() == beaconId)
+                .collect(Collectors.toList())
+        );
     }
 
-    @GetMapping(value = "/api/iqueue/operator/beacon", headers = {"Accept=application/json"})
+    @GetMapping(value = "beacon", headers = {"Accept=application/json"})
     public ResponseEntity getAll() {
-        try {
-            return ResponseEntity.ok(operatorBeaconRepository.getAll());
-        } catch (EmptyResultDataAccessException emptyResultDataAccessException) {
-            return ResponseEntity.status(404).build();
-        }
-        catch (Exception exception) {
-            return ResponseEntity.status(500).build();
-        }
+        return super.getAll();
     }
 
-    @PostMapping(value = "/api/iqueue/operator/beacon", headers = {"Accept=application/json", "Content-Type=application/json"})
-    public ResponseEntity add(@RequestBody OperatorBeaconDao operatorBeacon) {
+    @PostMapping(value = "beacon", headers = {"Accept=application/json", "Content-Type=application/json"})
+    public ResponseEntity add(@RequestBody OperatorBeacon operatorBeacon) {
         try {
-            if (operatorBeaconRepository.add(operatorBeacon)) {
-                return ResponseEntity
-                        .status(201)
-                        .header("Location", "/api/iqueue/operator/" + operatorBeacon.getOperatorId() +
-                                "/beacon/" + operatorBeacon.getBeaconId())
-                        .body(operatorBeacon);
-            }
-            else {
-                return ResponseEntity.status(409).build();
-            }
+            operatorBeaconRepository.save(operatorBeaconDaoModelMapper.mapModelToDao(operatorBeacon));
+
+            return super.add(operatorBeacon, "/api/iqueue/operator/" + operatorBeacon.getOperatorId() +
+                    "/beacon/" + operatorBeacon.getBeaconId());
+
         } catch (Exception exception) {
             return ResponseEntity.status(500).build();
         }
     }
 
-    @DeleteMapping("/api/iqueue/operator/{operatorId}/beacon/{beaconId}")
+    @DeleteMapping("{operatorId}/beacon/{beaconId}")
     public ResponseEntity remove(@PathVariable int operatorId, @PathVariable int beaconId) {
-        try {
-            if (operatorBeaconRepository.remove(operatorId, beaconId)) {
-                return ResponseEntity.ok().build();
-            }
-            else {
-                return ResponseEntity.status(404).build();
-            }
-        }
-        catch (Exception exception) {
-            return ResponseEntity.status(500).build();
-        }
+        return super.remove(new OperatorBeaconIds(operatorId, beaconId));
     }
 
 }

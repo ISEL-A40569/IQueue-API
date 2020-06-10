@@ -1,7 +1,5 @@
 package pt.ipl.isel.ps.iqueue.model;
 
-import javax.persistence.Column;
-
 public class Operator {
     private final int operatorId;
     private final String operatorDescription;

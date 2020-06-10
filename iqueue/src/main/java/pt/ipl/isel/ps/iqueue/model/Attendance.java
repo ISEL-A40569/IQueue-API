@@ -1,6 +1,5 @@
 package pt.ipl.isel.ps.iqueue.model;
 
-import javax.persistence.Column;
 import java.time.LocalDateTime;
 
 public class Attendance {

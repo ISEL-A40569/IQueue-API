@@ -1,9 +1,10 @@
 package pt.ipl.isel.ps.iqueue.dao.embeddable;
 
 import javax.persistence.Embeddable;
+import java.io.Serializable;
 
 @Embeddable
-public class OperatorBeaconIds {
+public class OperatorBeaconIds implements Serializable {
     private int operatorId;
     private int beaconId;
 

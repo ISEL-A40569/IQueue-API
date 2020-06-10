@@ -1,9 +1,10 @@
 package pt.ipl.isel.ps.iqueue.dao.embeddable;
 
 import javax.persistence.Embeddable;
+import java.io.Serializable;
 
 @Embeddable
-public class ServiceQueueTypeIds {
+public class ServiceQueueTypeIds implements Serializable {
     int serviceQueueTypeId;
     int languageId;
 

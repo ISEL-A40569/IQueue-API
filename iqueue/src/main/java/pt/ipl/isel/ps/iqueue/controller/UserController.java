@@ -4,26 +4,32 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import pt.ipl.isel.ps.iqueue.dao.UserDao;
 import pt.ipl.isel.ps.iqueue.dao.UserCredentialsDao;
+import pt.ipl.isel.ps.iqueue.dao.UserDao;
+import pt.ipl.isel.ps.iqueue.mapping.UserCredentialsDaoModelMapper;
+import pt.ipl.isel.ps.iqueue.mapping.UserDaoModelMapper;
 import pt.ipl.isel.ps.iqueue.model.User;
+import pt.ipl.isel.ps.iqueue.model.UserCredentials;
 import pt.ipl.isel.ps.iqueue.repository.UserCredentialsRepository;
 import pt.ipl.isel.ps.iqueue.repository.UserRepository;
 import pt.ipl.isel.ps.iqueue.utils.EmailService;
 import pt.ipl.isel.ps.iqueue.utils.PasswordGenerator;
 
-import java.util.List;
-import java.util.Optional;
-
 @RestController
 @RequestMapping("/api/iqueue/user")
-public class UserController {
+public class UserController extends Controller<User, Integer, UserDao> {
 
     @Autowired
     private final UserRepository userRepository;
 
     @Autowired
+    private final UserDaoModelMapper userDaoModelMapper;
+
+    @Autowired
     private final UserCredentialsRepository userCredentialsRepository;
+
+    @Autowired
+    private final UserCredentialsDaoModelMapper userCredentialsDaoModelMapper;
 
     @Autowired
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -34,9 +40,12 @@ public class UserController {
     @Autowired
     private final EmailService emailService;
 
-    public UserController(UserRepository userRepository, UserCredentialsRepository userCredentialsRepository, BCryptPasswordEncoder bCryptPasswordEncoder, PasswordGenerator passwordGenerator, EmailService emailService) {
+    public UserController(UserRepository userRepository, UserDaoModelMapper userDaoModelMapper, UserCredentialsRepository userCredentialsRepository, UserCredentialsDaoModelMapper userCredentialsDaoModelMapper, BCryptPasswordEncoder bCryptPasswordEncoder, PasswordGenerator passwordGenerator, EmailService emailService) {
+        super(userRepository, userDaoModelMapper);
         this.userRepository = userRepository;
+        this.userDaoModelMapper = userDaoModelMapper;
         this.userCredentialsRepository = userCredentialsRepository;
+        this.userCredentialsDaoModelMapper = userCredentialsDaoModelMapper;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.passwordGenerator = passwordGenerator;
         this.emailService = emailService;
@@ -44,50 +53,31 @@ public class UserController {
 
     @GetMapping(value = "{userId}", headers = {"Accept=application/json"})
     public ResponseEntity getById(@PathVariable int userId) {
-        try {
-            Optional<UserDao> optionalUser = userRepository.findById(userId);
-            if (optionalUser.isPresent()) {
-                return ResponseEntity.ok(optionalUser.get());
-            } else {
-                return ResponseEntity.status(404).build();
-            }
-        }
-        catch (Exception exception) {
-            return ResponseEntity.status(500).build();
-        }
+        return super.getById(userId);
     }
 
     @GetMapping(headers = {"Accept=application/json"})
     public ResponseEntity getAll() {
-        try {
-            List<UserDao> userList = userRepository.findAll();
-            if (!userList.isEmpty()) {
-                return ResponseEntity.ok(userList);
-            } else {
-                return ResponseEntity.status(404).build();
-            }
-        }
-        catch (Exception exception) {
-            return ResponseEntity.status(500).build();
-        }
+        return super.getAll();
     }
 
     @PostMapping(headers = {"Accept=application/json", "Content-Type=application/json"})
     public ResponseEntity add(@RequestBody User user) {
         try {
-            UserDao createdUser = userRepository.save(user);
+            User createdUser = userDaoModelMapper.mapDaoToModel(userRepository.save(userDaoModelMapper.
+                    mapModelToDao(user)));
 
             String newPassword = passwordGenerator.generatePassword();
 
-            UserCredentialsDao userCredentials = new UserCredentialsDao(createdUser.getUserId(), bCryptPasswordEncoder.encode(newPassword));
-            userCredentialsRepository.save(userCredentials);
+            UserCredentialsDao userCredentialsDao = new UserCredentialsDao(createdUser.getUserId(),
+                    bCryptPasswordEncoder.encode(newPassword));
+            userCredentialsRepository.save(userCredentialsDao);
 
             emailService.sendEmail(user.getEmail(),
                     "Welcome to IQueue, your password is " + newPassword);
 
-            return ResponseEntity.status(201)
-                    .header("Location", "/api/iqueue/user/" + createdUser.getUserId())
-                    .body(user);
+            return super.add(createdUser,
+                    "/api/iqueue/user/" + createdUser.getUserId());
 
         } catch (Exception exception) {
             return ResponseEntity.status(500).build();
@@ -95,42 +85,20 @@ public class UserController {
     }
 
     @DeleteMapping(value = "{userId}", headers = {"Accept=application/json"})
-    public ResponseEntity remove(@PathVariable int userId) {
-        try {
-            Optional<UserDao> optionalUser = userRepository.findById(userId);
-            if (optionalUser.isPresent()) {
-                userCredentialsRepository.delete(userCredentialsRepository.findById(userId).get());
-                userRepository.delete(optionalUser.get());
-                return ResponseEntity.ok().build();
-            } else {
-                return ResponseEntity.status(404).build();
-            }
-        } catch (Exception exception) {
-            return ResponseEntity.status(500).build();
-        }
+    public ResponseEntity remove(@PathVariable Integer userId) {
+        return super.remove(userId);
     }
 
     @PutMapping(value = "{userId}", headers = {"Accept=application/json", "Content-Type=application/json"})
-    public ResponseEntity update(@PathVariable int userId, @RequestBody UserDao user) {
-        try {
-            Optional<UserDao> optionalUser = userRepository.findById(userId);
-            if (optionalUser.isPresent()) {
-                user.setUserId(userId);
-                userRepository.save(user);
-                return ResponseEntity.ok(user);
-            } else {
-                return ResponseEntity.status(404).build();
-            }
-        } catch (Exception exception) {
-            return ResponseEntity.status(500).build();
-        }
+    public ResponseEntity update(@PathVariable Integer userId, @RequestBody User user) {
+        return super.update(userId, user);
     }
 
     @PutMapping(value = "{userId}/credentials", headers = {"Accept=application/json"})
-    public ResponseEntity changePassword(@PathVariable int userId, @RequestBody UserCredentialsDao newUserCredentials) {
+    public ResponseEntity changePassword(@PathVariable int userId, @RequestBody UserCredentials newUserCredentials) {
         try {
             newUserCredentials.setPassword(bCryptPasswordEncoder.encode(newUserCredentials.getPassword()));
-            userCredentialsRepository.save(newUserCredentials);
+            userCredentialsRepository.save(userCredentialsDaoModelMapper.mapModelToDao(newUserCredentials));
             return ResponseEntity.ok().build();
         } catch (Exception exception) {
             return ResponseEntity.status(500).build();

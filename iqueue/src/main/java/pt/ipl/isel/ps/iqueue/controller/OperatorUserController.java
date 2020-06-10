@@ -1,86 +1,66 @@
 package pt.ipl.isel.ps.iqueue.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pt.ipl.isel.ps.iqueue.dao.OperatorUserDao;
+import pt.ipl.isel.ps.iqueue.dao.embeddable.OperatorUserIds;
+import pt.ipl.isel.ps.iqueue.mapping.OperatorUserDaoModelMapper;
+import pt.ipl.isel.ps.iqueue.model.OperatorUser;
 import pt.ipl.isel.ps.iqueue.repository.OperatorUserRepository;
 
+import java.util.stream.Collectors;
+
 @RestController
-public class OperatorUserController {
+@RequestMapping("/api/iqueue/operator")
+public class OperatorUserController extends Controller<OperatorUser, OperatorUserIds, OperatorUserDao> {
 
     @Autowired
-    final private OperatorUserRepository operatorUserRepository;
+    private final OperatorUserRepository operatorUserRepository;
 
-    public OperatorUserController(OperatorUserRepository operatorUserRepository) {
+    @Autowired
+    private final OperatorUserDaoModelMapper operatorUserDaoModelMapper;
+
+    public OperatorUserController(OperatorUserRepository operatorUserRepository, OperatorUserDaoModelMapper operatorUserDaoModelMapper) {
+        super(operatorUserRepository, operatorUserDaoModelMapper);
         this.operatorUserRepository = operatorUserRepository;
+        this.operatorUserDaoModelMapper = operatorUserDaoModelMapper;
     }
 
-    @GetMapping(value = "/api/iqueue/operator/{operatorId}/user", headers = {"Accept=application/json"})
+    @GetMapping(value = "{operatorId}/user", headers = {"Accept=application/json"})
     public ResponseEntity getOperatorUsers(@PathVariable int operatorId) {
-        try {
-            return ResponseEntity.ok(operatorUserRepository.getOperatorUsers(operatorId));
-        } catch (EmptyResultDataAccessException emptyResultDataAccessException) {
-            return ResponseEntity.status(404).build();
-        }
-        catch (Exception exception) {
-            return ResponseEntity.status(500).build();
-        }
+        return super.getSome(operatorUserRepository
+                .findAll()
+                .stream()
+                .filter(operatorUserDao -> operatorUserDao.getOperatorUserIds().getOperatorId() == operatorId)
+                .collect(Collectors.toList())
+        );
     }
 
-    @GetMapping(value = "/api/iqueue/operator/user/{userId}", headers = {"Accept=application/json"})
+    @GetMapping(value = "user/{userId}", headers = {"Accept=application/json"})
     public ResponseEntity getUserOperator(@PathVariable int userId) {
-        try {
-            return ResponseEntity.ok(operatorUserRepository.getUserOperator(userId));
-        } catch (EmptyResultDataAccessException emptyResultDataAccessException) {
-            return ResponseEntity.status(404).build();
-        }
-        catch (Exception exception) {
-            return ResponseEntity.status(500).build();
-        }
+        return super.getSome(operatorUserRepository
+                .findAll()
+                .stream()
+                .filter(operatorUserDao -> operatorUserDao.getOperatorUserIds().getUserId() == userId)
+                .collect(Collectors.toList())
+        );
     }
 
-    @GetMapping(value = "/api/iqueue/operator/user", headers = {"Accept=application/json"})
-    public ResponseEntity getAll() {
+    @PostMapping(value = "user", headers = {"Accept=application/json", "Content-Type=application/json"})
+    public ResponseEntity add(@RequestBody OperatorUser operatorUser) {
         try {
-            return ResponseEntity.ok(operatorUserRepository.getAll());
-        } catch (EmptyResultDataAccessException emptyResultDataAccessException) {
-            return ResponseEntity.status(404).build();
-        }
-        catch (Exception exception) {
-            return ResponseEntity.status(500).build();
-        }
-    }
+            operatorUserRepository.save(operatorUserDaoModelMapper.mapModelToDao(operatorUser));
 
-    @PostMapping(value = "/api/iqueue/operator/user", headers = {"Accept=application/json", "Content-Type=application/json"})
-    public ResponseEntity add(@RequestBody OperatorUserDao operatorUser) {
-        try {
-            if (operatorUserRepository.add(operatorUser)) {
-                return ResponseEntity
-                        .status(201)
-                        .header("Location", "/api/iqueue/operator/" + operatorUser.getOperatorId() +
-                                "/user/" + operatorUser.getUserId())
-                        .body(operatorUser);
-            }
-            else {
-                return ResponseEntity.status(409).build();
-            }
+            return super.add(operatorUser, "/api/iqueue/operator/" + operatorUser.getOperatorId() +
+                    "/user/" + operatorUser.getUserId());
         } catch (Exception exception) {
             return ResponseEntity.status(500).build();
         }
     }
 
-    @DeleteMapping("/api/iqueue/operator/{operatorId}/user/{userId}")
+    @DeleteMapping("{operatorId}/user/{userId}")
     public ResponseEntity remove(@PathVariable int operatorId, @PathVariable int userId) {
-        try {
-            if (operatorUserRepository.remove(operatorId, userId)){
-                return ResponseEntity.ok().build();
-            } else {
-                return ResponseEntity.status(404).build();
-            }
-        } catch (Exception exception) {
-            return ResponseEntity.status(500).build();
-        }
+        return super.remove(new OperatorUserIds(operatorId, userId));
     }
 }

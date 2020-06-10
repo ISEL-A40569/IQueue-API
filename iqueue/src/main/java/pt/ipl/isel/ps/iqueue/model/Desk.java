@@ -1,7 +1,5 @@
 package pt.ipl.isel.ps.iqueue.model;
 
-import javax.persistence.Column;
-
 public class Desk {
     private final int deskId;
     private final int serviceQueueId;

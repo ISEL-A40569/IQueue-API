@@ -1,12 +1,18 @@
 package pt.ipl.isel.ps.iqueue.model;
 
-import javax.persistence.Column;
-
 public class UserCredentials {
 
-    private final int userId;
+    private int userId;
 
-    private final String password;
+    private String password;
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public UserCredentials(int userId, String password) {
         this.userId = userId;

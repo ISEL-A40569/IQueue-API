@@ -2,7 +2,6 @@ package pt.ipl.isel.ps.iqueue.utils;
 
 import junit.framework.TestCase;
 import org.junit.Test;
-import org.springframework.boot.test.context.TestComponent;
 
 public class PasswordGeneratorTest extends TestCase {
     private final PasswordGenerator passwordGenerator = new PasswordGenerator();

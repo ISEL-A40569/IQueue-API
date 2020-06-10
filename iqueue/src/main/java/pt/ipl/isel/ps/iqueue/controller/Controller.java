@@ -4,7 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import pt.ipl.isel.ps.iqueue.mapping.DaoModelMapper;
 
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -23,7 +22,7 @@ public abstract class Controller<M, K, D> {
         try {
             Optional<D> t = findById(id);
             if (t.isPresent()) {
-                return ResponseEntity.ok(daoModelMapper.mapDtoToModel(t.get()));
+                return ResponseEntity.ok(daoModelMapper.mapDaoToModel(t.get()));
             } else {
                 return ResponseEntity.status(404).build();
             }
@@ -38,7 +37,7 @@ public abstract class Controller<M, K, D> {
             List<D> tList = repository.findAll();
             if (!tList.isEmpty()) {
                 return ResponseEntity.ok(tList.stream()
-                        .map(daoModelMapper::mapDtoToModel)
+                        .map(daoModelMapper::mapDaoToModel)
                         .collect(Collectors.toList())
                 );
             } else {
@@ -54,7 +53,7 @@ public abstract class Controller<M, K, D> {
         try {
             if (!tList.isEmpty()) {
                 return ResponseEntity.ok(tList.stream()
-                        .map(daoModelMapper::mapDtoToModel)
+                        .map(daoModelMapper::mapDaoToModel)
                         .collect(Collectors.toList())
                 );
             } else {
@@ -97,7 +96,7 @@ public abstract class Controller<M, K, D> {
         try {
             Optional<D> optionalDTo = findById(id);
             if (optionalDTo.isPresent()) {
-                repository.save(daoModelMapper.mapModelToDto(newM));
+                repository.save(daoModelMapper.mapModelToDao(newM));
                 return ResponseEntity.ok(newM);
             } else {
                 return ResponseEntity.status(404).build();

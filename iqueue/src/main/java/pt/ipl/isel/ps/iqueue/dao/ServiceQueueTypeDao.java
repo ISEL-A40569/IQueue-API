@@ -4,7 +4,11 @@ import pt.ipl.isel.ps.iqueue.dao.embeddable.ServiceQueueTypeIds;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "ServiceQueueType")
 public class ServiceQueueTypeDao {
 
     @EmbeddedId

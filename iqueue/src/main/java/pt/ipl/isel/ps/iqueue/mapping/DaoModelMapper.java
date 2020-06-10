@@ -2,8 +2,8 @@ package pt.ipl.isel.ps.iqueue.mapping;
 
 public interface DaoModelMapper<D, M> {
 
-    M mapDtoToModel(D dao);
+    M mapDaoToModel(D dao);
 
-    D mapModelToDto(M model);
+    D mapModelToDao(M model);
 
 }

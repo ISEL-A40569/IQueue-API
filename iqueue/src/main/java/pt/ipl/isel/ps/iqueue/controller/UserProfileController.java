@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pt.ipl.isel.ps.iqueue.dao.UserProfileDao;
 import pt.ipl.isel.ps.iqueue.dao.embeddable.UserProfileIds;
-import pt.ipl.isel.ps.iqueue.mapping.DaoModelMapper;
+import pt.ipl.isel.ps.iqueue.mapping.UserProfileDaoModelMapper;
 import pt.ipl.isel.ps.iqueue.model.UserProfile;
 import pt.ipl.isel.ps.iqueue.repository.UserProfileRepository;
 
@@ -17,12 +17,14 @@ public class UserProfileController extends Controller<UserProfile, UserProfileId
 
     @Autowired
     private final UserProfileRepository userProfileRepository;
-    private final DaoModelMapper<UserProfileDao, UserProfile> daoModelMapper;
 
-    public UserProfileController(UserProfileRepository userProfileRepository, DaoModelMapper<UserProfileDao, UserProfile> daoModelMapper) {
-        super(userProfileRepository, daoModelMapper);
+    @Autowired
+    private final UserProfileDaoModelMapper userProfileDaoModelMapper;
+
+    public UserProfileController(UserProfileRepository userProfileRepository,  UserProfileDaoModelMapper userProfileDaoModelMapper) {
+        super(userProfileRepository, userProfileDaoModelMapper);
         this.userProfileRepository = userProfileRepository;
-        this.daoModelMapper = daoModelMapper;
+        this.userProfileDaoModelMapper = userProfileDaoModelMapper;
     }
 
     @GetMapping(value = "{userProfileId}", headers = {"Accept=application/json"})
@@ -35,19 +37,22 @@ public class UserProfileController extends Controller<UserProfile, UserProfileId
         return super.getSome(userProfileRepository
                 .findAll()
                 .stream()
-                .filter(userProfile -> userProfile.getUserProfileIds().getLanguageId() == languageId)
+                .filter(userProfileDao -> userProfileDao.getUserProfileIds().getLanguageId() == languageId)
                 .collect(Collectors.toList())
         );
     }
 
-    @Override
     @PostMapping(headers = {"Accept=application/json", "Content-Type=application/json"})
     protected ResponseEntity add(@RequestBody UserProfile userProfile) {
-        UserProfile createdUserProfile = daoModelMapper.mapDtoToModel(userProfileRepository.
-                save(daoModelMapper.mapModelToDto(userProfile)));
+        try {
+            userProfileRepository.save(userProfileDaoModelMapper.mapModelToDao(userProfile));
 
-        return super.add(createdUserProfile, "/api/iqueue/userprofile/" + createdUserProfile
-                .getUserProfileId());
+            return super.add(userProfile, "/api/iqueue/userprofile/" + userProfile
+                    .getUserProfileId());
+
+        } catch (Exception exception) {
+            return ResponseEntity.status(500).build();
+        }
     }
 
     @DeleteMapping(value = "{userProfileId}")

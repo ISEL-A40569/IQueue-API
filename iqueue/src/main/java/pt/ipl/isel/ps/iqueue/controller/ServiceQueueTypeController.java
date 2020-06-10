@@ -1,59 +1,55 @@
 package pt.ipl.isel.ps.iqueue.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pt.ipl.isel.ps.iqueue.dao.ServiceQueueTypeDao;
+import pt.ipl.isel.ps.iqueue.dao.embeddable.ServiceQueueTypeIds;
+import pt.ipl.isel.ps.iqueue.mapping.ServiceQueueTypeDaoModelMapper;
+import pt.ipl.isel.ps.iqueue.model.ServiceQueueType;
 import pt.ipl.isel.ps.iqueue.repository.ServiceQueueTypeRepository;
+
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/iqueue/servicequeuetype")
-public class ServiceQueueTypeController {
+public class ServiceQueueTypeController extends Controller<ServiceQueueType, ServiceQueueTypeIds, ServiceQueueTypeDao> {
 
     @Autowired
-    final private ServiceQueueTypeRepository serviceQueueTypeRepository;
+    private final ServiceQueueTypeRepository serviceQueueTypeRepository;
 
-    public ServiceQueueTypeController(ServiceQueueTypeRepository serviceQueueTypeRepository) {
+    @Autowired
+    private final ServiceQueueTypeDaoModelMapper serviceQueueTypeDaoModelMapper;
+
+    public ServiceQueueTypeController(ServiceQueueTypeRepository serviceQueueTypeRepository, ServiceQueueTypeDaoModelMapper serviceQueueTypeDaoModelMapper) {
+        super(serviceQueueTypeRepository, serviceQueueTypeDaoModelMapper);
         this.serviceQueueTypeRepository = serviceQueueTypeRepository;
+        this.serviceQueueTypeDaoModelMapper = serviceQueueTypeDaoModelMapper;
     }
 
     @GetMapping(value = "{serviceQueueTypeId}", headers = {"Accept=application/json"})
-    public ResponseEntity getByIds(@PathVariable int serviceQueueTypeId, @RequestParam int languageId) {
-        try {
-            return ResponseEntity.ok(serviceQueueTypeRepository.getByIds(serviceQueueTypeId, languageId));
-        } catch (EmptyResultDataAccessException emptyResultDataAccessException) {
-            return ResponseEntity.status(404).build();
-        }
-        catch (Exception exception) {
-            return ResponseEntity.status(500).build();
-        }
+    public ResponseEntity getById(@PathVariable int serviceQueueTypeId, @RequestParam int languageId) {
+        return super.getById(new ServiceQueueTypeIds(serviceQueueTypeId, languageId));
     }
 
     @GetMapping(headers = {"Accept=application/json"})
     public ResponseEntity getAll(@RequestParam int languageId) {
-        try {
-            return ResponseEntity.ok(serviceQueueTypeRepository.getAll(languageId));
-        } catch (EmptyResultDataAccessException emptyResultDataAccessException) {
-            return ResponseEntity.status(404).build();
-        }
-        catch (Exception exception) {
-            return ResponseEntity.status(500).build();
-        }
+        return super.getSome(serviceQueueTypeRepository
+                .findAll()
+                .stream()
+                .filter(serviceQueueTypeDao -> serviceQueueTypeDao.getServiceQueueTypeIds().getLanguageId() == languageId)
+                .collect(Collectors.toList())
+        );
     }
 
     @PostMapping(headers = {"Accept=application/json", "Content-Type=application/json"})
-    public ResponseEntity add(@RequestBody ServiceQueueTypeDao serviceQueueType) {
+    public ResponseEntity add(@RequestBody ServiceQueueType serviceQueueType) {
         try {
-            if (serviceQueueTypeRepository.add(serviceQueueType) != 0) {
-                return ResponseEntity
-                        .status(201)
-                        .header("Location", "/api/iqueue/servicequeuetype/" + serviceQueueType.getServiceQueueTypeId())
-                        .body(serviceQueueType);
-            }
-            else {
-                return ResponseEntity.status(409).build();
-            }
+            serviceQueueTypeRepository.save(serviceQueueTypeDaoModelMapper.mapModelToDao(serviceQueueType));
+
+            return super.add(serviceQueueType, "/api/iqueue/servicequeuetype/" + serviceQueueType
+                    .getServiceQueueTypeId());
+
         } catch (Exception exception) {
             return ResponseEntity.status(500).build();
         }
@@ -61,30 +57,11 @@ public class ServiceQueueTypeController {
 
     @DeleteMapping(value = "{serviceQueueTypeId}")
     public ResponseEntity remove(@PathVariable int serviceQueueTypeId,  @RequestParam int languageId) {
-        try {
-            if (serviceQueueTypeRepository.remove(serviceQueueTypeId, languageId)) {
-                return ResponseEntity.ok().build();
-            }
-            else {
-                return ResponseEntity.status(404).build();
-            }
-        } catch (Exception exception) {
-            return ResponseEntity.status(500).build();
-        }
+        return super.remove(new ServiceQueueTypeIds(serviceQueueTypeId, languageId));
     }
 
     @PutMapping(value = "{serviceQueueTypeId}", headers = {"Accept=application/json", "Content-Type=application/json"})
-    public ResponseEntity update(@PathVariable int serviceQueueTypeId, @RequestBody ServiceQueueTypeDao serviceQueueType) {
-        serviceQueueType.setServiceQueueTypeId(serviceQueueTypeId);
-        try {
-            if (serviceQueueTypeRepository.update(serviceQueueType)) {
-                return ResponseEntity.ok().body(serviceQueueType);
-            }
-            else {
-                return ResponseEntity.status(404).build();
-            }
-        } catch (Exception exception) {
-            return ResponseEntity.status(500).build();
-        }
+    public ResponseEntity update(@PathVariable int serviceQueueTypeId, @RequestBody ServiceQueueType serviceQueueType, @RequestParam int languageId) {
+        return super.update(new ServiceQueueTypeIds(serviceQueueTypeId, languageId), serviceQueueType);
     }
 }
