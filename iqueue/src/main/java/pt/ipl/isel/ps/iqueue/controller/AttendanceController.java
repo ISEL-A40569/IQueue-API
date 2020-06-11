@@ -54,6 +54,7 @@ public class AttendanceController extends Controller<Attendance, Integer, Attend
 
     @PutMapping(value = "{attendanceId}", headers = {"Accept=application/json", "Content-Type=application/json"})
     public ResponseEntity update(@PathVariable int attendanceId, @RequestBody Attendance attendance) {
+        attendance.setAttendanceId(attendanceId);
         return super.update(attendanceId, attendance);
     }
 }

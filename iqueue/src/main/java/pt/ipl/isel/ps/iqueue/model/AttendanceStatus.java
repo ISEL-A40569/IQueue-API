@@ -1,9 +1,9 @@
 package pt.ipl.isel.ps.iqueue.model;
 
 public class AttendanceStatus {
-    private final int attendanceStatusId;
-    private final int languageId;
-    private final String attendanceStatusDescription;
+    private int attendanceStatusId;
+    private int languageId;
+    private String attendanceStatusDescription;
 
     public AttendanceStatus(int attendanceStatusId, int languageId, String attendanceStatusDescription) {
         this.attendanceStatusId = attendanceStatusId;
@@ -21,5 +21,17 @@ public class AttendanceStatus {
 
     public String getAttendanceStatusDescription() {
         return attendanceStatusDescription;
+    }
+
+    public void setAttendanceStatusId(int attendanceStatusId) {
+        this.attendanceStatusId = attendanceStatusId;
+    }
+
+    public void setLanguageId(int languageId) {
+        this.languageId = languageId;
+    }
+
+    public void setAttendanceStatusDescription(String attendanceStatusDescription) {
+        this.attendanceStatusDescription = attendanceStatusDescription;
     }
 }

@@ -61,6 +61,7 @@ public class AttendanceStatusController extends Controller<AttendanceStatus, Att
     @PutMapping(value = "{attendanceStatusId}", headers = {"Accept=application/json", "Content-Type=application/json"})
     public ResponseEntity udpate(@PathVariable int attendanceStatusId, @RequestParam int languageId,
                                  @RequestBody AttendanceStatus attendanceStatus) {
+        attendanceStatus.setAttendanceStatusId(attendanceStatusId);
         return super.update(new AttendanceStatusIds(attendanceStatusId, languageId), attendanceStatus);
     }
 }

@@ -1,3 +1,5 @@
+use master
+
 drop database if exists iqueuedb
 
 go
@@ -130,12 +132,12 @@ go
 
 create table Attendance(
 attendanceId int identity primary key,
-serviceQueueId int references ServiceQueue(serviceQueueId), not null,
+serviceQueueId int references ServiceQueue(serviceQueueId) not null,
 deskId int references Desk(deskId),
 clientId int references [User](userId) not null,
 startWaitingDateTime datetime not null,
 startAttendanceDateTime datetime,
-endAttendanceTime datetime,
+endAttendanceDateTime datetime,
 attendanceStatusId int not null
 )
 

@@ -61,8 +61,9 @@ public class UserProfileController extends Controller<UserProfile, UserProfileId
     }
 
     @PutMapping(value = "{userProfileId}", headers = {"Accept=application/json", "Content-Type=application/json"})
-    public ResponseEntity update(@PathVariable int userProfileId, @RequestParam int languageId, @RequestBody UserProfile newUserProfile) {
-        return super.update(new UserProfileIds(userProfileId, languageId), newUserProfile);
+    public ResponseEntity update(@PathVariable int userProfileId, @RequestBody UserProfile newUserProfile) {
+        newUserProfile.setUserProfileId(userProfileId);
+        return super.update(new UserProfileIds(userProfileId, newUserProfile.getLanguageId()), newUserProfile);
     }
 
     private UserProfileIds buildKeyObject(int userProfileId, int languageId) {

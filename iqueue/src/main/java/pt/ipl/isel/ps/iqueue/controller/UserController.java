@@ -86,11 +86,17 @@ public class UserController extends Controller<User, Integer, UserDao> {
 
     @DeleteMapping(value = "{userId}", headers = {"Accept=application/json"})
     public ResponseEntity remove(@PathVariable Integer userId) {
-        return super.remove(userId);
+        try {
+            userCredentialsRepository.delete(userCredentialsRepository.findById(userId).get());
+            return super.remove(userId);
+        } catch (Exception exception) {
+            return ResponseEntity.status(500).build();
+        }
     }
 
     @PutMapping(value = "{userId}", headers = {"Accept=application/json", "Content-Type=application/json"})
     public ResponseEntity update(@PathVariable Integer userId, @RequestBody User user) {
+        user.setUserId(userId);
         return super.update(userId, user);
     }
 

@@ -1,8 +1,8 @@
 package pt.ipl.isel.ps.iqueue.model;
 
 public class Language {
-    private final int languageId;
-    private final String languageDescription;
+    private int languageId;
+    private String languageDescription;
 
     public Language(int languageId, String languageDescription) {
         this.languageId = languageId;
@@ -15,5 +15,13 @@ public class Language {
 
     public String getLanguageDescription() {
         return languageDescription;
+    }
+
+    public void setLanguageId(int languageId) {
+        this.languageId = languageId;
+    }
+
+    public void setLanguageDescription(String languageDescription) {
+        this.languageDescription = languageDescription;
     }
 }

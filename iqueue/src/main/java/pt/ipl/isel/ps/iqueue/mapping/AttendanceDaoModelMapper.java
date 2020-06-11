@@ -9,16 +9,16 @@ public class AttendanceDaoModelMapper implements DaoModelMapper<AttendanceDao, A
     @Override
     public Attendance mapDaoToModel(AttendanceDao dao) {
         return new Attendance(dao.getAttendanceId(), dao.getServiceQueueId(),
-                dao.getDeskId(), dao.getClientId(), dao.getStartWaitingTime(),
-                dao.getStartAttendanceTime(), dao.getEndAttendanceTime(),
+                dao.getDeskId(), dao.getClientId(), dao.getStartWaitingDateTime(),
+                dao.getStartAttendanceDateTime(), dao.getEndAttendanceDateTime(),
                 dao.getAttendanceStatusId());
     }
 
     @Override
     public AttendanceDao mapModelToDao(Attendance model) {
         return new AttendanceDao(model.getAttendanceId(), model.getServiceQueueId(),
-                model.getDeskId(), model.getClientId(), model.getStartWaitingTime(),
-                model.getStartAttendanceTime(), model.getEndAttendanceTime(),
+                model.getDeskId(), model.getClientId(), model.getStartWaitingDateTime(),
+                model.getStartAttendanceDateTime(), model.getEndAttendanceDateTime(),
                 model.getAttendanceStatusId());
     }
 }

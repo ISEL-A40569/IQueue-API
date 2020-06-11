@@ -52,6 +52,7 @@ public class LanguageController extends Controller<Language, Integer, LanguageDa
 
     @PutMapping(value = "{languageId}", headers = {"Accept=application/json", "Content-Type=application/json"})
     public ResponseEntity update(@PathVariable int languageId, @RequestBody Language language) {
+        language.setLanguageId(languageId);
         return super.update(languageId, language);
     }
 }

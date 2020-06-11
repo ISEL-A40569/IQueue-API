@@ -47,7 +47,7 @@ public class DeskController extends Controller<Desk, Integer, DeskDao> {
             Desk createdDesk = deskDaoModelMapper.mapDaoToModel(deskRepository
                     .save(deskDaoModelMapper.mapModelToDao(desk)));
 
-            return super.add(desk, "/api/iqueue/desk/" + createdDesk.getDeskId());
+            return super.add(createdDesk, "/api/iqueue/desk/" + createdDesk.getDeskId());
 
         } catch (Exception exception) {
             return ResponseEntity.status(500).build();
@@ -59,8 +59,9 @@ public class DeskController extends Controller<Desk, Integer, DeskDao> {
         return super.remove(deskId);
     }
 
-    @PutMapping(value = "/api/iqueue/operator/servicequeue/desk/{deskId}")
+    @PutMapping(value = "{deskId}")
     public ResponseEntity update(@PathVariable int deskId, @RequestBody Desk desk) {
+        desk.setDeskId(deskId);
         return super.update(deskId, desk);
     }
 

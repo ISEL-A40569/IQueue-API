@@ -60,6 +60,7 @@ public class ServiceQueueController extends Controller<ServiceQueue, Integer, Se
 
     @PutMapping(value = "{serviceQueueId}", headers = {"Accept=application/json", "Content-Type=application/json"})
     public ResponseEntity update(@PathVariable int serviceQueueId, @RequestBody ServiceQueue serviceQueue) {
+        serviceQueue.setServiceQueueId(serviceQueueId);
         return super.update(serviceQueueId, serviceQueue);
     }
 }

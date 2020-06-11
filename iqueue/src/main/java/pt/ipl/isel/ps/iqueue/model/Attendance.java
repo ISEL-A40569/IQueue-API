@@ -3,23 +3,23 @@ package pt.ipl.isel.ps.iqueue.model;
 import java.time.LocalDateTime;
 
 public class Attendance {
-    private final int attendanceId;
-    private final int serviceQueueId;
-    private final int deskId;
-    private final int clientId;
-    private final LocalDateTime startWaitingTime;
-    private final LocalDateTime startAttendanceTime;
-    private final LocalDateTime endAttendanceTime;
-    private final int attendanceStatusId;
+    private int attendanceId;
+    private int serviceQueueId;
+    private int deskId;
+    private int clientId;
+    private LocalDateTime startWaitingDateTime;
+    private LocalDateTime startAttendanceDateTime;
+    private LocalDateTime endAttendanceDateTime;
+    private int attendanceStatusId;
 
-    public Attendance(int attendanceId, int serviceQueueId, int deskId, int clientId, LocalDateTime startWaitingTime, LocalDateTime startAttendanceTime, LocalDateTime endAttendanceTime, int attendanceStatusId) {
+    public Attendance(int attendanceId, int serviceQueueId, int deskId, int clientId, LocalDateTime startWaitingDateTime, LocalDateTime startAttendanceDateTime, LocalDateTime endAttendanceDateTime, int attendanceStatusId) {
         this.attendanceId = attendanceId;
         this.serviceQueueId = serviceQueueId;
         this.deskId = deskId;
         this.clientId = clientId;
-        this.startWaitingTime = startWaitingTime;
-        this.startAttendanceTime = startAttendanceTime;
-        this.endAttendanceTime = endAttendanceTime;
+        this.startWaitingDateTime = startWaitingDateTime;
+        this.startAttendanceDateTime = startAttendanceDateTime;
+        this.endAttendanceDateTime = endAttendanceDateTime;
         this.attendanceStatusId = attendanceStatusId;
     }
 
@@ -39,19 +39,23 @@ public class Attendance {
         return clientId;
     }
 
-    public LocalDateTime getStartWaitingTime() {
-        return startWaitingTime;
+    public LocalDateTime getStartWaitingDateTime() {
+        return startWaitingDateTime;
     }
 
-    public LocalDateTime getStartAttendanceTime() {
-        return startAttendanceTime;
+    public LocalDateTime getStartAttendanceDateTime() {
+        return startAttendanceDateTime;
     }
 
-    public LocalDateTime getEndAttendanceTime() {
-        return endAttendanceTime;
+    public LocalDateTime getEndAttendanceDateTime() {
+        return endAttendanceDateTime;
     }
 
     public int getAttendanceStatusId() {
         return attendanceStatusId;
+    }
+
+    public void setAttendanceId(int attendanceId) {
+        this.attendanceId = attendanceId;
     }
 }

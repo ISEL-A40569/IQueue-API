@@ -1,12 +1,12 @@
 package pt.ipl.isel.ps.iqueue.model;
 
 public class Beacon {
-    private final int beaconId;
-    private final String beaconMacAddress;
-    private final String namespaceId;
-    private final String instanceId;
-    private final String manufacturer;
-    private final String model;
+    private int beaconId;
+    private String beaconMacAddress;
+    private String namespaceId;
+    private String instanceId;
+    private String manufacturer;
+    private String model;
 
     public Beacon(int beaconId, String beaconMacAddress, String namespaceId, String instanceId, String manufacturer, String model) {
         this.beaconId = beaconId;
@@ -39,5 +39,29 @@ public class Beacon {
 
     public String getModel() {
         return model;
+    }
+
+    public void setBeaconId(int beaconId) {
+        this.beaconId = beaconId;
+    }
+
+    public void setBeaconMacAddress(String beaconMacAddress) {
+        this.beaconMacAddress = beaconMacAddress;
+    }
+
+    public void setNamespaceId(String namespaceId) {
+        this.namespaceId = namespaceId;
+    }
+
+    public void setInstanceId(String instanceId) {
+        this.instanceId = instanceId;
+    }
+
+    public void setManufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
     }
 }

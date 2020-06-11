@@ -32,7 +32,7 @@
 									"// Response has expected properties test\r",
 									"pm.test(\"response has expected properties\", () => {\r",
 									"    pm.expect(jsonObject).to.have.property('languageId')\r",
-									"    pm.expect(jsonObject.languageId).to.eql(pm.environment.get(\"languageId\"))\r",
+									"    pm.expect(jsonObject.languageId).to.eql(+pm.environment.get(\"languageId\"))\r",
 									"    pm.expect(jsonObject).to.have.property('languageDescription')\r",
 									"    pm.expect(jsonObject.languageDescription).not.to.eql('')\r",
 									"})\r",
@@ -45,6 +45,21 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "secret",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "user",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [
 							{
@@ -98,7 +113,7 @@
 									"// Response has expected properties test\r",
 									"pm.test(\"response has expected properties\", () => {\r",
 									"    pm.expect(jsonObject).to.have.property('languageId')\r",
-									"    pm.expect(jsonObject.languageId).to.eql(pm.environment.get(\"languageId\"))\r",
+									"    pm.expect(jsonObject.languageId).to.eql(+pm.environment.get(\"languageId\"))\r",
 									"    pm.expect(jsonObject).to.have.property('languageDescription')\r",
 									"    pm.expect(jsonObject.languageDescription).not.to.eql('')\r",
 									"})"
@@ -225,7 +240,7 @@
 									"// Response has expected properties test\r",
 									"pm.test(\"response has expected properties\", () => {\r",
 									"    pm.expect(jsonObject).to.have.property('languageId')\r",
-									"    pm.expect(jsonObject.languageId).to.eql(pm.environment.get(\"languageId\"))\r",
+									"    pm.expect(jsonObject.languageId).to.eql(+pm.environment.get(\"languageId\"))\r",
 									"    pm.expect(jsonObject).to.have.property('languageDescription')\r",
 									"    pm.expect(jsonObject.languageDescription).not.to.eql('')\r",
 									"})"
@@ -296,7 +311,7 @@
 									"    pm.expect(jsonObject.userProfileId).to.eql(+pm.environment.get(\"userProfileId\"))\r",
 									"    \r",
 									"    pm.expect(jsonObject).to.have.property('languageId')\r",
-									"    pm.expect(jsonObject.languageId).to.eql(pm.environment.get(\"languageId\"))\r",
+									"    pm.expect(jsonObject.languageId).to.eql(+pm.environment.get(\"languageId\"))\r",
 									"    \r",
 									"    pm.expect(jsonObject).to.have.property('userProfileDescription')\r",
 									"    pm.expect(jsonObject.languageDescription).not.to.eql('')\r",
@@ -308,6 +323,21 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "secret",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "user",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -362,7 +392,7 @@
 									"    pm.expect(jsonObject.userProfileId).to.eql(+pm.environment.get(\"userProfileId\"))\r",
 									"    \r",
 									"    pm.expect(jsonObject).to.have.property('languageId')\r",
-									"    pm.expect(jsonObject.languageId).to.eql(pm.environment.get(\"languageId\"))\r",
+									"    pm.expect(jsonObject.languageId).to.eql(+pm.environment.get(\"languageId\"))\r",
 									"    \r",
 									"    pm.expect(jsonObject).to.have.property('userProfileDescription')\r",
 									"    pm.expect(jsonObject.languageDescription).not.to.eql('')\r",
@@ -441,6 +471,21 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "secret",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "user",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -491,7 +536,7 @@
 									"    pm.expect(jsonObject.userProfileId).to.eql(+pm.environment.get('userProfileId'))\r",
 									"    \r",
 									"    pm.expect(jsonObject).to.have.property('languageId')\r",
-									"    pm.expect(jsonObject.languageId).to.eql(pm.environment.get('languageId'))\r",
+									"    pm.expect(jsonObject.languageId).to.eql(+pm.environment.get('languageId'))\r",
 									"    \r",
 									"    pm.expect(jsonObject).to.have.property('userProfileDescription')\r",
 									"    pm.expect(jsonObject.languageDescription).not.to.eql('')\r",
@@ -570,8 +615,8 @@
 									"    pm.expect(jsonObject).to.have.property('email')\r",
 									"    pm.expect(jsonObject.email).to.eql('test@email.pt')    \r",
 									"    \r",
-									"    pm.expect(jsonObject).to.have.property('phoneNumber')\r",
-									"    pm.expect(jsonObject.phoneNumber).to.eql(123456789)  \r",
+									"    pm.expect(jsonObject).to.have.property('telephoneNumber')\r",
+									"    pm.expect(jsonObject.telephoneNumber).to.eql('123456789')  \r",
 									"    \r",
 									"    pm.expect(jsonObject).to.have.property('address')\r",
 									"    pm.expect(jsonObject.address).to.eql('Rua das Flores')      \r",
@@ -593,7 +638,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"userName\": \"test\",\r\n    \"email\": \"test@email.pt\",\r\n    \"phoneNumber\": 123456789,\r\n    \"address\": \"Rua das Flores\",\r\n    \"userProfileId\": {{userProfileId}}\r\n}",
+							"raw": "{\r\n    \"userName\": \"test\",\r\n    \"email\": \"test@email.pt\",\r\n    \"telephoneNumber\": 123456789,\r\n    \"address\": \"Rua das Flores\",\r\n    \"userProfileId\": {{userProfileId}}\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -648,8 +693,8 @@
 									"    pm.expect(jsonObject).to.have.property('email')\r",
 									"    pm.expect(jsonObject.email).to.eql('test@email.pt')    \r",
 									"    \r",
-									"    pm.expect(jsonObject).to.have.property('phoneNumber')\r",
-									"    pm.expect(jsonObject.phoneNumber).to.eql(123456789)  \r",
+									"    pm.expect(jsonObject).to.have.property('telephoneNumber')\r",
+									"    pm.expect(jsonObject.telephoneNumber).to.eql('123456789')  \r",
 									"    \r",
 									"    pm.expect(jsonObject).to.have.property('address')\r",
 									"    pm.expect(jsonObject.address).to.eql('Rua das Flores')      \r",
@@ -718,8 +763,8 @@
 									"    pm.expect(entry).to.have.property('email')\r",
 									"    pm.expect(entry.email).not.to.eql('')    \r",
 									"    \r",
-									"    pm.expect(entry).to.have.property('phoneNumber')\r",
-									"    pm.expect(entry.phoneNumber).not.to.eql('')  \r",
+									"    pm.expect(entry).to.have.property('telephoneNumber')\r",
+									"    pm.expect(entry.telephoneNumber).not.to.eql('')  \r",
 									"    \r",
 									"    pm.expect(entry).to.have.property('address')\r",
 									"    pm.expect(entry.address).not.to.eql('')  \r",
@@ -784,8 +829,8 @@
 									"    pm.expect(jsonObject).to.have.property('email')\r",
 									"    pm.expect(jsonObject.email).to.eql('updated@email.pt')    \r",
 									"    \r",
-									"    pm.expect(jsonObject).to.have.property('phoneNumber')\r",
-									"    pm.expect(jsonObject.phoneNumber).to.eql(123123123)  \r",
+									"    pm.expect(jsonObject).to.have.property('telephoneNumber')\r",
+									"    pm.expect(jsonObject.telephoneNumber).to.eql('123123123')  \r",
 									"    \r",
 									"    pm.expect(jsonObject).to.have.property('address')\r",
 									"    pm.expect(jsonObject.address).to.eql('updated')      \r",
@@ -807,7 +852,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"userName\": \"updated\",\r\n    \"email\": \"updated@email.pt\",\r\n    \"phoneNumber\": 123123123,\r\n    \"address\": \"updated\",\r\n    \"userProfileId\": {{userProfileId}}\r\n}",
+							"raw": "{\r\n    \"userName\": \"updated\",\r\n    \"email\": \"updated@email.pt\",\r\n    \"telephoneNumber\": 123123123,\r\n    \"address\": \"updated\",\r\n    \"userProfileId\": {{userProfileId}}\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -864,7 +909,7 @@
 									"    pm.expect(jsonObject.serviceQueueTypeId).to.eql(+pm.environment.get(\"serviceQueueTypeId\"))\r",
 									"    \r",
 									"    pm.expect(jsonObject).to.have.property('languageId')\r",
-									"    pm.expect(jsonObject.languageId).to.eql(pm.environment.get(\"languageId\"))\r",
+									"    pm.expect(jsonObject.languageId).to.eql(+pm.environment.get(\"languageId\"))\r",
 									"    \r",
 									"    pm.expect(jsonObject).to.have.property('serviceQueueTypeDescription')\r",
 									"    pm.expect(jsonObject.serviceQueueTypeDescription).to.eql('test')\r",
@@ -930,7 +975,7 @@
 									"    pm.expect(jsonObject.serviceQueueTypeId).to.eql(+pm.environment.get(\"serviceQueueTypeId\"))\r",
 									"    \r",
 									"    pm.expect(jsonObject).to.have.property('languageId')\r",
-									"    pm.expect(jsonObject.languageId).to.eql(pm.environment.get(\"languageId\"))\r",
+									"    pm.expect(jsonObject.languageId).to.eql(+pm.environment.get(\"languageId\"))\r",
 									"    \r",
 									"    pm.expect(jsonObject).to.have.property('serviceQueueTypeDescription')\r",
 									"    pm.expect(jsonObject.serviceQueueTypeDescription).to.eql('test')\r",
@@ -1059,7 +1104,7 @@
 									"    pm.expect(jsonObject.serviceQueueTypeId).to.eql(+pm.environment.get(\"serviceQueueTypeId\"))\r",
 									"    \r",
 									"    pm.expect(jsonObject).to.have.property('languageId')\r",
-									"    pm.expect(jsonObject.languageId).to.eql(pm.environment.get(\"languageId\"))\r",
+									"    pm.expect(jsonObject.languageId).to.eql(+pm.environment.get(\"languageId\"))\r",
 									"    \r",
 									"    pm.expect(jsonObject).to.have.property('serviceQueueTypeDescription')\r",
 									"    pm.expect(jsonObject.serviceQueueTypeDescription).to.eql('UPDATED!')\r",
@@ -1407,264 +1452,6 @@
 			"protocolProfileBehavior": {}
 		},
 		{
-			"name": "Client",
-			"item": [
-				{
-					"name": "POST Client",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "a4b7ecb2-2b5b-40fa-b7f2-0ef9a9bb0d4b",
-								"exec": [
-									"// OK response test\r",
-									"pm.test(\"response is ok\", () => {\r",
-									"    pm.response.to.have.status(201)\r",
-									"    pm.response.to.not.be.error\r",
-									"})\r",
-									"\r",
-									"// Response has body test\r",
-									"pm.test(\"response has body\", () => {\r",
-									"    pm.response.to.have.body\r",
-									"})\r",
-									"\r",
-									"const jsonObject = JSON.parse(responseBody)\r",
-									"\r",
-									"// Response has expected properties test\r",
-									"pm.test(\"response has expected properties\", () => {\r",
-									"    pm.expect(jsonObject).to.have.property('clientId')\r",
-									"    pm.expect(jsonObject.clientId).not.to.eql(0)\r",
-									"    pm.environment.set('clientId', jsonObject.clientId);\r",
-									"    \r",
-									"    pm.expect(jsonObject).to.have.property('clientName')\r",
-									"    pm.expect(jsonObject.clientName).to.eql('Test') \r",
-									"    \r",
-									"    pm.expect(jsonObject).to.have.property('email')\r",
-									"    pm.expect(jsonObject.email).to.eql('Test@email.com')    \r",
-									"})\r",
-									"\r",
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"clientName\": \"Test\",\r\n    \"email\": \"Test@email.com\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "https://localhost:8443/api/iqueue/client",
-							"protocol": "https",
-							"host": [
-								"localhost"
-							],
-							"port": "8443",
-							"path": [
-								"api",
-								"iqueue",
-								"client"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GET Client",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "584cd603-4a7d-414b-9554-396a26ce19ad",
-								"exec": [
-									"// OK response test\r",
-									"pm.test(\"response is ok\", () => {\r",
-									"    pm.response.to.have.status(200)\r",
-									"    pm.response.to.not.be.error\r",
-									"})\r",
-									"\r",
-									"// Response has body test\r",
-									"pm.test(\"response has body\", () => {\r",
-									"    pm.response.to.have.body\r",
-									"})\r",
-									"\r",
-									"const jsonObject = JSON.parse(responseBody)\r",
-									"\r",
-									"// Response has expected properties test\r",
-									"pm.test(\"response has expected properties\", () => {\r",
-									"    pm.expect(jsonObject).to.have.property('clientId')\r",
-									"    pm.expect(jsonObject.clientId).to.eql(+pm.environment.get('clientId'))\r",
-									"\r",
-									"    pm.expect(jsonObject).to.have.property('clientName')\r",
-									"    pm.expect(jsonObject.clientName).to.eql('Test') \r",
-									"    \r",
-									"    pm.expect(jsonObject).to.have.property('email')\r",
-									"    pm.expect(jsonObject.email).to.eql('Test@email.com')    \r",
-									"})"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "https://localhost:8443/api/iqueue/client/{{clientId}}",
-							"protocol": "https",
-							"host": [
-								"localhost"
-							],
-							"port": "8443",
-							"path": [
-								"api",
-								"iqueue",
-								"client",
-								"{{clientId}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GET Clients",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "9b08e067-6316-4b9a-b2ac-8bbe473a28bb",
-								"exec": [
-									"// OK response test\r",
-									"pm.test(\"response is ok\", () => {\r",
-									"    pm.response.to.have.status(200)\r",
-									"    pm.response.to.not.be.error\r",
-									"})\r",
-									"\r",
-									"// Response has body test\r",
-									"pm.test(\"response has body\", () => {\r",
-									"    pm.response.to.have.body\r",
-									"})\r",
-									"\r",
-									"const jsonObject = JSON.parse(responseBody)\r",
-									"\r",
-									"// Response has expected properties test\r",
-									"pm.test(\"response has expected properties\", () => {\r",
-									"    pm.expect(jsonObject).to.be.an('array')\r",
-									"    \r",
-									"    jsonObject.forEach(entry => {\r",
-									"        pm.expect(entry).to.have.property('clientId')\r",
-									"        pm.expect(entry.clientId).not.to.eql(0)\r",
-									"    \r",
-									"        pm.expect(entry).to.have.property('clientName')\r",
-									"        pm.expect(entry.clientName).not.to.eql('') \r",
-									"        \r",
-									"        pm.expect(entry).to.have.property('email')\r",
-									"        pm.expect(entry.email).not.to.eql('')    \r",
-									"    })\r",
-									"})"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "https://localhost:8443/api/iqueue/client",
-							"protocol": "https",
-							"host": [
-								"localhost"
-							],
-							"port": "8443",
-							"path": [
-								"api",
-								"iqueue",
-								"client"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "PUT Client",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "d15ab3b1-d677-4944-aab4-ec2a033b6ec8",
-								"exec": [
-									"// OK response test\r",
-									"pm.test(\"response is ok\", () => {\r",
-									"    pm.response.to.have.status(200)\r",
-									"    pm.response.to.not.be.error\r",
-									"})\r",
-									"\r",
-									"// Response has body test\r",
-									"pm.test(\"response has body\", () => {\r",
-									"    pm.response.to.have.body\r",
-									"})\r",
-									"\r",
-									"const jsonObject = JSON.parse(responseBody)\r",
-									"\r",
-									"// Response has expected properties test\r",
-									"pm.test(\"response has expected properties\", () => {\r",
-									"    pm.expect(jsonObject).to.have.property('clientId')\r",
-									"    pm.expect(jsonObject.clientId).to.eql(+pm.environment.get('clientId'))\r",
-									"\r",
-									"    pm.expect(jsonObject).to.have.property('clientName')\r",
-									"    pm.expect(jsonObject.clientName).to.eql('Update') \r",
-									"    \r",
-									"    pm.expect(jsonObject).to.have.property('email')\r",
-									"    pm.expect(jsonObject.email).to.eql('Update@email.com')    \r",
-									"})\r",
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"clientName\": \"Update\",\r\n    \"email\": \"Update@email.com\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "https://localhost:8443/api/iqueue/client/{{clientId}}",
-							"protocol": "https",
-							"host": [
-								"localhost"
-							],
-							"port": "8443",
-							"path": [
-								"api",
-								"iqueue",
-								"client",
-								"{{clientId}}"
-							]
-						}
-					},
-					"response": []
-				}
-			],
-			"protocolProfileBehavior": {}
-		},
-		{
 			"name": "Beacon",
 			"item": [
 				{
@@ -1697,21 +1484,12 @@
 									"    pm.expect(jsonObject).to.have.property('beaconMacAddress')\r",
 									"    pm.expect(jsonObject.beaconMacAddress).to.eql('111111111') \r",
 									"    \r",
-									"    pm.expect(jsonObject).to.have.property('uidNamespaceId')\r",
-									"    pm.expect(jsonObject.uidNamespaceId).to.eql('1')    \r",
+									"    pm.expect(jsonObject).to.have.property('namespaceId')\r",
+									"    pm.expect(jsonObject.namespaceId).to.eql('1')    \r",
 									"    \r",
-									"    pm.expect(jsonObject).to.have.property('uidInstanceId')\r",
-									"    pm.expect(jsonObject.uidInstanceId).to.eql('2')  \r",
-									"    \r",
-									"    pm.expect(jsonObject).to.have.property('iBeaconUuid')\r",
-									"    pm.expect(jsonObject.iBeaconUuid).to.eql('1') \r",
-									"    \r",
-									"    pm.expect(jsonObject).to.have.property('iBeaconMajor')\r",
-									"    pm.expect(jsonObject.iBeaconMajor).to.eql('1') \r",
-									"    \r",
-									"    pm.expect(jsonObject).to.have.property('iBeaconMinor')\r",
-									"    pm.expect(jsonObject.iBeaconMinor).to.eql('1')\r",
-									"    \r",
+									"    pm.expect(jsonObject).to.have.property('instanceId')\r",
+									"    pm.expect(jsonObject.instanceId).to.eql('2')  \r",
+									"        \r",
 									"    pm.expect(jsonObject).to.have.property('manufacturer')\r",
 									"    pm.expect(jsonObject.manufacturer).to.eql('Minew')\r",
 									"    \r",
@@ -1729,7 +1507,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"beaconMacAddress\": \"111111111\",\r\n    \"uidNamespaceId\": \"1\",\r\n    \"uidInstanceId\": \"2\",\r\n    \"iBeaconUuid\": \"1\",\r\n    \"iBeaconMajor\": \"1\",\r\n    \"iBeaconMinor\": \"1\",\r\n    \"manufacturer\": \"Minew\",\r\n    \"model\": \"C3\"\r\n}",
+							"raw": "{\r\n    \"beaconMacAddress\": \"111111111\",\r\n    \"namespaceId\": \"1\",\r\n    \"instanceId\": \"2\",\r\n    \"manufacturer\": \"Minew\",\r\n    \"model\": \"C3\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1781,20 +1559,11 @@
 									"    pm.expect(jsonObject).to.have.property('beaconMacAddress')\r",
 									"    pm.expect(jsonObject.beaconMacAddress).to.eql('111111111') \r",
 									"    \r",
-									"    pm.expect(jsonObject).to.have.property('uidNamespaceId')\r",
-									"    pm.expect(jsonObject.uidNamespaceId).to.eql('1')    \r",
+									"    pm.expect(jsonObject).to.have.property('namespaceId')\r",
+									"    pm.expect(jsonObject.namespaceId).to.eql('1')    \r",
 									"    \r",
-									"    pm.expect(jsonObject).to.have.property('uidInstanceId')\r",
-									"    pm.expect(jsonObject.uidInstanceId).to.eql('2')  \r",
-									"    \r",
-									"    pm.expect(jsonObject).to.have.property('iBeaconUuid')\r",
-									"    pm.expect(jsonObject.iBeaconUuid).to.eql('1') \r",
-									"    \r",
-									"    pm.expect(jsonObject).to.have.property('iBeaconMajor')\r",
-									"    pm.expect(jsonObject.iBeaconMajor).to.eql('1') \r",
-									"    \r",
-									"    pm.expect(jsonObject).to.have.property('iBeaconMinor')\r",
-									"    pm.expect(jsonObject.iBeaconMinor).to.eql('1')\r",
+									"    pm.expect(jsonObject).to.have.property('instanceId')\r",
+									"    pm.expect(jsonObject.instanceId).to.eql('2')  \r",
 									"    \r",
 									"    pm.expect(jsonObject).to.have.property('manufacturer')\r",
 									"    pm.expect(jsonObject.manufacturer).to.eql('Minew')\r",
@@ -1860,21 +1629,12 @@
 									"        pm.expect(entry).to.have.property('beaconMacAddress')\r",
 									"        pm.expect(entry.beaconMacAddress).not.to.eql('') \r",
 									"        \r",
-									"        pm.expect(entry).to.have.property('uidNamespaceId')\r",
-									"        pm.expect(entry.uidNamespaceId).not.to.eql('')  \r",
+									"        pm.expect(entry).to.have.property('namespaceId')\r",
+									"        pm.expect(entry.namespaceId).not.to.eql('')  \r",
 									"        \r",
-									"        pm.expect(entry).to.have.property('uidInstanceId')\r",
-									"        pm.expect(entry.uidInstanceId).not.to.eql('')  \r",
-									"        \r",
-									"        pm.expect(entry).to.have.property('iBeaconUuid')\r",
-									"        pm.expect(entry.iBeaconUuid).not.to.eql('') \r",
-									"        \r",
-									"        pm.expect(entry).to.have.property('iBeaconMajor')\r",
-									"        pm.expect(entry.iBeaconMajor).not.to.eql('') \r",
-									"        \r",
-									"        pm.expect(entry).to.have.property('iBeaconMinor')\r",
-									"        pm.expect(entry.iBeaconMinor).not.to.eql('') \r",
-									"        \r",
+									"        pm.expect(entry).to.have.property('instanceId')\r",
+									"        pm.expect(entry.instanceId).not.to.eql('')  \r",
+									"                \r",
 									"        pm.expect(entry).to.have.property('manufacturer')\r",
 									"        pm.expect(entry.manufacturer).not.to.eql('') \r",
 									"        \r",
@@ -1933,23 +1693,14 @@
 									"    pm.expect(jsonObject).to.have.property('beaconId')",
 									"    pm.expect(jsonObject.beaconId).to.eql(pm.environment.get('beaconId'))",
 									"",
-									"    // pm.expect(jsonObject).to.have.property('beaconMacAddress')",
-									"    // pm.expect(jsonObject.beaconMacAddress).to.eql('222222222') ",
+									"    pm.expect(jsonObject).to.have.property('beaconMacAddress')",
+									"    pm.expect(jsonObject.beaconMacAddress).to.eql('222222222') ",
 									"    ",
-									"    pm.expect(jsonObject).to.have.property('uidNamespaceId')",
-									"    pm.expect(jsonObject.uidNamespaceId).to.eql('4')    ",
+									"    pm.expect(jsonObject).to.have.property('namespaceId')",
+									"    pm.expect(jsonObject.namespaceId).to.eql('4')    ",
 									"    ",
-									"    pm.expect(jsonObject).to.have.property('uidInstanceId')",
-									"    pm.expect(jsonObject.uidInstanceId).to.eql('3')  ",
-									"    ",
-									"    pm.expect(jsonObject).to.have.property('iBeaconUuid')",
-									"    pm.expect(jsonObject.iBeaconUuid).to.eql('3') ",
-									"    ",
-									"    pm.expect(jsonObject).to.have.property('iBeaconMajor')",
-									"    pm.expect(jsonObject.iBeaconMajor).to.eql('3') ",
-									"    ",
-									"    pm.expect(jsonObject).to.have.property('iBeaconMinor')",
-									"    pm.expect(jsonObject.iBeaconMinor).to.eql('2')",
+									"    pm.expect(jsonObject).to.have.property('instanceId')",
+									"    pm.expect(jsonObject.instanceId).to.eql('3')  ",
 									"    ",
 									"    pm.expect(jsonObject).to.have.property('manufacturer')",
 									"    pm.expect(jsonObject.manufacturer).to.eql('Apple')",
@@ -1971,7 +1722,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"uidNamespaceId\": \"4\",\r\n    \"uidInstanceId\": \"3\",\r\n    \"iBeaconUuid\": \"3\",\r\n    \"iBeaconMajor\": \"3\",\r\n    \"iBeaconMinor\": \"2\",\r\n    \"manufacturer\": \"Apple\",\r\n    \"model\": \"C4\"\r\n}",
+							"raw": "{\t\r\n\t\"beaconMacAddress\": \"222222222\",\r\n    \"namespaceId\": \"4\",\r\n    \"instanceId\": \"3\",\r\n    \"manufacturer\": \"Apple\",\r\n    \"model\": \"C4\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2186,66 +1937,6 @@
 						}
 					},
 					"response": []
-				},
-				{
-					"name": "GET OperatorsUsers",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "f79b5959-cbad-455c-a679-d1e897e695a1",
-								"exec": [
-									"// OK response test\r",
-									"pm.test(\"response is ok\", () => {\r",
-									"    pm.response.to.have.status(200)\r",
-									"    pm.response.to.not.be.error\r",
-									"})\r",
-									"\r",
-									"// Response has body test\r",
-									"pm.test(\"response has body\", () => {\r",
-									"    pm.response.to.have.body\r",
-									"})\r",
-									"\r",
-									"const jsonObject = JSON.parse(responseBody)\r",
-									"\r",
-									"// Response has expected properties test\r",
-									"pm.test(\"response has expected properties\", () => {\r",
-									"    pm.expect(jsonObject).to.be.an('array')\r",
-									"    \r",
-									"    jsonObject.forEach(entry => {\r",
-									"        pm.expect(entry).to.have.property('operatorId')\r",
-									"        pm.expect(entry.operatorId).not.to.eql(0)\r",
-									"    \r",
-									"        pm.expect(entry).to.have.property('userId')\r",
-									"        pm.expect(entry.userId).not.to.eql(0)\r",
-									"    })\r",
-									"})\r",
-									"\r",
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "https://localhost:8443/api/iqueue/operator/user",
-							"protocol": "https",
-							"host": [
-								"localhost"
-							],
-							"port": "8443",
-							"path": [
-								"api",
-								"iqueue",
-								"operator",
-								"user"
-							]
-						}
-					},
-					"response": []
 				}
 			],
 			"protocolProfileBehavior": {}
@@ -2402,13 +2093,15 @@
 									"\r",
 									"// Response has expected properties test\r",
 									"pm.test(\"response has expected properties\", () => {\r",
-									"\r",
-									"    pm.expect(jsonObject).to.have.property('operatorId')\r",
-									"    pm.expect(jsonObject.operatorId).to.eql(+pm.environment.get(\"operatorId\"))\r",
+									"    pm.expect(jsonObject).to.be.an('array')\r",
 									"    \r",
-									"    pm.expect(jsonObject).to.have.property('beaconId')\r",
-									"    pm.expect(jsonObject.beaconId).to.eql(+pm.environment.get(\"beaconId\"))\r",
-									"\r",
+									"    jsonObject.forEach(entry => {\r",
+									"        pm.expect(entry).to.have.property('operatorId')\r",
+									"        pm.expect(entry.operatorId).to.eql(+pm.environment.get(\"operatorId\"))\r",
+									"        \r",
+									"        pm.expect(entry).to.have.property('beaconId')\r",
+									"        pm.expect(entry.beaconId).to.eql(+pm.environment.get(\"beaconId\"))\r",
+									"    })\r",
 									"})\r",
 									"\r",
 									""
@@ -2501,10 +2194,10 @@
 			"protocolProfileBehavior": {}
 		},
 		{
-			"name": "OperatorServiceQueue",
+			"name": "ServiceQueue",
 			"item": [
 				{
-					"name": "POST OperatorServiceQueue",
+					"name": "POST ServiceQueue",
 					"event": [
 						{
 							"listen": "test",
@@ -2561,7 +2254,7 @@
 							}
 						},
 						"url": {
-							"raw": "https://localhost:8443/api/iqueue/operator/servicequeue",
+							"raw": "https://localhost:8443/api/iqueue/servicequeue",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -2570,7 +2263,6 @@
 							"path": [
 								"api",
 								"iqueue",
-								"operator",
 								"servicequeue"
 							]
 						}
@@ -2578,7 +2270,7 @@
 					"response": []
 				},
 				{
-					"name": "GET OperatorServiceQueues",
+					"name": "GET ServiceQueues",
 					"event": [
 						{
 							"listen": "test",
@@ -2629,7 +2321,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:8443/api/iqueue/operator/{{operatorId}}/servicequeue",
+							"raw": "https://localhost:8443/api/iqueue/servicequeue?operatorId={{operatorId}}",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -2638,16 +2330,20 @@
 							"path": [
 								"api",
 								"iqueue",
-								"operator",
-								"{{operatorId}}",
 								"servicequeue"
+							],
+							"query": [
+								{
+									"key": "operatorId",
+									"value": "{{operatorId}}"
+								}
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "GET OperatorServiceQueue",
+					"name": "GET ServiceQueue",
 					"event": [
 						{
 							"listen": "test",
@@ -2694,7 +2390,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:8443/api/iqueue/operator/{{operatorId}}/servicequeue/{{serviceQueueId}}",
+							"raw": "https://localhost:8443/api/iqueue/servicequeue/{{serviceQueueId}}",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -2703,8 +2399,6 @@
 							"path": [
 								"api",
 								"iqueue",
-								"operator",
-								"{{operatorId}}",
 								"servicequeue",
 								"{{serviceQueueId}}"
 							]
@@ -2713,74 +2407,7 @@
 					"response": []
 				},
 				{
-					"name": "GET OperatorsServiceQueues",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "c0265cd8-2fea-464b-93a9-f84a52519ad1",
-								"exec": [
-									"// OK response test",
-									"pm.test(\"response is ok\", () => {",
-									"    pm.response.to.have.status(200)",
-									"    pm.response.to.not.be.error",
-									"})",
-									"",
-									"// Response has body test",
-									"pm.test(\"response has body\", () => {",
-									"    pm.response.to.have.body",
-									"})",
-									"",
-									"const jsonObject = JSON.parse(responseBody)",
-									"",
-									"// Response has expected properties test",
-									"pm.test(\"response has expected properties\", () => {",
-									"    pm.expect(jsonObject).to.be.an('array')",
-									"    ",
-									"    jsonObject.forEach(entry => {",
-									"        pm.expect(entry).to.have.property('operatorId')",
-									"        pm.expect(entry.operatorId).not.to.eql(0)",
-									"    ",
-									"        pm.expect(entry).to.have.property('serviceQueueId')",
-									"        pm.expect(entry.serviceQueueId).not.to.eql(0)",
-									"        ",
-									"        pm.expect(entry).to.have.property('serviceQueueDescription')",
-									"        pm.expect(entry.serviceQueueDescription).not.to.eql('')",
-									"    ",
-									"        pm.expect(entry).to.have.property('serviceQueueTypeId')",
-									"        pm.expect(entry.serviceQueueTypeId).not.to.eql(0)",
-									"        ",
-									"        pm.expect(entry).to.have.property('dailyLimit')",
-									"    })",
-									"})",
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "https://localhost:8443/api/iqueue/operator/servicequeue",
-							"protocol": "https",
-							"host": [
-								"localhost"
-							],
-							"port": "8443",
-							"path": [
-								"api",
-								"iqueue",
-								"operator",
-								"servicequeue"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "PUT OperatorServiceQueue",
+					"name": "PUT ServiceQueue",
 					"event": [
 						{
 							"listen": "test",
@@ -2829,7 +2456,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"serviceQueueDescription\": \"Updated\",\r\n    \"serviceQueueTypeId\": {{serviceQueueTypeId}},\r\n    \"dailyLimit\": 0\r\n}",
+							"raw": "{\r\n\t\"operatorId\": {{operatorId}},\r\n    \"serviceQueueDescription\": \"Updated\",\r\n    \"serviceQueueTypeId\": {{serviceQueueTypeId}},\r\n    \"dailyLimit\": 0\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2837,7 +2464,7 @@
 							}
 						},
 						"url": {
-							"raw": "https://localhost:8443/api/iqueue/operator/{{operatorId}}/servicequeue/{{serviceQueueId}}",
+							"raw": "https://localhost:8443/api/iqueue/servicequeue/{{serviceQueueId}}",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -2846,8 +2473,6 @@
 							"path": [
 								"api",
 								"iqueue",
-								"operator",
-								"{{operatorId}}",
 								"servicequeue",
 								"{{serviceQueueId}}"
 							]
@@ -2859,10 +2484,10 @@
 			"protocolProfileBehavior": {}
 		},
 		{
-			"name": "ServiceQueueDesk",
+			"name": "Desk",
 			"item": [
 				{
-					"name": "POST ServiceQueueDesk",
+					"name": "POST Desk",
 					"event": [
 						{
 							"listen": "test",
@@ -2884,15 +2509,12 @@
 									"",
 									"// Response has expected properties test",
 									"pm.test(\"response has expected properties\", () => {",
-									"    pm.expect(jsonObject).to.have.property('operatorId')",
-									"    pm.expect(jsonObject.operatorId).to.eql(+pm.environment.get(\"operatorId\"))",
-									"",
-									"    pm.expect(jsonObject).to.have.property('serviceQueueId')",
-									"    pm.expect(jsonObject.serviceQueueId).to.eql(+pm.environment.get('serviceQueueId'))",
-									"",
 									"    pm.expect(jsonObject).to.have.property('deskId')",
 									"    pm.expect(jsonObject.deskId).not.to.eql(0)",
 									"    pm.environment.set(\"deskId\", jsonObject.deskId)",
+									"",
+									"    pm.expect(jsonObject).to.have.property('serviceQueueId')",
+									"    pm.expect(jsonObject.serviceQueueId).to.eql(+pm.environment.get('serviceQueueId'))",
 									"",
 									"    pm.expect(jsonObject).to.have.property('deskDescription')",
 									"    pm.expect(jsonObject.deskDescription).to.eql(\"test\")",
@@ -2909,7 +2531,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"operatorId\": {{operatorId}},\r\n    \"serviceQueueId\": {{serviceQueueId}},\r\n    \"deskDescription\": \"test\"\r\n}",
+							"raw": "{\r\n    \"serviceQueueId\": {{serviceQueueId}},\r\n    \"deskDescription\": \"test\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2917,7 +2539,7 @@
 							}
 						},
 						"url": {
-							"raw": "https://localhost:8443/api/iqueue/operator/servicequeue/desk",
+							"raw": "https://localhost:8443/api/iqueue/desk",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -2926,8 +2548,6 @@
 							"path": [
 								"api",
 								"iqueue",
-								"operator",
-								"servicequeue",
 								"desk"
 							]
 						}
@@ -2960,9 +2580,6 @@
 									"    pm.expect(jsonObject).to.be.an('array')",
 									"    ",
 									"    jsonObject.forEach(entry => {",
-									"        pm.expect(entry).to.have.property('operatorId')",
-									"        pm.expect(entry.operatorId).to.eql(+pm.environment.get(\"operatorId\"))",
-									"    ",
 									"        pm.expect(entry).to.have.property('serviceQueueId')",
 									"        pm.expect(entry.serviceQueueId).to.eql(pm.environment.get('serviceQueueId'))",
 									"    ",
@@ -2984,7 +2601,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:8443/api/iqueue/operator/{{operatorId}}/servicequeue/{{serviceQueueId}}/desk",
+							"raw": "https://localhost:8443/api/iqueue/desk?serviceQueueId={{serviceQueueId}}",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -2993,85 +2610,20 @@
 							"path": [
 								"api",
 								"iqueue",
-								"operator",
-								"{{operatorId}}",
-								"servicequeue",
-								"{{serviceQueueId}}",
 								"desk"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GET ServiceQueuesDesks",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "d1e0c093-efc6-471b-aef5-c6219be7734c",
-								"exec": [
-									"// OK response test",
-									"pm.test(\"response is ok\", () => {",
-									"    pm.response.to.have.status(200)",
-									"    pm.response.to.not.be.error",
-									"})",
-									"",
-									"// Response has body test",
-									"pm.test(\"response has body\", () => {",
-									"    pm.response.to.have.body",
-									"})",
-									"",
-									"const jsonObject = JSON.parse(responseBody)",
-									"",
-									"// Response has expected properties test",
-									"pm.test(\"response has expected properties\", () => {",
-									"    pm.expect(jsonObject).to.be.an('array')",
-									"    ",
-									"    jsonObject.forEach(entry => {",
-									"        pm.expect(entry).to.have.property('operatorId')",
-									"        pm.expect(entry.operatorId).not.to.eql(0)",
-									"    ",
-									"        pm.expect(entry).to.have.property('serviceQueueId')",
-									"        pm.expect(entry.serviceQueueId).not.to.eql(0)",
-									"    ",
-									"        pm.expect(entry).to.have.property('deskId')",
-									"        pm.expect(entry.deskId).not.to.eql(0)",
-									"    ",
-									"        pm.expect(entry).to.have.property('deskDescription')",
-									"        pm.expect(entry.deskDescription).not.to.eql('')",
-									"    })",
-									"})",
-									"",
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "https://localhost:8443/api/iqueue/operator/servicequeue/desk",
-							"protocol": "https",
-							"host": [
-								"localhost"
 							],
-							"port": "8443",
-							"path": [
-								"api",
-								"iqueue",
-								"operator",
-								"servicequeue",
-								"desk"
+							"query": [
+								{
+									"key": "serviceQueueId",
+									"value": "{{serviceQueueId}}"
+								}
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Get ServiceQueueDesk",
+					"name": "Get Desk",
 					"event": [
 						{
 							"listen": "test",
@@ -3093,9 +2645,6 @@
 									"",
 									"// Response has expected properties test",
 									"pm.test(\"response has expected properties\", () => {",
-									"    pm.expect(jsonObject).to.have.property('operatorId')",
-									"    pm.expect(jsonObject.operatorId).not.to.eql(0)",
-									"    ",
 									"    pm.expect(jsonObject).to.have.property('serviceQueueId')",
 									"    pm.expect(jsonObject.serviceQueueId).not.to.eql(0)",
 									"    ",
@@ -3115,7 +2664,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:8443/api/iqueue/operator/servicequeue/desk/{{deskId}}",
+							"raw": "https://localhost:8443/api/iqueue/desk/{{deskId}}",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -3124,8 +2673,6 @@
 							"path": [
 								"api",
 								"iqueue",
-								"operator",
-								"servicequeue",
 								"desk",
 								"{{deskId}}"
 							]
@@ -3134,7 +2681,7 @@
 					"response": []
 				},
 				{
-					"name": "PUT ServiceQueueDesk",
+					"name": "PUT Desk",
 					"event": [
 						{
 							"listen": "test",
@@ -3156,10 +2703,6 @@
 									"",
 									"// Response has expected properties test",
 									"pm.test(\"response has expected properties\", () => {",
-									"",
-									"        pm.expect(jsonObject).to.have.property('operatorId')",
-									"        pm.expect(jsonObject.operatorId).to.eql(+pm.environment.get(\"operatorId\"))",
-									"    ",
 									"        pm.expect(jsonObject).to.have.property('serviceQueueId')",
 									"        pm.expect(jsonObject.serviceQueueId).to.eql(+pm.environment.get('serviceQueueId'))",
 									"    ",
@@ -3182,7 +2725,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"operatorId\": {{operatorId}},\r\n    \"serviceQueueId\": {{serviceQueueId}},\r\n    \"deskDescription\": \"updated\"\r\n}\r\n",
+							"raw": "{\r\n    \"serviceQueueId\": {{serviceQueueId}},\r\n    \"deskDescription\": \"updated\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3190,7 +2733,7 @@
 							}
 						},
 						"url": {
-							"raw": "https://localhost:8443/api/iqueue/operator/servicequeue/desk/{{deskId}}",
+							"raw": "https://localhost:8443/api/iqueue/desk/{{deskId}}",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -3199,8 +2742,6 @@
 							"path": [
 								"api",
 								"iqueue",
-								"operator",
-								"servicequeue",
 								"desk",
 								"{{deskId}}"
 							]
@@ -3212,10 +2753,10 @@
 			"protocolProfileBehavior": {}
 		},
 		{
-			"name": "ServiceQueueDeskUser",
+			"name": "DeskUser",
 			"item": [
 				{
-					"name": "POST ServiceQueueDeskUser",
+					"name": "POST DeskUser",
 					"event": [
 						{
 							"listen": "test",
@@ -3237,20 +2778,11 @@
 									"",
 									"// Response has expected properties test",
 									"pm.test(\"response has expected properties\", () => {",
-									"    pm.expect(jsonObject).to.have.property('operatorId')",
-									"    pm.expect(jsonObject.operatorId).to.eql(+pm.environment.get(\"operatorId\"))",
-									"",
-									"    pm.expect(jsonObject).to.have.property('serviceQueueId')",
-									"    pm.expect(jsonObject.serviceQueueId).to.eql(+pm.environment.get('serviceQueueId'))",
-									"",
 									"    pm.expect(jsonObject).to.have.property('deskId')",
 									"    pm.expect(jsonObject.deskId).to.eql(+pm.environment.get(\"deskId\"))",
 									"",
 									"    pm.expect(jsonObject).to.have.property('userId')",
 									"    pm.expect(jsonObject.userId).to.eql(+pm.environment.get(\"userId\"))",
-									"    ",
-									"    pm.expect(jsonObject).to.have.property('date')",
-									"    pm.expect(jsonObject.date).to.eql('2020-04-10')",
 									"})",
 									"",
 									""
@@ -3264,7 +2796,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"operatorId\": {{operatorId}},\n\t\"serviceQueueId\": {{serviceQueueId}},\n\t\"deskId\": {{deskId}},\n\t\"userId\": {{userId}},\n\t\"date\": \"2020-04-10\"\n}",
+							"raw": "{\n\t\"deskId\": {{deskId}},\n\t\"userId\": {{userId}}\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3272,7 +2804,7 @@
 							}
 						},
 						"url": {
-							"raw": "https://localhost:8443/api/iqueue/operator/servicequeue/desk/user",
+							"raw": "https://localhost:8443/api/iqueue/desk/user",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -3281,8 +2813,6 @@
 							"path": [
 								"api",
 								"iqueue",
-								"operator",
-								"servicequeue",
 								"desk",
 								"user"
 							]
@@ -3291,7 +2821,7 @@
 					"response": []
 				},
 				{
-					"name": "GET ServiceDeskUsers",
+					"name": "GET DeskUser",
 					"event": [
 						{
 							"listen": "test",
@@ -3316,20 +2846,11 @@
 									"    pm.expect(jsonObject).to.be.an('array')",
 									"    ",
 									"    jsonObject.forEach(entry => {",
-									"        pm.expect(entry).to.have.property('operatorId')",
-									"        pm.expect(entry.operatorId).to.eql(+pm.environment.get(\"operatorId\"))",
-									"    ",
-									"        pm.expect(entry).to.have.property('serviceQueueId')",
-									"        pm.expect(entry.serviceQueueId).to.eql(+pm.environment.get('serviceQueueId'))",
-									"    ",
 									"        pm.expect(entry).to.have.property('deskId')",
 									"        pm.expect(entry.deskId).to.eql(+pm.environment.get(\"deskId\"))",
 									"    ",
 									"        pm.expect(entry).to.have.property('userId')",
 									"        pm.expect(entry.userId).to.eql(+pm.environment.get(\"userId\"))",
-									"        ",
-									"        pm.expect(entry).to.have.property('date')",
-									"        pm.expect(entry.date).to.eql(pm.environment.get('date'))",
 									"    })",
 									"})",
 									"",
@@ -3343,7 +2864,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:8443/api/iqueue/operator/{{operatorId}}/servicequeue/{{serviceQueueId}}/desk/{{deskId}}/user",
+							"raw": "https://localhost:8443/api/iqueue/desk/{{deskId}}/user",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -3352,10 +2873,6 @@
 							"path": [
 								"api",
 								"iqueue",
-								"operator",
-								"{{operatorId}}",
-								"servicequeue",
-								"{{serviceQueueId}}",
 								"desk",
 								"{{deskId}}",
 								"user"
@@ -3365,87 +2882,7 @@
 					"response": []
 				},
 				{
-					"name": "GET ServiceDeskUsersByDate",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "efd77d08-9c85-4d4c-ad62-9d06469faa34",
-								"exec": [
-									"// OK response test",
-									"pm.test(\"response is ok\", () => {",
-									"    pm.response.to.have.status(200)",
-									"    pm.response.to.not.be.error",
-									"})",
-									"",
-									"// Response has body test",
-									"pm.test(\"response has body\", () => {",
-									"    pm.response.to.have.body",
-									"})",
-									"",
-									"const jsonObject = JSON.parse(responseBody)",
-									"",
-									"// Response has expected properties test",
-									"pm.test(\"response has expected properties\", () => {",
-									"    pm.expect(jsonObject).to.be.an('array')",
-									"    ",
-									"    jsonObject.forEach(entry => {",
-									"        pm.expect(entry).to.have.property('operatorId')",
-									"        pm.expect(entry.operatorId).to.eql(+pm.environment.get(\"operatorId\"))",
-									"    ",
-									"        pm.expect(entry).to.have.property('serviceQueueId')",
-									"        pm.expect(entry.serviceQueueId).to.eql(+pm.environment.get('serviceQueueId'))",
-									"    ",
-									"        pm.expect(entry).to.have.property('deskId')",
-									"        pm.expect(entry.deskId).to.eql(+pm.environment.get(\"deskId\"))",
-									"    ",
-									"        pm.expect(entry).to.have.property('userId')",
-									"        pm.expect(entry.userId).to.eql(+pm.environment.get(\"userId\"))",
-									"        ",
-									"        pm.expect(entry).to.have.property('date')",
-									"        pm.expect(entry.date).to.eql(pm.environment.get('date'))",
-									"    })",
-									"})",
-									"",
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "https://localhost:8443/api/iqueue/operator/{{operatorId}}/servicequeue/{{serviceQueueId}}/desk/{{deskId}}/user?date={{date}}",
-							"protocol": "https",
-							"host": [
-								"localhost"
-							],
-							"port": "8443",
-							"path": [
-								"api",
-								"iqueue",
-								"operator",
-								"{{operatorId}}",
-								"servicequeue",
-								"{{serviceQueueId}}",
-								"desk",
-								"{{deskId}}",
-								"user"
-							],
-							"query": [
-								{
-									"key": "date",
-									"value": "{{date}}"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GET ServiceDeskUserDates",
+					"name": "GET UserDesk",
 					"event": [
 						{
 							"listen": "test",
@@ -3470,20 +2907,11 @@
 									"    pm.expect(jsonObject).to.be.an('array')",
 									"    ",
 									"    jsonObject.forEach(entry => {",
-									"        pm.expect(entry).to.have.property('operatorId')",
-									"        pm.expect(entry.operatorId).to.eql(+pm.environment.get(\"operatorId\"))",
-									"    ",
-									"        pm.expect(entry).to.have.property('serviceQueueId')",
-									"        pm.expect(entry.serviceQueueId).to.eql(+pm.environment.get('serviceQueueId'))",
-									"    ",
 									"        pm.expect(entry).to.have.property('deskId')",
 									"        pm.expect(entry.deskId).to.eql(+pm.environment.get(\"deskId\"))",
 									"    ",
 									"        pm.expect(entry).to.have.property('userId')",
 									"        pm.expect(entry.userId).to.eql(+pm.environment.get(\"userId\"))",
-									"        ",
-									"        pm.expect(entry).to.have.property('date')",
-									"        pm.expect(entry.date).to.eql(pm.environment.get('date'))",
 									"    })",
 									"})",
 									"",
@@ -3497,7 +2925,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:8443/api/iqueue/operator/{{operatorId}}/servicequeue/{{serviceQueueId}}/desk/{{deskId}}/user/{{userId}}",
+							"raw": "https://localhost:8443/api/iqueue/desk/user/{{userId}}",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -3506,92 +2934,9 @@
 							"path": [
 								"api",
 								"iqueue",
-								"operator",
-								"{{operatorId}}",
-								"servicequeue",
-								"{{serviceQueueId}}",
-								"desk",
-								"{{deskId}}",
-								"user",
-								"{{userId}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GET UserServiceDesks",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "a03029ba-587d-4bc6-86b7-b2378ad98b1a",
-								"exec": [
-									"// OK response test",
-									"pm.test(\"response is ok\", () => {",
-									"    pm.response.to.have.status(200)",
-									"    pm.response.to.not.be.error",
-									"})",
-									"",
-									"// Response has body test",
-									"pm.test(\"response has body\", () => {",
-									"    pm.response.to.have.body",
-									"})",
-									"",
-									"const jsonObject = JSON.parse(responseBody)",
-									"",
-									"// Response has expected properties test",
-									"pm.test(\"response has expected properties\", () => {",
-									"    pm.expect(jsonObject).to.be.an('array')",
-									"    ",
-									"    jsonObject.forEach(entry => {",
-									"        pm.expect(entry).to.have.property('operatorId')",
-									"        pm.expect(entry.operatorId).to.eql(+pm.environment.get(\"operatorId\"))",
-									"    ",
-									"        pm.expect(entry).to.have.property('serviceQueueId')",
-									"        pm.expect(entry.serviceQueueId).to.eql(+pm.environment.get('serviceQueueId'))",
-									"    ",
-									"        pm.expect(entry).to.have.property('deskId')",
-									"        pm.expect(entry.deskId).to.eql(+pm.environment.get(\"deskId\"))",
-									"    ",
-									"        pm.expect(entry).to.have.property('userId')",
-									"        pm.expect(entry.userId).to.eql(+pm.environment.get(\"userId\"))",
-									"        ",
-									"        pm.expect(entry).to.have.property('date')",
-									"        pm.expect(entry.date).to.eql(pm.environment.get('date'))",
-									"    })",
-									"})",
-									"",
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "https://localhost:8443/api/iqueue/operator/servicequeue/desk/user/{{userId}}?date={{date}}",
-							"protocol": "https",
-							"host": [
-								"localhost"
-							],
-							"port": "8443",
-							"path": [
-								"api",
-								"iqueue",
-								"operator",
-								"servicequeue",
 								"desk",
 								"user",
 								"{{userId}}"
-							],
-							"query": [
-								{
-									"key": "date",
-									"value": "{{date}}"
-								}
 							]
 						}
 					},
@@ -3906,9 +3251,6 @@
 									"    pm.expect(jsonObject.attendanceId).not.to.eql(0)",
 									"    pm.environment.set(\"attendanceId\", jsonObject.attendanceId)",
 									"",
-									"    pm.expect(jsonObject).to.have.property('operatorId')",
-									"    pm.expect(jsonObject.operatorId).to.eql(+pm.environment.get('operatorId'))",
-									"",
 									"    pm.expect(jsonObject).to.have.property('serviceQueueId')",
 									"    pm.expect(jsonObject.serviceQueueId).to.eql(+pm.environment.get('serviceQueueId'))",
 									"    ",
@@ -3916,25 +3258,19 @@
 									"    pm.expect(jsonObject.deskId).to.eql(+pm.environment.get('deskId'))",
 									"",
 									"    pm.expect(jsonObject).to.have.property('clientId')",
-									"    pm.expect(jsonObject.clientId).to.eql(+pm.environment.get('clientId'))",
+									"    pm.expect(jsonObject.clientId).to.eql(+pm.environment.get('userId'))",
 									"    ",
-									"    pm.expect(jsonObject).to.have.property('startWaitingTime')",
-									"    pm.expect(jsonObject.startWaitingTime).to.eql(\"2020-04-10T20:00:00\")",
+									"    pm.expect(jsonObject).to.have.property('startWaitingDateTime')",
+									"    pm.expect(jsonObject.startWaitingDateTime).to.eql(\"2020-04-10T20:00:00\")",
 									"    ",
 									"    pm.expect(jsonObject).to.have.property('attendanceStatusId')",
 									"    pm.expect(jsonObject.attendanceStatusId).to.eql(+pm.environment.get('attendanceStatusId'))",
 									"    ",
-									"    pm.expect(jsonObject).to.have.property('attendanceUserId')",
-									"    pm.expect(jsonObject.attendanceUserId).to.eql(+pm.environment.get('userId'))",
+									"    pm.expect(jsonObject).to.have.property('startAttendanceDateTime')",
+									"    pm.expect(jsonObject.startAttendanceDateTime).to.eql(null)",
 									"    ",
-									"    pm.expect(jsonObject).to.have.property('endWaitingTime')",
-									"    pm.expect(jsonObject.endWaitingTime).to.eql(null)",
-									"    ",
-									"    pm.expect(jsonObject).to.have.property('startAttendanceTime')",
-									"    pm.expect(jsonObject.startAttendanceTime).to.eql(null)",
-									"    ",
-									"    pm.expect(jsonObject).to.have.property('endAttendanceTime')",
-									"    pm.expect(jsonObject.endAttendanceTime).to.eql(null)",
+									"    pm.expect(jsonObject).to.have.property('endAttendanceDateTime')",
+									"    pm.expect(jsonObject.endAttendanceDateTime).to.eql(null)",
 									"})",
 									"",
 									""
@@ -3948,7 +3284,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"operatorId\": {{operatorId}},\n\t\"serviceQueueId\": {{serviceQueueId}},\n\t\"deskId\": {{deskId}},\n\t\"clientId\": {{clientId}},\n\t\"startWaitingTime\": \"2020-04-10T20:00:00\",\n\t\"attendanceStatusId\": {{attendanceStatusId}},\n\t\"attendanceUserId\": {{userId}}\n}",
+							"raw": "{\n\t\"serviceQueueId\": {{serviceQueueId}},\n\t\"deskId\": {{deskId}},\n\t\"clientId\": {{userId}},\n\t\"startWaitingDateTime\": \"2020-04-10T20:00:00\",\n\t\"attendanceStatusId\": {{attendanceStatusId}}\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3997,9 +3333,6 @@
 									"    pm.expect(jsonObject).to.have.property('attendanceId')",
 									"    pm.expect(jsonObject.attendanceId).to.eql(+pm.environment.get(\"attendanceId\"))",
 									"",
-									"    pm.expect(jsonObject).to.have.property('operatorId')",
-									"    pm.expect(jsonObject.operatorId).to.eql(+pm.environment.get('operatorId'))",
-									"",
 									"    pm.expect(jsonObject).to.have.property('serviceQueueId')",
 									"    pm.expect(jsonObject.serviceQueueId).to.eql(+pm.environment.get('serviceQueueId'))",
 									"    ",
@@ -4007,25 +3340,19 @@
 									"    pm.expect(jsonObject.deskId).to.eql(+pm.environment.get('deskId'))",
 									"",
 									"    pm.expect(jsonObject).to.have.property('clientId')",
-									"    pm.expect(jsonObject.clientId).to.eql(+pm.environment.get('clientId'))",
+									"    pm.expect(jsonObject.clientId).to.eql(+pm.environment.get('userId'))",
 									"    ",
-									"    pm.expect(jsonObject).to.have.property('startWaitingTime')",
-									"    pm.expect(jsonObject.startWaitingTime).to.eql(\"2020-04-10T20:00:00\")",
+									"    pm.expect(jsonObject).to.have.property('startWaitingDateTime')",
+									"    pm.expect(jsonObject.startWaitingDateTime).to.eql(\"2020-04-10T20:00:00\")",
 									"    ",
 									"    pm.expect(jsonObject).to.have.property('attendanceStatusId')",
 									"    pm.expect(jsonObject.attendanceStatusId).to.eql(+pm.environment.get('attendanceStatusId'))",
 									"    ",
-									"    pm.expect(jsonObject).to.have.property('attendanceUserId')",
-									"    pm.expect(jsonObject.attendanceUserId).to.eql(pm.environment.get('userId'))",
+									"    pm.expect(jsonObject).to.have.property('startAttendanceDateTime')",
+									"    pm.expect(jsonObject.startAttendanceDateTime).to.eql(null)",
 									"    ",
-									"    pm.expect(jsonObject).to.have.property('endWaitingTime')",
-									"    pm.expect(jsonObject.endWaitingTime).to.eql(null)",
-									"    ",
-									"    pm.expect(jsonObject).to.have.property('startAttendanceTime')",
-									"    pm.expect(jsonObject.startAttendanceTime).to.eql(null)",
-									"    ",
-									"    pm.expect(jsonObject).to.have.property('endAttendanceTime')",
-									"    pm.expect(jsonObject.endAttendanceTime).to.eql(null)",
+									"    pm.expect(jsonObject).to.have.property('endAttendanceDateTime')",
+									"    pm.expect(jsonObject.endAttendanceDateTime).to.eql(null)",
 									"})",
 									"",
 									""
@@ -4082,10 +3409,7 @@
 									"    jsonObject.forEach(entry => {",
 									"        pm.expect(entry).to.have.property('attendanceId')",
 									"        pm.expect(entry.attendanceId).not.to.eql(0)",
-									"    ",
-									"        pm.expect(entry).to.have.property('operatorId')",
-									"        pm.expect(entry.operatorId).not.to.eql(0)",
-									"    ",
+									"        ",
 									"        pm.expect(entry).to.have.property('serviceQueueId')",
 									"        pm.expect(entry.serviceQueueId).not.to.eql(0)",
 									"        ",
@@ -4095,23 +3419,17 @@
 									"        pm.expect(entry).to.have.property('clientId')",
 									"        pm.expect(entry.clientId).not.to.eql(0)",
 									"        ",
-									"        pm.expect(entry).to.have.property('startWaitingTime')",
-									"        pm.expect(entry.startWaitingTime).not.to.eql('')",
+									"        pm.expect(entry).to.have.property('startWaitingDateTime')",
+									"        pm.expect(entry.startWaitingDateTime).not.to.eql('')",
 									"        ",
 									"        pm.expect(entry).to.have.property('attendanceStatusId')",
 									"        pm.expect(entry.attendanceStatusId).not.to.eql(0)",
 									"        ",
-									"        pm.expect(entry).to.have.property('attendanceUserId')",
-									"        pm.expect(entry.attendanceUserId).not.to.eql(0)",
+									"        pm.expect(entry).to.have.property('startAttendanceDateTime')",
+									"        pm.expect(entry.startAttendanceDateTime).not.to.eql('')",
 									"        ",
-									"        pm.expect(entry).to.have.property('endWaitingTime')",
-									"        pm.expect(entry.endWaitingTime).not.to.eql('')",
-									"        ",
-									"        pm.expect(entry).to.have.property('startAttendanceTime')",
-									"        pm.expect(entry.startAttendanceTime).not.to.eql('')",
-									"        ",
-									"        pm.expect(entry).to.have.property('endAttendanceTime')",
-									"        pm.expect(entry.endAttendanceTime).not.to.eql('')",
+									"        pm.expect(entry).to.have.property('endAttendanceDateTime')",
+									"        pm.expect(entry.endAttendanceDateTime).not.to.eql('')",
 									"    })",
 									"})",
 									""
@@ -4165,9 +3483,6 @@
 									"    pm.expect(jsonObject).to.have.property('attendanceId')",
 									"    pm.expect(jsonObject.attendanceId).to.eql(+pm.environment.get(\"attendanceId\"))",
 									"",
-									"    pm.expect(jsonObject).to.have.property('operatorId')",
-									"    pm.expect(jsonObject.operatorId).to.eql(+pm.environment.get('operatorId'))",
-									"",
 									"    pm.expect(jsonObject).to.have.property('serviceQueueId')",
 									"    pm.expect(jsonObject.serviceQueueId).to.eql(+pm.environment.get('serviceQueueId'))",
 									"    ",
@@ -4175,25 +3490,19 @@
 									"    pm.expect(jsonObject.deskId).to.eql(+pm.environment.get('deskId'))",
 									"",
 									"    pm.expect(jsonObject).to.have.property('clientId')",
-									"    pm.expect(jsonObject.clientId).to.eql(+pm.environment.get('clientId'))",
+									"    pm.expect(jsonObject.clientId).to.eql(+pm.environment.get('userId'))",
 									"    ",
-									"    pm.expect(jsonObject).to.have.property('startWaitingTime')",
-									"    pm.expect(jsonObject.startWaitingTime).to.eql(\"2020-04-10T20:00:00\")",
+									"    pm.expect(jsonObject).to.have.property('startWaitingDateTime')",
+									"    pm.expect(jsonObject.startWaitingDateTime).to.eql(\"2020-04-10T20:00:00\")",
 									"    ",
 									"    pm.expect(jsonObject).to.have.property('attendanceStatusId')",
 									"    pm.expect(jsonObject.attendanceStatusId).to.eql(+pm.environment.get('attendanceStatusId'))",
 									"    ",
-									"    pm.expect(jsonObject).to.have.property('attendanceUserId')",
-									"    pm.expect(jsonObject.attendanceUserId).to.eql(pm.environment.get('userId'))",
+									"    pm.expect(jsonObject).to.have.property('startAttendanceDateTime')",
+									"    pm.expect(jsonObject.startAttendanceDateTime).to.eql(\"2020-04-10T20:10:00\")",
 									"    ",
-									"    pm.expect(jsonObject).to.have.property('endWaitingTime')",
-									"    pm.expect(jsonObject.endWaitingTime).to.eql(\"2020-04-10T20:10:00\")",
-									"    ",
-									"    pm.expect(jsonObject).to.have.property('startAttendanceTime')",
-									"    pm.expect(jsonObject.startAttendanceTime).to.eql(\"2020-04-10T20:10:00\")",
-									"    ",
-									"    pm.expect(jsonObject).to.have.property('endAttendanceTime')",
-									"    pm.expect(jsonObject.endAttendanceTime).to.eql(\"2020-04-10T20:15:00\")",
+									"    pm.expect(jsonObject).to.have.property('endAttendanceDateTime')",
+									"    pm.expect(jsonObject.endAttendanceDateTime).to.eql(\"2020-04-10T20:15:00\")",
 									"})",
 									"",
 									""
@@ -4207,7 +3516,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\t\n\t\"operatorId\": {{operatorId}},\n\t\"serviceQueueId\": {{serviceQueueId}},\n\t\"deskId\": {{deskId}},\n\t\"clientId\": {{clientId}},\n\t\"startWaitingTime\": \"2020-04-10T20:00:00\",\n\t\"endWaitingTime\": \"2020-04-10T20:10:00\",\n\t\"startAttendanceTime\": \"2020-04-10T20:10:00\",\n\t\"endAttendanceTime\": \"2020-04-10T20:15:00\",\n\t\"attendanceStatusId\": {{attendanceStatusId}},\n\t\"attendanceUserId\": {{userId}}\n}\n",
+							"raw": "{\t\n\t\"serviceQueueId\": {{serviceQueueId}},\n\t\"deskId\": {{deskId}},\n\t\"clientId\": {{userId}},\n\t\"startWaitingDateTime\": \"2020-04-10T20:00:00\",\n\t\"startAttendanceDateTime\": \"2020-04-10T20:10:00\",\n\t\"endAttendanceDateTime\": \"2020-04-10T20:15:00\",\n\t\"attendanceStatusId\": {{attendanceStatusId}}\n}\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4263,8 +3572,8 @@
 									"    pm.expect(jsonObject).to.have.property('attendanceId')",
 									"    pm.expect(jsonObject.attendanceId).to.eql(+pm.environment.get(\"attendanceId\"))",
 									"",
-									"    pm.expect(jsonObject).to.have.property('classificationCreationTime')",
-									"    pm.expect(jsonObject.classificationCreationTime).to.eql(\"2020-04-10T20:17:05\")",
+									"    pm.expect(jsonObject).to.have.property('classificationCreationDateTime')",
+									"    pm.expect(jsonObject.classificationCreationDateTime).to.eql(\"2020-04-10T20:17:05\")",
 									"",
 									"    pm.expect(jsonObject).to.have.property('rate')",
 									"    pm.expect(jsonObject.rate).to.eql(5)",
@@ -4284,7 +3593,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"attendanceId\": {{attendanceId}},\n\t\"classificationCreationTime\": \"2020-04-10T20:17:05\",\n\t\"rate\": 5,\n\t\"observations\": \"test\"\n}",
+							"raw": "{\n\t\"attendanceId\": {{attendanceId}},\n\t\"classificationCreationDateTime\": \"2020-04-10T20:17:05\",\n\t\"rate\": 5,\n\t\"observations\": \"test\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4334,8 +3643,8 @@
 									"    pm.expect(jsonObject).to.have.property('attendanceId')",
 									"    pm.expect(jsonObject.attendanceId).to.eql(+pm.environment.get(\"attendanceId\"))",
 									"",
-									"    pm.expect(jsonObject).to.have.property('classificationCreationTime')",
-									"    pm.expect(jsonObject.classificationCreationTime).to.eql(\"2020-04-10T20:17:05\")",
+									"    pm.expect(jsonObject).to.have.property('classificationCreationDateTime')",
+									"    pm.expect(jsonObject.classificationCreationDateTime).to.eql(\"2020-04-10T20:17:05\")",
 									"",
 									"    pm.expect(jsonObject).to.have.property('rate')",
 									"    pm.expect(jsonObject.rate).to.eql(5)",
@@ -4400,8 +3709,8 @@
 									"        pm.expect(entry).to.have.property('attendanceId')",
 									"        pm.expect(entry.attendanceId).not.to.eql(0)",
 									"    ",
-									"        pm.expect(entry).to.have.property('classificationCreationTime')",
-									"        pm.expect(entry.classificationCreationTime).not.to.eql(\"\")",
+									"        pm.expect(entry).to.have.property('classificationCreationDateTime')",
+									"        pm.expect(entry.classificationCreationDateTime).not.to.eql(\"\")",
 									"    ",
 									"        pm.expect(entry).to.have.property('rate')",
 									"        pm.expect(entry.rate).not.to.eql(0)",
@@ -4580,7 +3889,7 @@
 					"response": []
 				},
 				{
-					"name": "DELETE ServiceQueueDeskUser",
+					"name": "DELETE DeskUser",
 					"event": [
 						{
 							"listen": "test",
@@ -4601,7 +3910,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:8443/api/iqueue/operator/{{operatorId}}/servicequeue/{{serviceQueueId}}/desk/{{deskId}}/user/{{userId}}?date={{date}}",
+							"raw": "https://localhost:8443/api/iqueue/desk/{{deskId}}/user/{{userId}}",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -4610,27 +3919,17 @@
 							"path": [
 								"api",
 								"iqueue",
-								"operator",
-								"{{operatorId}}",
-								"servicequeue",
-								"{{serviceQueueId}}",
 								"desk",
 								"{{deskId}}",
 								"user",
 								"{{userId}}"
-							],
-							"query": [
-								{
-									"key": "date",
-									"value": "{{date}}"
-								}
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "DELETE ServiceQueueDesk",
+					"name": "DELETE Desk",
 					"event": [
 						{
 							"listen": "test",
@@ -4651,7 +3950,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:8443/api/iqueue/operator/{{operatorId}}/servicequeue/{{serviceQueueId}}/desk/{{deskId}}",
+							"raw": "https://localhost:8443/api/iqueue/desk/{{deskId}}",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -4660,10 +3959,6 @@
 							"path": [
 								"api",
 								"iqueue",
-								"operator",
-								"{{operatorId}}",
-								"servicequeue",
-								"{{serviceQueueId}}",
 								"desk",
 								"{{deskId}}"
 							]
@@ -4672,7 +3967,7 @@
 					"response": []
 				},
 				{
-					"name": "DELETE OperatorServiceQueue",
+					"name": "DELETE ServiceQueue",
 					"event": [
 						{
 							"listen": "test",
@@ -4693,7 +3988,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:8443/api/iqueue/operator/{{operatorId}}/servicequeue/{{serviceQueueId}}",
+							"raw": "https://localhost:8443/api/iqueue/servicequeue/{{serviceQueueId}}",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -4702,8 +3997,6 @@
 							"path": [
 								"api",
 								"iqueue",
-								"operator",
-								"{{operatorId}}",
 								"servicequeue",
 								"{{serviceQueueId}}"
 							]
@@ -4773,13 +4066,14 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:8443api/iqueue/operator/{{operatorId}}/user/{{userId}}",
+							"raw": "https://localhost:8443/api/iqueue/operator/{{operatorId}}/user/{{userId}}",
 							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "8443api",
+							"port": "8443",
 							"path": [
+								"api",
 								"iqueue",
 								"operator",
 								"{{operatorId}}",
@@ -4861,44 +4155,6 @@
 								"iqueue",
 								"operator",
 								"{{operatorId}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "DELETE Client",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "28c65e58-f5d4-4caf-86fc-a64077871688",
-								"exec": [
-									"// OK response test\r",
-									"pm.test(\"response is ok\", () => {\r",
-									"    pm.response.to.have.status(200)\r",
-									"    pm.response.to.not.be.error\r",
-									"})"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "https://localhost:8443/api/iqueue/client/{{clientId}}",
-							"protocol": "https",
-							"host": [
-								"localhost"
-							],
-							"port": "8443",
-							"path": [
-								"api",
-								"iqueue",
-								"client",
-								"{{clientId}}"
 							]
 						}
 					},

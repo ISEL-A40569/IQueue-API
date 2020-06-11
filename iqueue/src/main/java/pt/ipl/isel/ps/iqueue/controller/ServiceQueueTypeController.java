@@ -61,7 +61,8 @@ public class ServiceQueueTypeController extends Controller<ServiceQueueType, Ser
     }
 
     @PutMapping(value = "{serviceQueueTypeId}", headers = {"Accept=application/json", "Content-Type=application/json"})
-    public ResponseEntity update(@PathVariable int serviceQueueTypeId, @RequestBody ServiceQueueType serviceQueueType, @RequestParam int languageId) {
-        return super.update(new ServiceQueueTypeIds(serviceQueueTypeId, languageId), serviceQueueType);
+    public ResponseEntity update(@PathVariable int serviceQueueTypeId, @RequestBody ServiceQueueType serviceQueueType) {
+        serviceQueueType.setServiceQueueTypeId(serviceQueueTypeId);
+        return super.update(new ServiceQueueTypeIds(serviceQueueTypeId, serviceQueueType.getLanguageId()), serviceQueueType);
     }
 }

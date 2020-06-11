@@ -21,14 +21,14 @@ public class AttendanceDao {
     @Column(name = "clientId")
     private int clientId;
 
-    @Column(name = "startWaitingTime")
-    private LocalDateTime startWaitingTime;
+    @Column(name = "startWaitingDateTime")
+    private LocalDateTime startWaitingDateTime;
 
-    @Column(name = "startAttendanceTime")
-    private LocalDateTime startAttendanceTime;
+    @Column(name = "startAttendanceDateTime")
+    private LocalDateTime startAttendanceDateTime;
 
-    @Column(name = "endAttendanceTime")
-    private LocalDateTime endAttendanceTime;
+    @Column(name = "endAttendanceDateTime")
+    private LocalDateTime endAttendanceDateTime;
 
     @Column(name = "attendanceStatusId")
     private int attendanceStatusId;
@@ -36,14 +36,14 @@ public class AttendanceDao {
     public AttendanceDao() {
     }
 
-    public AttendanceDao(int attendanceId, int serviceQueueId, int deskId, int clientId, LocalDateTime startWaitingTime, LocalDateTime startAttendanceTime, LocalDateTime endAttendanceTime, int attendanceStatusId) {
+    public AttendanceDao(int attendanceId, int serviceQueueId, int deskId, int clientId, LocalDateTime startWaitingDateTime, LocalDateTime startAttendanceDateTime, LocalDateTime endAttendanceDateTime, int attendanceStatusId) {
         this.attendanceId = attendanceId;
         this.serviceQueueId = serviceQueueId;
         this.deskId = deskId;
         this.clientId = clientId;
-        this.startWaitingTime = startWaitingTime;
-        this.startAttendanceTime = startAttendanceTime;
-        this.endAttendanceTime = endAttendanceTime;
+        this.startWaitingDateTime = startWaitingDateTime;
+        this.startAttendanceDateTime = startAttendanceDateTime;
+        this.endAttendanceDateTime = endAttendanceDateTime;
         this.attendanceStatusId = attendanceStatusId;
     }
 
@@ -79,28 +79,28 @@ public class AttendanceDao {
         this.clientId = clientId;
     }
 
-    public LocalDateTime getStartWaitingTime() {
-        return startWaitingTime;
+    public LocalDateTime getStartWaitingDateTime() {
+        return startWaitingDateTime;
     }
 
-    public void setStartWaitingTime(LocalDateTime startWaitingTime) {
-        this.startWaitingTime = startWaitingTime;
+    public void setStartWaitingDateTime(LocalDateTime startWaitingDateTime) {
+        this.startWaitingDateTime = startWaitingDateTime;
     }
 
-    public LocalDateTime getStartAttendanceTime() {
-        return startAttendanceTime;
+    public LocalDateTime getStartAttendanceDateTime() {
+        return startAttendanceDateTime;
     }
 
-    public void setStartAttendanceTime(LocalDateTime startAttendanceTime) {
-        this.startAttendanceTime = startAttendanceTime;
+    public void setStartAttendanceDateTime(LocalDateTime startAttendanceDateTime) {
+        this.startAttendanceDateTime = startAttendanceDateTime;
     }
 
-    public LocalDateTime getEndAttendanceTime() {
-        return endAttendanceTime;
+    public LocalDateTime getEndAttendanceDateTime() {
+        return endAttendanceDateTime;
     }
 
-    public void setEndAttendanceTime(LocalDateTime endAttendanceTime) {
-        this.endAttendanceTime = endAttendanceTime;
+    public void setEndAttendanceDateTime(LocalDateTime endAttendanceDateTime) {
+        this.endAttendanceDateTime = endAttendanceDateTime;
     }
 
     public int getAttendanceStatusId() {

@@ -54,6 +54,7 @@ public class BeaconController extends Controller<Beacon, Integer, BeaconDao> {
 
     @PutMapping(value = "{beaconId}", headers = {"Accept=application/json", "Content-Type=application/json"})
     public ResponseEntity update(@PathVariable int beaconId, @RequestBody Beacon beacon) {
+        beacon.setBeaconId(beaconId);
         return super.update(beaconId, beacon);
     }
 }

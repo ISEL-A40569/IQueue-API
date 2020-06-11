@@ -55,6 +55,7 @@ public class OperatorController extends Controller<Operator, Integer, OperatorDa
 
     @PutMapping(value = "{operatorId}", headers = {"Accept=application/json", "Content-Type=application/json"})
     public ResponseEntity update(@PathVariable int operatorId, @RequestBody Operator operator) {
+        operator.setOperatorId(operatorId);
         return super.update(operatorId, operator);
     }
 }

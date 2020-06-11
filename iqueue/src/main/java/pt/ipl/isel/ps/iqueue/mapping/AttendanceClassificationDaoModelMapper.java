@@ -8,13 +8,13 @@ import pt.ipl.isel.ps.iqueue.model.AttendanceClassification;
 public class AttendanceClassificationDaoModelMapper implements DaoModelMapper<AttendanceClassificationDao, AttendanceClassification> {
     @Override
     public AttendanceClassification mapDaoToModel(AttendanceClassificationDao dao) {
-        return new AttendanceClassification(dao.getAttendanceId(), dao.getClassificationCreationTime(),
+        return new AttendanceClassification(dao.getAttendanceId(), dao.getClassificationCreationDateTime(),
                 dao.getRate(), dao.getObservations());
     }
 
     @Override
     public AttendanceClassificationDao mapModelToDao(AttendanceClassification model) {
-        return new AttendanceClassificationDao(model.getAttendanceId(), model.getClassificationCreationTime(),
+        return new AttendanceClassificationDao(model.getAttendanceId(), model.getClassificationCreationDateTime(),
                 model.getRate(), model.getObservations());
     }
 }

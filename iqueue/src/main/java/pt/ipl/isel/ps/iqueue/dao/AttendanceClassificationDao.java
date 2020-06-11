@@ -8,12 +8,11 @@ import java.time.LocalDateTime;
 public class AttendanceClassificationDao {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "attendanceId")
     private int attendanceId;
 
-    @Column(name = "classificationCreationTime")
-    private LocalDateTime classificationCreationTime;
+    @Column(name = "classificationCreationDateTime")
+    private LocalDateTime classificationCreationDateTime;
 
     @Column(name = "rate")
     private int rate;
@@ -24,9 +23,9 @@ public class AttendanceClassificationDao {
     public AttendanceClassificationDao() {
     }
 
-    public AttendanceClassificationDao(int attendanceId, LocalDateTime classificationCreationTime, int rate, String observations) {
+    public AttendanceClassificationDao(int attendanceId, LocalDateTime classificationCreationDateTime, int rate, String observations) {
         this.attendanceId = attendanceId;
-        this.classificationCreationTime = classificationCreationTime;
+        this.classificationCreationDateTime = classificationCreationDateTime;
         this.rate = rate;
         this.observations = observations;
     }
@@ -39,12 +38,12 @@ public class AttendanceClassificationDao {
         this.attendanceId = attendanceId;
     }
 
-    public LocalDateTime getClassificationCreationTime() {
-        return classificationCreationTime;
+    public LocalDateTime getClassificationCreationDateTime() {
+        return classificationCreationDateTime;
     }
 
-    public void setClassificationCreationTime(LocalDateTime classificationCreationTime) {
-        this.classificationCreationTime = classificationCreationTime;
+    public void setClassificationCreationDateTime(LocalDateTime classificationCreationDateTime) {
+        this.classificationCreationDateTime = classificationCreationDateTime;
     }
 
     public int getRate() {

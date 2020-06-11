@@ -1,9 +1,9 @@
 package pt.ipl.isel.ps.iqueue.model;
 
 public class Desk {
-    private final int deskId;
-    private final int serviceQueueId;
-    private final String deskDescription;
+    private int deskId;
+    private int serviceQueueId;
+    private String deskDescription;
 
     public Desk(int deskId, int serviceQueueId, String deskDescription) {
         this.deskId = deskId;
@@ -21,5 +21,17 @@ public class Desk {
 
     public String getDeskDescription() {
         return deskDescription;
+    }
+
+    public void setDeskId(int deskId) {
+        this.deskId = deskId;
+    }
+
+    public void setServiceQueueId(int serviceQueueId) {
+        this.serviceQueueId = serviceQueueId;
+    }
+
+    public void setDeskDescription(String deskDescription) {
+        this.deskDescription = deskDescription;
     }
 }

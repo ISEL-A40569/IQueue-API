@@ -2,7 +2,7 @@ package pt.ipl.isel.ps.iqueue.model;
 
 public class User {
 
-    private final int userId;
+    private int userId;
 
     private final String userName;
 
@@ -45,5 +45,9 @@ public class User {
 
     public int getUserProfileId() {
         return userProfileId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 }

@@ -4,13 +4,13 @@ import java.time.LocalDateTime;
 
 public class AttendanceClassification {
     private final int attendanceId;
-    private final LocalDateTime classificationCreationTime;
+    private final LocalDateTime classificationCreationDateTime;
     private final int rate;
     private final String observations;
 
-    public AttendanceClassification(int attendanceId, LocalDateTime classificationCreationTime, int rate, String observations) {
+    public AttendanceClassification(int attendanceId, LocalDateTime classificationCreationDateTime, int rate, String observations) {
         this.attendanceId = attendanceId;
-        this.classificationCreationTime = classificationCreationTime;
+        this.classificationCreationDateTime = classificationCreationDateTime;
         this.rate = rate;
         this.observations = observations;
     }
@@ -19,8 +19,8 @@ public class AttendanceClassification {
         return attendanceId;
     }
 
-    public LocalDateTime getClassificationCreationTime() {
-        return classificationCreationTime;
+    public LocalDateTime getClassificationCreationDateTime() {
+        return classificationCreationDateTime;
     }
 
     public int getRate() {

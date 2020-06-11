@@ -1,11 +1,11 @@
 package pt.ipl.isel.ps.iqueue.model;
 
 public class Operator {
-    private final int operatorId;
-    private final String operatorDescription;
-    private final String email;
-    private final int phoneNumber;
-    private final String address;
+    private int operatorId;
+    private String operatorDescription;
+    private String email;
+    private int phoneNumber;
+    private String address;
 
     public Operator(int operatorId, String operatorDescription, String email, int phoneNumber, String address) {
         this.operatorId = operatorId;
@@ -33,5 +33,25 @@ public class Operator {
 
     public String getAddress() {
         return address;
+    }
+
+    public void setOperatorId(int operatorId) {
+        this.operatorId = operatorId;
+    }
+
+    public void setOperatorDescription(String operatorDescription) {
+        this.operatorDescription = operatorDescription;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPhoneNumber(int phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

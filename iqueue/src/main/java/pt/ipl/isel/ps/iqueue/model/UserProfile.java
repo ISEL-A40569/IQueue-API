@@ -1,9 +1,9 @@
 package pt.ipl.isel.ps.iqueue.model;
 
 public class UserProfile {
-    private final int userProfileId;
-    private final int languageId;
-    private final String userProfileDescription;
+    private int userProfileId;
+    private int languageId;
+    private String userProfileDescription;
 
     public UserProfile(int userProfileId, int languageId, String userProfileDescription) {
         this.userProfileId = userProfileId;
@@ -21,5 +21,17 @@ public class UserProfile {
 
     public String getUserProfileDescription() {
         return userProfileDescription;
+    }
+
+    public void setUserProfileId(int userProfileId) {
+        this.userProfileId = userProfileId;
+    }
+
+    public void setLanguageId(int languageId) {
+        this.languageId = languageId;
+    }
+
+    public void setUserProfileDescription(String userProfileDescription) {
+        this.userProfileDescription = userProfileDescription;
     }
 }
