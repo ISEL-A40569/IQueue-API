@@ -51,7 +51,7 @@ create table Operator(
 operatorId int identity primary key,
 operatorDescription varchar(100) not null,
 email varchar(100),
-phoneNumber int,
+telephoneNumber varchar(15),
 [address] varchar(200)
 )
 
@@ -204,7 +204,4 @@ insert into [User] values('Administrator', 'admin@email.com', null, null, 1)
 insert into UserCredentials values(1, '$2a$10$7FSwcv.GcqzRXI3o6UB/X.U1xAnKGVDpk18KUY3D2JzLP./qUZBkC')
 
 commit
-
-select * from [User] 
-select * from UserCredentials
 

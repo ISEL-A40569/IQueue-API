@@ -9,12 +9,12 @@ public class OperatorDaoModelMapper implements DaoModelMapper<OperatorDao, Opera
     @Override
     public Operator mapDaoToModel(OperatorDao dao) {
         return new Operator(dao.getOperatorId(), dao.getOperatorDescription(),
-                dao.getEmail(), dao.getPhoneNumber(), dao.getAddress());
+                dao.getEmail(), dao.getTelephoneNumber(), dao.getAddress());
     }
 
     @Override
     public OperatorDao mapModelToDao(Operator model) {
         return new OperatorDao(model.getOperatorId(), model.getOperatorDescription(),
-                model.getEmail(), model.getPhoneNumber(), model.getAddress());
+                model.getEmail(), model.getTelephoneNumber(), model.getAddress());
     }
 }

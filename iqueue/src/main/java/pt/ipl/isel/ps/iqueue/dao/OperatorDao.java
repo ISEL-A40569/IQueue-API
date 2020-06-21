@@ -17,8 +17,8 @@ public class OperatorDao {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "phoneNumber")
-    private int phoneNumber;
+    @Column(name = "telephoneNumber")
+    private String telephoneNumber;
 
     @Column(name = "address")
     private String address;
@@ -26,11 +26,11 @@ public class OperatorDao {
     public OperatorDao() {
     }
 
-    public OperatorDao(int operatorId, String operatorDescription, String email, int phoneNumber, String address) {
+    public OperatorDao(int operatorId, String operatorDescription, String email, String telephoneNumber, String address) {
         this.operatorId = operatorId;
         this.operatorDescription = operatorDescription;
         this.email = email;
-        this.phoneNumber = phoneNumber;
+        this.telephoneNumber = telephoneNumber;
         this.address = address;
     }
 
@@ -50,8 +50,8 @@ public class OperatorDao {
         return email;
     }
 
-    public int getPhoneNumber() {
-        return phoneNumber;
+    public String getTelephoneNumber() {
+        return telephoneNumber;
     }
 
     public String getAddress() {

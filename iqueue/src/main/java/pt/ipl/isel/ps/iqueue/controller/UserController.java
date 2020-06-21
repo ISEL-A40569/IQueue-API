@@ -74,7 +74,9 @@ public class UserController extends Controller<User, Integer, UserDao> {
             userCredentialsRepository.save(userCredentialsDao);
 
             emailService.sendEmail(user.getEmail(),
-                    "Welcome to IQueue, your password is " + newPassword);
+                    "IQueue user registration",
+                    buildRegistrationEmailMessage(createdUser.getUserId(), newPassword)
+            );
 
             return super.add(createdUser,
                     "/api/iqueue/user/" + createdUser.getUserId());
@@ -109,5 +111,13 @@ public class UserController extends Controller<User, Integer, UserDao> {
         } catch (Exception exception) {
             return ResponseEntity.status(500).build();
         }
+    }
+
+    private String buildRegistrationEmailMessage(int userId, String password) {
+        return "Welcome to IQueue!" + System.lineSeparator()
+                + System.lineSeparator()
+                + "User Id: " + userId
+                + System.lineSeparator()
+                + "Password: " + password;
     }
 }

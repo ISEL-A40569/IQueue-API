@@ -1,18 +1,25 @@
 package pt.ipl.isel.ps.iqueue.filter;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.http.HttpMethod;
+import org.springframework.stereotype.Component;
+import org.springframework.web.util.ContentCachingRequestWrapper;
 import pt.ipl.isel.ps.iqueue.dao.LogEntryDao;
 import pt.ipl.isel.ps.iqueue.repository.LogEntryRepository;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
+import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.stream.Collectors;
 
-public class LogFilter extends OncePerRequestFilter {
+import static java.nio.charset.StandardCharsets.UTF_8;
+
+
+@Component
+public class LogFilter implements Filter {
 
     @Autowired
     private final LogEntryRepository logEntryRepository;
@@ -22,18 +29,31 @@ public class LogFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        LogEntryDao logEntry = new LogEntryDao();
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+        HttpServletRequest req = (HttpServletRequest) request;
+        HttpServletResponse res = (HttpServletResponse) response;
+        ContentCachingRequestWrapper requestWrapper = new ContentCachingRequestWrapper(req);
 
-        logEntry.setLogCreationDateTime(LocalDateTime.now());
-        logEntry.setRequestMethod(request.getMethod());
-        logEntry.setRequestUri(request.getRequestURI());
-//        logEntry.setRequestHeaders(request.getHeaders()); // TODO: how to get all of them?
-//        logEntry.setRequestBody(request.);    // TODO: how to get body?
-        logEntry.setResponseStatus(response.getStatus());
-//        logEntry.setResponseHeaders(response.getHeaders());   // TODO: how to get all of them?
-//        logEntry.setResponseBody(response.get);   // TODO: how to get body?
+        chain.doFilter(req, res);
 
-        logEntryRepository.save(logEntry);
+        if (!req.getMethod().equals(HttpMethod.OPTIONS.name())) {
+            LogEntryDao logEntry = new LogEntryDao();
+
+            logEntry.setLogCreationDateTime(LocalDateTime.now());
+            logEntry.setRequestMethod(req.getMethod());
+            logEntry.setRequestUri(req.getRequestURI());
+            logEntry.setRequestHeaders("test"); // TODO: how to get all of them?
+
+            logEntry.setRequestBody(new String(requestWrapper.getContentAsByteArray(),UTF_8));
+            logEntry.setResponseStatus(res.getStatus());
+            logEntry.setResponseHeaders("test");   // TODO: how to get all of them?
+            logEntry.setResponseBody("test");   // TODO: how to get body?
+
+            try {
+                logEntryRepository.save(logEntry);
+            } catch (Exception e) {
+                // TODO: What if LOG throws exception !? -> send email !?
+            }
+        }
     }
 }

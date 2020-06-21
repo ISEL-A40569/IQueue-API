@@ -4,14 +4,14 @@ public class Operator {
     private int operatorId;
     private String operatorDescription;
     private String email;
-    private int phoneNumber;
+    private String telephoneNumber;
     private String address;
 
-    public Operator(int operatorId, String operatorDescription, String email, int phoneNumber, String address) {
+    public Operator(int operatorId, String operatorDescription, String email, String telephoneNumber, String address) {
         this.operatorId = operatorId;
         this.operatorDescription = operatorDescription;
         this.email = email;
-        this.phoneNumber = phoneNumber;
+        this.telephoneNumber = telephoneNumber;
         this.address = address;
     }
 
@@ -27,8 +27,8 @@ public class Operator {
         return email;
     }
 
-    public int getPhoneNumber() {
-        return phoneNumber;
+    public String getTelephoneNumber() {
+        return telephoneNumber;
     }
 
     public String getAddress() {
@@ -47,8 +47,8 @@ public class Operator {
         this.email = email;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setTelephoneNumber(String telephoneNumber) {
+        this.telephoneNumber = telephoneNumber;
     }
 
     public void setAddress(String address) {
