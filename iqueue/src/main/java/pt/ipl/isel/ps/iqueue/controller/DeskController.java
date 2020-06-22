@@ -8,6 +8,7 @@ import pt.ipl.isel.ps.iqueue.mapping.DeskDaoModelMapper;
 import pt.ipl.isel.ps.iqueue.model.Desk;
 import pt.ipl.isel.ps.iqueue.repository.DeskRepository;
 
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -32,13 +33,17 @@ public class DeskController extends Controller<Desk, Integer, DeskDao> {
     }
 
     @GetMapping(headers = {"Accept=application/json"})
-    public ResponseEntity getServiceQueueDesks(@RequestParam int serviceQueueId) {
-        return super.getSome(deskRepository
-                .findAll()
-                .stream()
-                .filter(deskDao -> deskDao.getServiceQueueId() == serviceQueueId)
-                .collect(Collectors.toList())
-        );
+    public ResponseEntity getServiceQueueDesks(@RequestParam(required = false) Integer serviceQueueId) {
+        if (serviceQueueId != null) {
+            return super.getSome(deskRepository
+                    .findAll()
+                    .stream()
+                    .filter(deskDao -> deskDao.getServiceQueueId() == serviceQueueId)
+                    .collect(Collectors.toList())
+            );
+        } else {
+            return super.getAll();
+        }
     }
 
     @PostMapping(headers = {"Accept=application/json", "Content-Type=application/json"})

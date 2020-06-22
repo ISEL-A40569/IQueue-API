@@ -193,15 +193,87 @@ insert into AttendanceStatus values(1, 1, 'Waiting')
 insert into AttendanceStatus values(2, 1, 'In Attendance')
 insert into AttendanceStatus values(3, 1, 'Done')
 insert into AttendanceStatus values(4, 1, 'Quit')
-insert into AttendanceStatus values(5, 1, 'No Show')
 insert into AttendanceStatus values(1, 2, 'Em Espera')
 insert into AttendanceStatus values(2, 2, 'Em Atendimento')
 insert into AttendanceStatus values(3, 2, 'Concluído')
 insert into AttendanceStatus values(4, 2, 'Desistência')
-insert into AttendanceStatus values(5, 2, 'Falta')
 
 insert into [User] values('Administrator', 'admin@email.com', null, null, 1)
 insert into UserCredentials values(1, '$2a$10$7FSwcv.GcqzRXI3o6UB/X.U1xAnKGVDpk18KUY3D2JzLP./qUZBkC')
 
 commit
 
+
+
+--select * from Attendance
+
+--select * from AttendanceClassification
+
+go
+
+create or alter procedure
+GetServiceQueueStatistics @serviceQueueId int
+as 
+begin
+declare @temp table(attendanceCount int,
+averageWaitingSeconds int,
+averageAttendanceSeconds int,
+averageRate int,
+quitCount int
+)
+
+declare
+@attendanceCount int,
+@averageWaitingSeconds int,
+@averageAttendanceSeconds int,
+@averageRate int,
+@quitCount int
+
+-- Average ServiceQueue Rate
+set @averageRate = ( select AVG(t2.rate) from Attendance as t1
+inner join AttendanceClassification as t2
+on t1.attendanceId = t2.attendanceId
+where t1.serviceQueueId = @serviceQueueId and
+t1.attendanceStatusId = 3 )
+
+-- ServiceQueue Attendance Count
+set @attendanceCount = ( select count(*) from Attendance
+where serviceQueueId = @serviceQueueId and
+attendanceStatusId = 3 )
+
+-- ServiceQueue Quit Count
+set @quitCount = ( select count(*) from Attendance
+where serviceQueueId = @serviceQueueId and
+attendanceStatusId = 4 )
+
+-- ServiceQueue Attendance Average Waiting Time
+set @averageWaitingSeconds = ( select DATEDIFF(ss, startWaitingDateTime, startAttendanceDateTime)
+from Attendance
+where serviceQueueId = @serviceQueueId and
+attendanceStatusId = 4 )
+
+-- ServiceQueue Average Attendance Time
+set @averageAttendanceSeconds = ( select DATEDIFF(ss, startAttendanceDateTime, endAttendanceDateTime)
+as averageAttendanceSeconds
+from Attendance
+where serviceQueueId = @serviceQueueId and
+attendanceStatusId = 4 )
+
+insert into @temp values(@attendanceCount, @averageWaitingSeconds, @averageAttendanceSeconds, @averageRate, @quitCount)
+
+select * from @temp
+end
+
+go
+
+create or alter procedure
+GetServiceQueueWaitingCount @serviceQueueId int
+as 
+begin
+-- ServiceQueue Waiting Count
+select count(*) as waitingCount from Attendance
+where serviceQueueId = @serviceQueueId and
+attendanceStatusId = 1
+end
+
+--exec GetServiceQueueStatistics 1

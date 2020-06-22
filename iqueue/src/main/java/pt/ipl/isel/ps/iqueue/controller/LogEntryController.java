@@ -31,7 +31,7 @@ public class LogEntryController extends Controller<LogEntry, Integer, LogEntryDa
         this.logEntryDaoModelMapper = logEntryDaoModelMapper;
     }
 
-    @GetMapping
+    @GetMapping(headers = {"Accept=application/json"})
     public ResponseEntity getAll(@RequestParam(required = false) LocalDate date) {
         if (date != null) {
             return super.getSome(logEntryRepository
