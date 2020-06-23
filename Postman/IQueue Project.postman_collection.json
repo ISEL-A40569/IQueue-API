@@ -1182,8 +1182,8 @@
 									"    pm.expect(jsonObject).to.have.property('email')\r",
 									"    pm.expect(jsonObject.email).to.eql('test@email.pt')    \r",
 									"    \r",
-									"    pm.expect(jsonObject).to.have.property('phoneNumber')\r",
-									"    pm.expect(jsonObject.phoneNumber).to.eql(111111111)  \r",
+									"    pm.expect(jsonObject).to.have.property('telephoneNumber')\r",
+									"    pm.expect(jsonObject.telephoneNumber).to.eql('111111111')  \r",
 									"    \r",
 									"    pm.expect(jsonObject).to.have.property('address')\r",
 									"    pm.expect(jsonObject.address).to.eql('Rua das Flores')  \r",
@@ -1200,7 +1200,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"operatorDescription\": \"Test\",\r\n    \"email\": \"test@email.pt\",\r\n    \"phoneNumber\": 111111111,\r\n    \"address\": \"Rua das Flores\"\r\n}",
+							"raw": "{\r\n    \"operatorDescription\": \"Test\",\r\n    \"email\": \"test@email.pt\",\r\n    \"telephoneNumber\": \"111111111\",\r\n    \"address\": \"Rua das Flores\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1255,8 +1255,8 @@
 									"    pm.expect(jsonObject).to.have.property('email')\r",
 									"    pm.expect(jsonObject.email).to.eql('test@email.pt')    \r",
 									"    \r",
-									"    pm.expect(jsonObject).to.have.property('phoneNumber')\r",
-									"    pm.expect(jsonObject.phoneNumber).to.eql(111111111)  \r",
+									"    pm.expect(jsonObject).to.have.property('telephoneNumber')\r",
+									"    pm.expect(jsonObject.telephoneNumber).to.eql('111111111')  \r",
 									"    \r",
 									"    pm.expect(jsonObject).to.have.property('address')\r",
 									"    pm.expect(jsonObject.address).to.eql('Rua das Flores')  \r",
@@ -1328,8 +1328,8 @@
 									"        pm.expect(entry).to.have.property('email')\r",
 									"        pm.expect(entry.email).not.to.eql('')    \r",
 									"        \r",
-									"        pm.expect(entry).to.have.property('phoneNumber')\r",
-									"        pm.expect(entry.phoneNumber).not.to.eql('')  \r",
+									"        pm.expect(entry).to.have.property('telephoneNumber')\r",
+									"        pm.expect(entry.telephoneNumber).not.to.eql('')  \r",
 									"        \r",
 									"        pm.expect(entry).to.have.property('address')\r",
 									"        pm.expect(entry.address).not.to.eql('')  \r",
@@ -1406,8 +1406,8 @@
 									"    pm.expect(jsonObject).to.have.property('email')\r",
 									"    pm.expect(jsonObject.email).to.eql('Updated@email.pt')    \r",
 									"    \r",
-									"    pm.expect(jsonObject).to.have.property('phoneNumber')\r",
-									"    pm.expect(jsonObject.phoneNumber).to.eql(222222222)  \r",
+									"    pm.expect(jsonObject).to.have.property('telephoneNumber')\r",
+									"    pm.expect(jsonObject.telephoneNumber).to.eql('222222222')  \r",
 									"    \r",
 									"    pm.expect(jsonObject).to.have.property('address')\r",
 									"    pm.expect(jsonObject.address).to.eql('Updated')  \r",
@@ -1424,7 +1424,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"operatorDescription\": \"Updated\",\r\n    \"email\": \"Updated@email.pt\",\r\n    \"phoneNumber\": 222222222,\r\n    \"address\": \"Updated\"\r\n}",
+							"raw": "{\r\n    \"operatorDescription\": \"Updated\",\r\n    \"email\": \"Updated@email.pt\",\r\n    \"telephoneNumber\": \"222222222\",\r\n    \"address\": \"Updated\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3741,6 +3741,73 @@
 								"iqueue",
 								"attendance",
 								"classification"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "ServiceQueueStatistics",
+			"item": [
+				{
+					"name": "GET ServiceQueueStatistics",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c9b60bd2-8a55-4dd0-b372-704767c7c7d1",
+								"exec": [
+									"// OK response test\r",
+									"pm.test(\"response is ok\", () => {\r",
+									"    pm.response.to.have.status(200)\r",
+									"    pm.response.to.not.be.error\r",
+									"})\r",
+									"\r",
+									"// Response has body test\r",
+									"pm.test(\"response has body\", () => {\r",
+									"    pm.response.to.have.body\r",
+									"})\r",
+									"\r",
+									"const jsonObject = JSON.parse(responseBody)\r",
+									"\r",
+									"// Response has expected properties test\r",
+									"pm.test(\"response has expected properties\", () => {\r",
+									"    pm.expect(jsonObject).to.have.property('attendanceCount')\r",
+									"\r",
+									"    pm.expect(jsonObject).to.have.property('averageWaitingSeconds')\r",
+									"\r",
+									"    pm.expect(jsonObject).to.have.property('averageAttendanceSeconds')\r",
+									"\r",
+									"    pm.expect(jsonObject).to.have.property('averageRate')\r",
+									"\r",
+									"    pm.expect(jsonObject).to.have.property('quitCount')\r",
+									"\r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:8443/api/iqueue/servicequeue/{{serviceQueueId}}/statistics",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8443",
+							"path": [
+								"api",
+								"iqueue",
+								"servicequeue",
+								"{{serviceQueueId}}",
+								"statistics"
 							]
 						}
 					},
