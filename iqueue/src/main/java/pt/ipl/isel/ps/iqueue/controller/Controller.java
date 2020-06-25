@@ -49,10 +49,10 @@ public abstract class Controller<M, K, D> {
         }
     }
 
-    protected ResponseEntity getSome(List<D> tList) {
+    protected ResponseEntity getSome(List<D> daoList) {
         try {
-            if (!tList.isEmpty()) {
-                return ResponseEntity.ok(tList.stream()
+            if (!daoList.isEmpty()) {
+                return ResponseEntity.ok(daoList.stream()
                         .map(daoModelMapper::mapDaoToModel)
                         .collect(Collectors.toList())
                 );

@@ -3442,7 +3442,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:8443/api/iqueue/attendance",
+							"raw": "https://localhost:8443/api/iqueue/attendance?serviceQueueId={{serviceQueueId}}",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -3452,6 +3452,12 @@
 								"api",
 								"iqueue",
 								"attendance"
+							],
+							"query": [
+								{
+									"key": "serviceQueueId",
+									"value": "{{serviceQueueId}}"
+								}
 							]
 						}
 					},

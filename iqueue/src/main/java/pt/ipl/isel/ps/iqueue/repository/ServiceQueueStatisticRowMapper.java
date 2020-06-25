@@ -13,7 +13,7 @@ public class ServiceQueueStatisticRowMapper implements RowMapper<ServiceQueueSta
         return new ServiceQueueStatistic(rs.getInt("attendanceCount"),
                 rs.getInt("averageWaitingSeconds"),
                 rs.getInt("averageAttendanceSeconds"),
-                rs.getInt("averageRate"),
+                rs.getFloat("averageRate"),
                 rs.getInt("quitCount"));
     }
 }

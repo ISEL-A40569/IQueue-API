@@ -1,21 +1,24 @@
 package pt.ipl.isel.ps.iqueue.model;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 public class ServiceQueueStatistic {
 
     int attendanceCount;
 
-    int averageWaitingSeconds;
+    LocalTime averageWaitingTime;
 
-    int averageAttendanceSeconds;
+    LocalTime averageAttendanceTime;
 
-    int averageRate;
+    float averageRate;
 
     int quitCount;
 
-    public ServiceQueueStatistic(int attendanceCount, int averageWaitingSeconds, int averageAttendanceSeconds, int averageRate, int quitCount) {
+    public ServiceQueueStatistic(int attendanceCount, int averageWaitingSeconds, int averageAttendanceSeconds, float averageRate, int quitCount) {
         this.attendanceCount = attendanceCount;
-        this.averageWaitingSeconds = averageWaitingSeconds;
-        this.averageAttendanceSeconds = averageAttendanceSeconds;
+        this.averageWaitingTime = LocalTime.ofSecondOfDay(averageWaitingSeconds);
+        this.averageAttendanceTime = LocalTime.ofSecondOfDay(averageAttendanceSeconds);
         this.averageRate = averageRate;
         this.quitCount = quitCount;
     }
@@ -28,27 +31,27 @@ public class ServiceQueueStatistic {
         this.attendanceCount = attendanceCount;
     }
 
-    public int getAverageWaitingSeconds() {
-        return averageWaitingSeconds;
+    public LocalTime getAverageWaitingTime() {
+        return averageWaitingTime;
     }
 
-    public void setAverageWaitingSeconds(int averageWaitingSeconds) {
-        this.averageWaitingSeconds = averageWaitingSeconds;
+    public void setAverageWaitingTime(LocalTime averageWaitingTime) {
+        this.averageWaitingTime = averageWaitingTime;
     }
 
-    public int getAverageAttendanceSeconds() {
-        return averageAttendanceSeconds;
+    public LocalTime getAverageAttendanceTime() {
+        return averageAttendanceTime;
     }
 
-    public void setAverageAttendanceSeconds(int averageAttendanceSeconds) {
-        this.averageAttendanceSeconds = averageAttendanceSeconds;
+    public void setAverageAttendanceTime(LocalTime averageAttendanceTime) {
+        this.averageAttendanceTime = averageAttendanceTime;
     }
 
-    public int getAverageRate() {
+    public float getAverageRate() {
         return averageRate;
     }
 
-    public void setAverageRate(int averageRate) {
+    public void setAverageRate(float averageRate) {
         this.averageRate = averageRate;
     }
 

@@ -29,7 +29,8 @@ public class ServiceQueueStatisticsController {
 
         try {
             if (serviceQueueStatisticOptional.isPresent()) {
-                return ResponseEntity.ok(serviceQueueStatisticOptional.get());
+                ServiceQueueStatistic serviceQueueStatistic = serviceQueueStatisticOptional.get();
+                return ResponseEntity.ok(serviceQueueStatistic);
             } else {
                 return ResponseEntity.status(404).build();
             }

@@ -152,6 +152,13 @@ observations varchar(200)
 
 go
 
+create table AttendanceTicket(
+attendanceId int primary key references Attendance,
+ticketNumber int
+)
+
+go
+
 create table [Log](
 logId int identity primary key,
 logCreationDateTime datetime not null,
@@ -203,22 +210,44 @@ insert into UserCredentials values(1, '$2a$10$7FSwcv.GcqzRXI3o6UB/X.U1xAnKGVDpk1
 
 commit
 
+go
 
+-- Trigger to fill AttendanceTicket on Attendance insert
+create or alter trigger FillAttendanceTicket
+on Attendance
+after insert
+as
+begin
+declare 
+@serviceQueueId int,
+@ticketNumber int
 
---select * from Attendance
+set @serviceQueueId = ( select serviceQueueId from Attendance where attendanceId = @@IDENTITY )
 
---select * from AttendanceClassification
+set @ticketNumber = ( select count(*) from Attendance
+where serviceQueueId = @serviceQueueId and
+attendanceStatusId = 1 and
+convert(varchar(10), startWaitingDateTime, 120) = convert(varchar(10), GETDATE(), 120) )
+print @ticketNumber
+set @ticketNumber = @ticketNumber + 1
+
+insert into AttendanceTicket values(@@IDENTITY, @ticketNumber)
+
+end
 
 go
 
+-- Procedure to read ServiceQueue Attendance Stats
+-- TODO: CAN WE OPTIMIZE THESE SELECTS!?
 create or alter procedure
 GetServiceQueueStatistics @serviceQueueId int
 as 
 begin
-declare @temp table(attendanceCount int,
+declare @tempStats table(
+attendanceCount int,
 averageWaitingSeconds int,
 averageAttendanceSeconds int,
-averageRate int,
+averageRate decimal(2,1),
 quitCount int
 )
 
@@ -247,25 +276,26 @@ where serviceQueueId = @serviceQueueId and
 attendanceStatusId = 4 )
 
 -- ServiceQueue Attendance Average Waiting Time
-set @averageWaitingSeconds = ( select DATEDIFF(ss, startWaitingDateTime, startAttendanceDateTime)
+set @averageWaitingSeconds = ( select avg(DATEDIFF(ss, startWaitingDateTime, startAttendanceDateTime))
 from Attendance
-where serviceQueueId = @serviceQueueId and
-attendanceStatusId = 4 )
+where serviceQueueId = 1 and
+attendanceStatusId = 3 )
 
 -- ServiceQueue Average Attendance Time
-set @averageAttendanceSeconds = ( select DATEDIFF(ss, startAttendanceDateTime, endAttendanceDateTime)
+set @averageAttendanceSeconds = ( select avg(DATEDIFF(ss, startAttendanceDateTime, endAttendanceDateTime))
 as averageAttendanceSeconds
 from Attendance
 where serviceQueueId = @serviceQueueId and
-attendanceStatusId = 4 )
+attendanceStatusId = 3 )
 
-insert into @temp values(@attendanceCount, @averageWaitingSeconds, @averageAttendanceSeconds, @averageRate, @quitCount)
+insert into @tempStats values(@attendanceCount, @averageWaitingSeconds, @averageAttendanceSeconds, @averageRate, @quitCount)
 
-select * from @temp
+select * from @tempStats
 end
 
 go
 
+-- Procedure to get ServiceQueue waiting count
 create or alter procedure
 GetServiceQueueWaitingCount @serviceQueueId int
 as 
@@ -273,7 +303,19 @@ begin
 -- ServiceQueue Waiting Count
 select count(*) as waitingCount from Attendance
 where serviceQueueId = @serviceQueueId and
-attendanceStatusId = 1
+attendanceStatusId = 1 and
+startWaitingDateTime >= convert(varchar(10),  GETDATE(), 120)-- '2020-06-24 20:00:00.000'
 end
 
+-- Rubish for tests - DELETE WHEN OK
+
 --exec GetServiceQueueStatistics 1
+
+--exec GetServiceQueueWaitingCount 1
+
+--select * from Attendance
+
+--insert into Attendance values(1, 1, 2, '2020-06-25 20:00:00.000', null, null, 1)
+--select * from AttendanceTicket
+
+--select * from AttendanceClassification

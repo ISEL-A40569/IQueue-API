@@ -8,6 +8,9 @@ import pt.ipl.isel.ps.iqueue.mapping.AttendanceDaoModelMapper;
 import pt.ipl.isel.ps.iqueue.model.Attendance;
 import pt.ipl.isel.ps.iqueue.repository.AttendanceRepository;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RestController
 @RequestMapping("/api/iqueue/attendance")
 public class AttendanceController extends Controller<Attendance, Integer, AttendanceDao> {
@@ -30,8 +33,22 @@ public class AttendanceController extends Controller<Attendance, Integer, Attend
     }
 
     @GetMapping(headers = {"Accept=application/json"})
-    public ResponseEntity getAll() {
-        return super.getAll();
+    public ResponseEntity getAll(@RequestParam Integer serviceQueueId) {    // TODO: THIS IS HORRIBLE, MUST RE-THINK AND RE-WRITE THIS SHIT!!!
+        if (serviceQueueId != null) {
+            List<AttendanceDao> attendanceDaoList = attendanceRepository
+                    .findAll()
+                    .stream()
+                    .filter(attendanceDao -> attendanceDao.getServiceQueueId() == serviceQueueId &&
+                            attendanceDao.getAttendanceStatusId() == 3)
+                    .collect(Collectors.toList());
+            if (!attendanceDaoList.isEmpty()) {
+                return super.getSome(attendanceDaoList);
+            } else {
+                return ResponseEntity.status(404).build();
+            }
+        } else {
+            return super.getAll();
+        }
     }
 
     @PostMapping(headers = {"Accept=application/json", "Content-Type=application/json"})
