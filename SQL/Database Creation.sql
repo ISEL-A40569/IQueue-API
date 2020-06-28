@@ -228,10 +228,11 @@ set @ticketNumber = ( select count(*) from Attendance
 where serviceQueueId = @serviceQueueId and
 attendanceStatusId = 1 and
 convert(varchar(10), startWaitingDateTime, 120) = convert(varchar(10), GETDATE(), 120) )
-print @ticketNumber
-set @ticketNumber = @ticketNumber + 1
 
-insert into AttendanceTicket values(@@IDENTITY, @ticketNumber)
+if @ticketNumber > 0
+	begin
+		 insert into AttendanceTicket values(@@IDENTITY, @ticketNumber)
+	end
 
 end
 
@@ -304,7 +305,20 @@ begin
 select count(*) as waitingCount from Attendance
 where serviceQueueId = @serviceQueueId and
 attendanceStatusId = 1 and
-startWaitingDateTime >= convert(varchar(10),  GETDATE(), 120)-- '2020-06-24 20:00:00.000'
+convert(varchar(10), startWaitingDateTime, 120) = convert(varchar(10), GETDATE(), 120) 
+end
+
+
+go
+
+-- Procedure to get next Attendance for a given desk
+create or alter procedure GetNextAttendance @deskId int
+as
+begin
+select min(attendanceId) as nextAttendance from Attendance
+where deskId = @deskId and
+attendanceStatusId = 1 and
+convert(varchar(10), startWaitingDateTime, 120) = convert(varchar(10), GETDATE(), 120)
 end
 
 -- Rubish for tests - DELETE WHEN OK
@@ -313,9 +327,20 @@ end
 
 --exec GetServiceQueueWaitingCount 1
 
+--insert into Attendance values(1, 1, 2, '2020-06-29 20:00:00.000', null, null, 1)
+
 --select * from Attendance
 
---insert into Attendance values(1, 1, 2, '2020-06-25 20:00:00.000', null, null, 1)
---select * from AttendanceTicket
+--select * from AttendanceTicket 
 
 --select * from AttendanceClassification
+
+go 
+
+
+
+update Attendance
+set attendanceStatusId = 3
+where attendanceId = 5
+
+exec GetNextAttendance 1

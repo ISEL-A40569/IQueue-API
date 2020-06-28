@@ -3264,13 +3264,14 @@
 									"    pm.expect(jsonObject.startWaitingDateTime).to.eql(\"2020-04-10T20:00:00\")",
 									"    ",
 									"    pm.expect(jsonObject).to.have.property('attendanceStatusId')",
-									"    pm.expect(jsonObject.attendanceStatusId).to.eql(+pm.environment.get('attendanceStatusId'))",
+									"    pm.expect(jsonObject.attendanceStatusId).to.eql(1)",
 									"    ",
 									"    pm.expect(jsonObject).to.have.property('startAttendanceDateTime')",
 									"    pm.expect(jsonObject.startAttendanceDateTime).to.eql(null)",
 									"    ",
 									"    pm.expect(jsonObject).to.have.property('endAttendanceDateTime')",
 									"    pm.expect(jsonObject.endAttendanceDateTime).to.eql(null)",
+									"",
 									"})",
 									"",
 									""
@@ -3284,7 +3285,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"serviceQueueId\": {{serviceQueueId}},\n\t\"deskId\": {{deskId}},\n\t\"clientId\": {{userId}},\n\t\"startWaitingDateTime\": \"2020-04-10T20:00:00\",\n\t\"attendanceStatusId\": {{attendanceStatusId}}\n}",
+							"raw": "{\n\t\"serviceQueueId\": {{serviceQueueId}},\n\t\"deskId\": {{deskId}},\n\t\"clientId\": {{userId}},\n\t\"startWaitingDateTime\": \"2020-04-10T20:00:00\",\n\t\"attendanceStatusId\": 1\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3346,13 +3347,14 @@
 									"    pm.expect(jsonObject.startWaitingDateTime).to.eql(\"2020-04-10T20:00:00\")",
 									"    ",
 									"    pm.expect(jsonObject).to.have.property('attendanceStatusId')",
-									"    pm.expect(jsonObject.attendanceStatusId).to.eql(+pm.environment.get('attendanceStatusId'))",
+									"    pm.expect(jsonObject.attendanceStatusId).to.eql(1)",
 									"    ",
 									"    pm.expect(jsonObject).to.have.property('startAttendanceDateTime')",
 									"    pm.expect(jsonObject.startAttendanceDateTime).to.eql(null)",
 									"    ",
 									"    pm.expect(jsonObject).to.have.property('endAttendanceDateTime')",
 									"    pm.expect(jsonObject.endAttendanceDateTime).to.eql(null)",
+									"",
 									"})",
 									"",
 									""
@@ -3430,6 +3432,7 @@
 									"        ",
 									"        pm.expect(entry).to.have.property('endAttendanceDateTime')",
 									"        pm.expect(entry.endAttendanceDateTime).not.to.eql('')",
+									"",
 									"    })",
 									"})",
 									""
@@ -3442,7 +3445,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:8443/api/iqueue/attendance?serviceQueueId={{serviceQueueId}}",
+							"raw": "https://localhost:8443/api/iqueue/attendance?serviceQueueId=",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -3456,7 +3459,7 @@
 							"query": [
 								{
 									"key": "serviceQueueId",
-									"value": "{{serviceQueueId}}"
+									"value": ""
 								}
 							]
 						}
@@ -3502,13 +3505,14 @@
 									"    pm.expect(jsonObject.startWaitingDateTime).to.eql(\"2020-04-10T20:00:00\")",
 									"    ",
 									"    pm.expect(jsonObject).to.have.property('attendanceStatusId')",
-									"    pm.expect(jsonObject.attendanceStatusId).to.eql(+pm.environment.get('attendanceStatusId'))",
+									"    pm.expect(jsonObject.attendanceStatusId).to.eql(1)",
 									"    ",
 									"    pm.expect(jsonObject).to.have.property('startAttendanceDateTime')",
 									"    pm.expect(jsonObject.startAttendanceDateTime).to.eql(\"2020-04-10T20:10:00\")",
 									"    ",
 									"    pm.expect(jsonObject).to.have.property('endAttendanceDateTime')",
 									"    pm.expect(jsonObject.endAttendanceDateTime).to.eql(\"2020-04-10T20:15:00\")",
+									"",
 									"})",
 									"",
 									""
@@ -3522,7 +3526,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\t\n\t\"serviceQueueId\": {{serviceQueueId}},\n\t\"deskId\": {{deskId}},\n\t\"clientId\": {{userId}},\n\t\"startWaitingDateTime\": \"2020-04-10T20:00:00\",\n\t\"startAttendanceDateTime\": \"2020-04-10T20:10:00\",\n\t\"endAttendanceDateTime\": \"2020-04-10T20:15:00\",\n\t\"attendanceStatusId\": {{attendanceStatusId}}\n}\n",
+							"raw": "{\t\n\t\"serviceQueueId\": {{serviceQueueId}},\n\t\"deskId\": {{deskId}},\n\t\"clientId\": {{userId}},\n\t\"startWaitingDateTime\": \"2020-04-10T20:00:00\",\n\t\"startAttendanceDateTime\": \"2020-04-10T20:10:00\",\n\t\"endAttendanceDateTime\": \"2020-04-10T20:15:00\",\n\t\"attendanceStatusId\": 1\n}\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3783,9 +3787,9 @@
 									"pm.test(\"response has expected properties\", () => {\r",
 									"    pm.expect(jsonObject).to.have.property('attendanceCount')\r",
 									"\r",
-									"    pm.expect(jsonObject).to.have.property('averageWaitingSeconds')\r",
+									"    pm.expect(jsonObject).to.have.property('averageWaitingTime')\r",
 									"\r",
-									"    pm.expect(jsonObject).to.have.property('averageAttendanceSeconds')\r",
+									"    pm.expect(jsonObject).to.have.property('averageAttendanceTime')\r",
 									"\r",
 									"    pm.expect(jsonObject).to.have.property('averageRate')\r",
 									"\r",
