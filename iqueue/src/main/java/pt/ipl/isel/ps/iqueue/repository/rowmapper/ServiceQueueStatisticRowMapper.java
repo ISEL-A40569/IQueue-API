@@ -1,4 +1,4 @@
-package pt.ipl.isel.ps.iqueue.repository;
+package pt.ipl.isel.ps.iqueue.repository.rowmapper;
 
 import org.springframework.jdbc.core.RowMapper;
 import pt.ipl.isel.ps.iqueue.model.ServiceQueueStatistic;

@@ -6,8 +6,11 @@ import org.springframework.web.bind.annotation.*;
 import pt.ipl.isel.ps.iqueue.dao.ServiceQueueDao;
 import pt.ipl.isel.ps.iqueue.mapping.ServiceQueueDaoModelMapper;
 import pt.ipl.isel.ps.iqueue.model.ServiceQueue;
+import pt.ipl.isel.ps.iqueue.model.ServiceQueueWaitingCount;
 import pt.ipl.isel.ps.iqueue.repository.ServiceQueueRepository;
+import pt.ipl.isel.ps.iqueue.repository.ServiceQueueWaitingCountRepository;
 
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -18,11 +21,15 @@ public class ServiceQueueController extends Controller<ServiceQueue, Integer, Se
     private final ServiceQueueRepository serviceQueueRepository;
 
     @Autowired
+    private final ServiceQueueWaitingCountRepository serviceQueueWaitingCountRepository;
+
+    @Autowired
     private final ServiceQueueDaoModelMapper serviceQueueDaoModelMapper;
 
-    public ServiceQueueController(ServiceQueueRepository serviceQueueRepository, ServiceQueueDaoModelMapper serviceQueueDaoModelMapper) {
+    public ServiceQueueController(ServiceQueueRepository serviceQueueRepository, ServiceQueueWaitingCountRepository serviceQueueWaitingCountRepository, ServiceQueueDaoModelMapper serviceQueueDaoModelMapper) {
         super(serviceQueueRepository, serviceQueueDaoModelMapper);
         this.serviceQueueRepository = serviceQueueRepository;
+        this.serviceQueueWaitingCountRepository = serviceQueueWaitingCountRepository;
         this.serviceQueueDaoModelMapper = serviceQueueDaoModelMapper;
     }
 
@@ -39,6 +46,15 @@ public class ServiceQueueController extends Controller<ServiceQueue, Integer, Se
     @GetMapping(value ="{serviceQueueId}", headers = {"Accept=application/json"})
     public ResponseEntity getById(@PathVariable Integer serviceQueueId) {
         return super.getById(serviceQueueId);
+    }
+
+    @GetMapping(value ="waitingCount/{deskId}", headers = {"Accept=application/json"})
+    public ResponseEntity getServiceQueueWaitingCount(@PathVariable int deskId) {
+        try {
+            return ResponseEntity.ok(serviceQueueWaitingCountRepository.get(deskId).get());
+        } catch (Exception exception) {
+            return ResponseEntity.status(500).build();
+        }
     }
 
     @PostMapping(headers = {"Accept=application/json", "Content-Type=application/json"})

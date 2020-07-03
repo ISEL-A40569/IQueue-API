@@ -6,9 +6,12 @@ import org.springframework.web.bind.annotation.*;
 import pt.ipl.isel.ps.iqueue.dao.AttendanceDao;
 import pt.ipl.isel.ps.iqueue.mapping.AttendanceDaoModelMapper;
 import pt.ipl.isel.ps.iqueue.model.Attendance;
+import pt.ipl.isel.ps.iqueue.model.NextAttendance;
 import pt.ipl.isel.ps.iqueue.repository.AttendanceRepository;
+import pt.ipl.isel.ps.iqueue.repository.NextAttendanceRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -19,11 +22,15 @@ public class AttendanceController extends Controller<Attendance, Integer, Attend
     private final AttendanceRepository attendanceRepository;
 
     @Autowired
+    private final NextAttendanceRepository nextAttendanceRepository;
+
+    @Autowired
     private final AttendanceDaoModelMapper attendanceDaoModelMapper;
 
-    public AttendanceController(AttendanceRepository attendanceRepository, AttendanceDaoModelMapper attendanceDaoModelMapper) {
+    public AttendanceController(AttendanceRepository attendanceRepository, NextAttendanceRepository nextAttendanceRepository, AttendanceDaoModelMapper attendanceDaoModelMapper) {
         super(attendanceRepository, attendanceDaoModelMapper);
         this.attendanceRepository = attendanceRepository;
+        this.nextAttendanceRepository = nextAttendanceRepository;
         this.attendanceDaoModelMapper = attendanceDaoModelMapper;
     }
 
@@ -48,6 +55,25 @@ public class AttendanceController extends Controller<Attendance, Integer, Attend
             }
         } else {
             return super.getAll();
+        }
+    }
+
+    @GetMapping(value = "{next/{deskId}", headers = {"Accept=application/json"})
+    public ResponseEntity getNextAttendance(@PathVariable int deskId) {
+        try {
+            Optional<NextAttendance> nextAttendanceObject = nextAttendanceRepository.get(deskId);
+            if (nextAttendanceObject.isPresent()) {
+                Attendance nextAttendance = attendanceDaoModelMapper
+                        .mapDaoToModel(attendanceRepository
+                                .findById(nextAttendanceObject.get().getNextAttendanceId())
+                                .get());
+                return ResponseEntity.ok(nextAttendance);
+            } else {
+                return ResponseEntity.status(404).build();
+            }
+
+        } catch (Exception exception) {
+            return ResponseEntity.status(404).build();
         }
     }
 

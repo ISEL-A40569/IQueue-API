@@ -298,25 +298,31 @@ go
 
 -- Procedure to get ServiceQueue waiting count
 create or alter procedure
-GetServiceQueueWaitingCount @serviceQueueId int
+GetServiceQueueWaitingCount @deskId int
 as 
 begin
--- ServiceQueue Waiting Count
+declare @serviceQueueId int
+
+set @serviceQueueId = ( select serviceQueueId from Desk where deskId = @deskId )
+
 select count(*) as waitingCount from Attendance
 where serviceQueueId = @serviceQueueId and
 attendanceStatusId = 1 and
 convert(varchar(10), startWaitingDateTime, 120) = convert(varchar(10), GETDATE(), 120) 
 end
 
-
 go
 
--- Procedure to get next Attendance for a given desk
+-- Procedure to get next Attendance for a given deskId
 create or alter procedure GetNextAttendance @deskId int
 as
 begin
+declare @serviceQueueId int
+
+set @serviceQueueId = ( select serviceQueueId from Desk where deskId = @deskId )
+
 select min(attendanceId) as nextAttendance from Attendance
-where deskId = @deskId and
+where ServiceQueueId = @serviceQueueId and
 attendanceStatusId = 1 and
 convert(varchar(10), startWaitingDateTime, 120) = convert(varchar(10), GETDATE(), 120)
 end
@@ -327,7 +333,7 @@ end
 
 --exec GetServiceQueueWaitingCount 1
 
---insert into Attendance values(1, 1, 2, '2020-06-29 20:00:00.000', null, null, 1)
+--insert into Attendance values(1, null, 2, '2020-06-30 20:00:00.000', null, null, 1)
 
 --select * from Attendance
 
@@ -341,6 +347,6 @@ go
 
 update Attendance
 set attendanceStatusId = 3
-where attendanceId = 5
+where attendanceId = 8
 
 exec GetNextAttendance 1
