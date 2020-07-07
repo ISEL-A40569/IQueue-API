@@ -226,7 +226,6 @@ set @serviceQueueId = ( select serviceQueueId from Attendance where attendanceId
 
 set @ticketNumber = ( select count(*) from Attendance
 where serviceQueueId = @serviceQueueId and
-attendanceStatusId = 1 and
 convert(varchar(10), startWaitingDateTime, 120) = convert(varchar(10), GETDATE(), 120) )
 
 if @ticketNumber > 0
@@ -333,7 +332,7 @@ end
 
 --exec GetServiceQueueWaitingCount 1
 
---insert into Attendance values(1, null, 2, '2020-06-30 20:00:00.000', null, null, 1)
+--insert into Attendance values(1, null, 2, '2020-07-05 19:05:00.000', null, null, 1)
 
 --select * from Attendance
 
@@ -345,8 +344,8 @@ go
 
 
 
-update Attendance
-set attendanceStatusId = 3
-where attendanceId = 8
+--update Attendance
+--set attendanceStatusId = 3
+--where attendanceId = 8
 
-exec GetNextAttendance 1
+--exec GetNextAttendance 1

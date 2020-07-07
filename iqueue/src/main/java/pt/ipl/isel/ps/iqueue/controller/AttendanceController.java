@@ -58,7 +58,7 @@ public class AttendanceController extends Controller<Attendance, Integer, Attend
         }
     }
 
-    @GetMapping(value = "{next/{deskId}", headers = {"Accept=application/json"})
+    @GetMapping(value = "next/{deskId}", headers = {"Accept=application/json"})
     public ResponseEntity getNextAttendance(@PathVariable int deskId) {
         try {
             Optional<NextAttendance> nextAttendanceObject = nextAttendanceRepository.get(deskId);

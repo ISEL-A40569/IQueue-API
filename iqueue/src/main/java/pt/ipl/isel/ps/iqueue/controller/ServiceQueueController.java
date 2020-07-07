@@ -48,7 +48,7 @@ public class ServiceQueueController extends Controller<ServiceQueue, Integer, Se
         return super.getById(serviceQueueId);
     }
 
-    @GetMapping(value ="waitingCount/{deskId}", headers = {"Accept=application/json"})
+    @GetMapping(value ="waitingcount/{deskId}", headers = {"Accept=application/json"})
     public ResponseEntity getServiceQueueWaitingCount(@PathVariable int deskId) {
         try {
             return ResponseEntity.ok(serviceQueueWaitingCountRepository.get(deskId).get());

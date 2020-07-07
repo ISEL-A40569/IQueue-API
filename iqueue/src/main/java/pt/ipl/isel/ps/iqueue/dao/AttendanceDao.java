@@ -16,7 +16,7 @@ public class AttendanceDao {
     private int serviceQueueId;
 
     @Column(name = "deskId")
-    private int deskId;
+    private Integer deskId;
 
     @Column(name = "clientId")
     private int clientId;
@@ -36,7 +36,7 @@ public class AttendanceDao {
     public AttendanceDao() {
     }
 
-    public AttendanceDao(int attendanceId, int serviceQueueId, int deskId, int clientId, LocalDateTime startWaitingDateTime, LocalDateTime startAttendanceDateTime, LocalDateTime endAttendanceDateTime, int attendanceStatusId) {
+    public AttendanceDao(int attendanceId, int serviceQueueId, Integer deskId, int clientId, LocalDateTime startWaitingDateTime, LocalDateTime startAttendanceDateTime, LocalDateTime endAttendanceDateTime, int attendanceStatusId) {
         this.attendanceId = attendanceId;
         this.serviceQueueId = serviceQueueId;
         this.deskId = deskId;
@@ -63,11 +63,11 @@ public class AttendanceDao {
         this.serviceQueueId = serviceQueueId;
     }
 
-    public int getDeskId() {
+    public Integer getDeskId() {
         return deskId;
     }
 
-    public void setDeskId(int deskId) {
+    public void setDeskId(Integer deskId) {
         this.deskId = deskId;
     }
 

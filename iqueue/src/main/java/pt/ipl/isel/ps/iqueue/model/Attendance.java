@@ -5,14 +5,14 @@ import java.time.LocalDateTime;
 public class Attendance {
     private int attendanceId;
     private int serviceQueueId;
-    private int deskId;
+    private Integer deskId;
     private int clientId;
     private LocalDateTime startWaitingDateTime;
     private LocalDateTime startAttendanceDateTime;
     private LocalDateTime endAttendanceDateTime;
     private int attendanceStatusId;
 
-    public Attendance(int attendanceId, int serviceQueueId, int deskId, int clientId, LocalDateTime startWaitingDateTime, LocalDateTime startAttendanceDateTime, LocalDateTime endAttendanceDateTime, int attendanceStatusId) {
+    public Attendance(int attendanceId, int serviceQueueId, Integer deskId, int clientId, LocalDateTime startWaitingDateTime, LocalDateTime startAttendanceDateTime, LocalDateTime endAttendanceDateTime, int attendanceStatusId) {
         this.attendanceId = attendanceId;
         this.serviceQueueId = serviceQueueId;
         this.deskId = deskId;
@@ -31,7 +31,7 @@ public class Attendance {
         return serviceQueueId;
     }
 
-    public int getDeskId() {
+    public Integer getDeskId() {
         return deskId;
     }
 
