@@ -10,4 +10,6 @@ import pt.ipl.isel.ps.iqueue.dao.BeaconDao;
 @Component
 public interface BeaconRepository extends JpaRepository<BeaconDao, Integer> {
 
+    BeaconDao findByNamespaceIdAndInstanceId(String namespaceId, String instanceId);
+
 }

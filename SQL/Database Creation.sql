@@ -68,8 +68,8 @@ go
 create table Beacon(
 beaconId int identity primary key,
 beaconMacAddress varchar(12) unique not null,
-namespaceId varchar(10) not null,
-instanceId varchar(6) unique not null,
+namespaceId varchar(20) not null,
+instanceId varchar(12) unique not null,
 manufacturer varchar(50) not null,
 model varchar(50) not null
 )
@@ -326,6 +326,25 @@ attendanceStatusId = 1 and
 convert(varchar(10), startWaitingDateTime, 120) = convert(varchar(10), GETDATE(), 120)
 end
 
+
+go
+
+
+create or alter procedure GetCurrentAttendance @serviceQueueId int
+as
+begin
+declare @attendanceId int
+
+set @attendanceId = ( select min(attendanceId) 
+from Attendance
+where ServiceQueueId = @serviceQueueId and
+attendanceStatusId = 2 and
+convert(varchar(10), startWaitingDateTime, 120) = convert(varchar(10), GETDATE(), 120) )
+
+select ticketNumber from AttendanceTicket
+where attendanceId = @attendanceId
+end
+
 -- Rubish for tests - DELETE WHEN OK
 
 --exec GetServiceQueueStatistics 1
@@ -340,12 +359,17 @@ end
 
 --select * from AttendanceClassification
 
+update Attendance n 
+set attendanceStatusId = 3
+where attendanceId = 106
+
 go 
 
-
+exec GetCurrentAttendance 3
 
 --update Attendance
 --set attendanceStatusId = 3
 --where attendanceId = 8
 
 --exec GetNextAttendance 1
+

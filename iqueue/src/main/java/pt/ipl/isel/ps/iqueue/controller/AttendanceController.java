@@ -10,6 +10,9 @@ import pt.ipl.isel.ps.iqueue.model.NextAttendance;
 import pt.ipl.isel.ps.iqueue.repository.AttendanceRepository;
 import pt.ipl.isel.ps.iqueue.repository.NextAttendanceRepository;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.Socket;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -100,4 +103,5 @@ public class AttendanceController extends Controller<Attendance, Integer, Attend
         attendance.setAttendanceId(attendanceId);
         return super.update(attendanceId, attendance);
     }
+
 }

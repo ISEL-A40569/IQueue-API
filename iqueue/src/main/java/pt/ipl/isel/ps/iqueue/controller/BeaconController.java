@@ -5,8 +5,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pt.ipl.isel.ps.iqueue.dao.BeaconDao;
 import pt.ipl.isel.ps.iqueue.mapping.BeaconDaoModelMapper;
+import pt.ipl.isel.ps.iqueue.mapping.OperatorBeaconDaoModelMapper;
 import pt.ipl.isel.ps.iqueue.model.Beacon;
+import pt.ipl.isel.ps.iqueue.model.EddystoneUid;
+import pt.ipl.isel.ps.iqueue.model.OperatorBeacon;
 import pt.ipl.isel.ps.iqueue.repository.BeaconRepository;
+import pt.ipl.isel.ps.iqueue.repository.OperatorBeaconRepository;
 
 @RestController
 @RequestMapping("/api/iqueue/beacon")
@@ -16,12 +20,20 @@ public class BeaconController extends Controller<Beacon, Integer, BeaconDao> {
     private final BeaconRepository beaconRepository;
 
     @Autowired
-    private final BeaconDaoModelMapper beaconDaoModelMapperM;
+    private final OperatorBeaconRepository operatorBeaconRepository;
 
-    public BeaconController(BeaconRepository beaconRepository, BeaconDaoModelMapper beaconDaoModelMapperM) {
+    @Autowired
+    private final BeaconDaoModelMapper beaconDaoModelMapper;
+
+    @Autowired
+    private final OperatorBeaconDaoModelMapper operatorBeaconDaoModelMapper;
+
+    public BeaconController(BeaconRepository beaconRepository, OperatorBeaconRepository operatorBeaconRepository, BeaconDaoModelMapper beaconDaoModelMapperM, OperatorBeaconDaoModelMapper operatorBeaconDaoModelMapper) {
         super(beaconRepository, beaconDaoModelMapperM);
         this.beaconRepository = beaconRepository;
-        this.beaconDaoModelMapperM = beaconDaoModelMapperM;
+        this.operatorBeaconRepository = operatorBeaconRepository;
+        this.beaconDaoModelMapper = beaconDaoModelMapperM;
+        this.operatorBeaconDaoModelMapper = operatorBeaconDaoModelMapper;
     }
 
     @GetMapping(value = "{beaconId}", headers = {"Accept=application/json"})
@@ -34,11 +46,29 @@ public class BeaconController extends Controller<Beacon, Integer, BeaconDao> {
         return super.getAll();
     }
 
+    @PostMapping(value = "/eddystoneUid", headers = {"Accept=application/json", "Content-Type=application/json"})
+    public ResponseEntity getOperatorBeaconByEddystoneUid(@RequestBody EddystoneUid eddystoneUid) {
+        try {
+            Beacon beacon = beaconDaoModelMapper
+                    .mapDaoToModel(beaconRepository
+                            .findByNamespaceIdAndInstanceId(eddystoneUid.getNamespaceId(), eddystoneUid.getInstanceId()));
+
+            OperatorBeacon operatorBeacon = operatorBeaconDaoModelMapper
+                    .mapDaoToModel(operatorBeaconRepository
+                            .findByOperatorBeaconIdsBeaconId(beacon.getBeaconId()));
+
+            return ResponseEntity.ok(operatorBeacon);
+
+        } catch (Exception exception) {
+            return ResponseEntity.status(500).build();
+        }
+    }
+
     @PostMapping(headers = {"Accept=application/json", "Content-Type=application/json"})
     public ResponseEntity add(@RequestBody Beacon beacon) {
         try {
-            Beacon createdBeacon = beaconDaoModelMapperM.mapDaoToModel(beaconRepository
-                    .save(beaconDaoModelMapperM.mapModelToDao(beacon)));
+            Beacon createdBeacon = beaconDaoModelMapper.mapDaoToModel(beaconRepository
+                    .save(beaconDaoModelMapper.mapModelToDao(beacon)));
 
             return super.add(createdBeacon, "/api/iqueue/beacon/" + createdBeacon.getBeaconId());
         } catch (Exception exception) {

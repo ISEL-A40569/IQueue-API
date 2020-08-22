@@ -23,7 +23,7 @@ dependencies {
 	}
 	implementation group: 'com.microsoft.sqlserver', name: 'mssql-jdbc', version: '7.2.2.jre8'
 	implementation 'junit:junit:4.12'
-
+	compile group: 'com.google.apis', name: 'google-api-services-proximitybeacon', version: 'v1beta1-rev46-1.22.0'
 }
 
 test {

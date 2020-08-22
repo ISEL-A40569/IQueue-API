@@ -6,11 +6,10 @@ import org.springframework.web.bind.annotation.*;
 import pt.ipl.isel.ps.iqueue.dao.ServiceQueueDao;
 import pt.ipl.isel.ps.iqueue.mapping.ServiceQueueDaoModelMapper;
 import pt.ipl.isel.ps.iqueue.model.ServiceQueue;
-import pt.ipl.isel.ps.iqueue.model.ServiceQueueWaitingCount;
+import pt.ipl.isel.ps.iqueue.repository.ServiceQueueCurrentAttendanceRepository;
 import pt.ipl.isel.ps.iqueue.repository.ServiceQueueRepository;
 import pt.ipl.isel.ps.iqueue.repository.ServiceQueueWaitingCountRepository;
 
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -23,13 +22,16 @@ public class ServiceQueueController extends Controller<ServiceQueue, Integer, Se
     @Autowired
     private final ServiceQueueWaitingCountRepository serviceQueueWaitingCountRepository;
 
+    private final ServiceQueueCurrentAttendanceRepository serviceQueueCurrentAttendanceRepository;
+
     @Autowired
     private final ServiceQueueDaoModelMapper serviceQueueDaoModelMapper;
 
-    public ServiceQueueController(ServiceQueueRepository serviceQueueRepository, ServiceQueueWaitingCountRepository serviceQueueWaitingCountRepository, ServiceQueueDaoModelMapper serviceQueueDaoModelMapper) {
+    public ServiceQueueController(ServiceQueueRepository serviceQueueRepository, ServiceQueueWaitingCountRepository serviceQueueWaitingCountRepository, ServiceQueueCurrentAttendanceRepository serviceQueueCurrentAttendanceRepository, ServiceQueueDaoModelMapper serviceQueueDaoModelMapper) {
         super(serviceQueueRepository, serviceQueueDaoModelMapper);
         this.serviceQueueRepository = serviceQueueRepository;
         this.serviceQueueWaitingCountRepository = serviceQueueWaitingCountRepository;
+        this.serviceQueueCurrentAttendanceRepository = serviceQueueCurrentAttendanceRepository;
         this.serviceQueueDaoModelMapper = serviceQueueDaoModelMapper;
     }
 
@@ -52,6 +54,15 @@ public class ServiceQueueController extends Controller<ServiceQueue, Integer, Se
     public ResponseEntity getServiceQueueWaitingCount(@PathVariable int deskId) {
         try {
             return ResponseEntity.ok(serviceQueueWaitingCountRepository.get(deskId).get());
+        } catch (Exception exception) {
+            return ResponseEntity.status(500).build();
+        }
+    }
+
+    @GetMapping(value ="{serviceQueueId}/currentattendance", headers = {"Accept=application/json"})
+    public ResponseEntity getServiceQueueCurrentAttendanceTicketNumber(@PathVariable int serviceQueueId) {
+        try {
+            return ResponseEntity.ok(serviceQueueCurrentAttendanceRepository.get(serviceQueueId).get());
         } catch (Exception exception) {
             return ResponseEntity.status(500).build();
         }
