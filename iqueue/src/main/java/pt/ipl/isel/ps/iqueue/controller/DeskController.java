@@ -7,8 +7,9 @@ import pt.ipl.isel.ps.iqueue.dao.DeskDao;
 import pt.ipl.isel.ps.iqueue.mapping.DeskDaoModelMapper;
 import pt.ipl.isel.ps.iqueue.model.Desk;
 import pt.ipl.isel.ps.iqueue.repository.DeskRepository;
+import pt.ipl.isel.ps.iqueue.repository.DeskUserRepository;
 
-import java.util.Optional;
+import javax.transaction.Transactional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -19,11 +20,15 @@ public class DeskController extends Controller<Desk, Integer, DeskDao> {
     private final DeskRepository deskRepository;
 
     @Autowired
+    private final DeskUserRepository deskUserRepository;
+
+    @Autowired
     private final DeskDaoModelMapper deskDaoModelMapper;
 
-    public DeskController(DeskRepository deskRepository, DeskDaoModelMapper deskDaoModelMapper) {
+    public DeskController(DeskRepository deskRepository, DeskUserRepository deskUserRepository, DeskDaoModelMapper deskDaoModelMapper) {
         super(deskRepository, deskDaoModelMapper);
         this.deskRepository = deskRepository;
+        this.deskUserRepository = deskUserRepository;
         this.deskDaoModelMapper = deskDaoModelMapper;
     }
 
@@ -60,7 +65,9 @@ public class DeskController extends Controller<Desk, Integer, DeskDao> {
     }
 
     @DeleteMapping(value = "{deskId}")
+    @Transactional
     public ResponseEntity remove(@PathVariable int deskId) {
+        deskUserRepository.deleteByDeskUserIdsDeskId(deskId);
         return super.remove(deskId);
     }
 

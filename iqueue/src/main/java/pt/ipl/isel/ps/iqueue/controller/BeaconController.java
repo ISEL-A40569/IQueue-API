@@ -12,6 +12,8 @@ import pt.ipl.isel.ps.iqueue.model.OperatorBeacon;
 import pt.ipl.isel.ps.iqueue.repository.BeaconRepository;
 import pt.ipl.isel.ps.iqueue.repository.OperatorBeaconRepository;
 
+import javax.transaction.Transactional;
+
 @RestController
 @RequestMapping("/api/iqueue/beacon")
 public class BeaconController extends Controller<Beacon, Integer, BeaconDao> {
@@ -78,7 +80,9 @@ public class BeaconController extends Controller<Beacon, Integer, BeaconDao> {
     }
 
     @DeleteMapping(value = "{beaconId}")
+    @Transactional
     public ResponseEntity remove(@PathVariable int beaconId) {
+        operatorBeaconRepository.deleteByOperatorBeaconIdsBeaconId(beaconId);
         return super.remove(beaconId);
     }
 

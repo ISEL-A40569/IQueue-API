@@ -47,6 +47,7 @@ public class LanguageController extends Controller<Language, Integer, LanguageDa
 
     @DeleteMapping(value = "{languageId}")
     public ResponseEntity remove(@PathVariable int languageId) {
+        // TODO: if needed, must remove first usages of language: UserProfile, ServiceQueueType and AttendanceStatus
         return super.remove(languageId);
     }
 

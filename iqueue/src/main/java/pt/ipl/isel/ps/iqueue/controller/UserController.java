@@ -10,10 +10,11 @@ import pt.ipl.isel.ps.iqueue.mapping.UserCredentialsDaoModelMapper;
 import pt.ipl.isel.ps.iqueue.mapping.UserDaoModelMapper;
 import pt.ipl.isel.ps.iqueue.model.User;
 import pt.ipl.isel.ps.iqueue.model.UserCredentials;
-import pt.ipl.isel.ps.iqueue.repository.UserCredentialsRepository;
-import pt.ipl.isel.ps.iqueue.repository.UserRepository;
+import pt.ipl.isel.ps.iqueue.repository.*;
 import pt.ipl.isel.ps.iqueue.utils.EmailService;
 import pt.ipl.isel.ps.iqueue.utils.PasswordGenerator;
+
+import javax.transaction.Transactional;
 
 @RestController
 @RequestMapping("/api/iqueue/user")
@@ -29,6 +30,21 @@ public class UserController extends Controller<User, Integer, UserDao> {
     private final UserCredentialsRepository userCredentialsRepository;
 
     @Autowired
+    private final AttendanceRepository attendanceRepository;
+
+    @Autowired
+    private final AttendanceClassificationRepository attendanceClassificationRepository;
+
+    @Autowired
+    private final AttendanceTicketRepository attendanceTicketRepository;
+
+    @Autowired
+    private final DeskUserRepository deskUserRepository;
+
+    @Autowired
+    private final OperatorUserRepository operatorUserRepository;
+
+    @Autowired
     private final UserCredentialsDaoModelMapper userCredentialsDaoModelMapper;
 
     @Autowired
@@ -40,11 +56,16 @@ public class UserController extends Controller<User, Integer, UserDao> {
     @Autowired
     private final EmailService emailService;
 
-    public UserController(UserRepository userRepository, UserDaoModelMapper userDaoModelMapper, UserCredentialsRepository userCredentialsRepository, UserCredentialsDaoModelMapper userCredentialsDaoModelMapper, BCryptPasswordEncoder bCryptPasswordEncoder, PasswordGenerator passwordGenerator, EmailService emailService) {
+    public UserController(UserRepository userRepository, UserDaoModelMapper userDaoModelMapper, UserCredentialsRepository userCredentialsRepository, AttendanceRepository attendanceRepository, AttendanceClassificationRepository attendanceClassificationRepository, AttendanceTicketRepository attendanceTicketRepository, DeskUserRepository deskUserRepository, OperatorUserRepository operatorUserRepository, UserCredentialsDaoModelMapper userCredentialsDaoModelMapper, BCryptPasswordEncoder bCryptPasswordEncoder, PasswordGenerator passwordGenerator, EmailService emailService) {
         super(userRepository, userDaoModelMapper);
         this.userRepository = userRepository;
         this.userDaoModelMapper = userDaoModelMapper;
         this.userCredentialsRepository = userCredentialsRepository;
+        this.attendanceRepository = attendanceRepository;
+        this.attendanceClassificationRepository = attendanceClassificationRepository;
+        this.attendanceTicketRepository = attendanceTicketRepository;
+        this.deskUserRepository = deskUserRepository;
+        this.operatorUserRepository = operatorUserRepository;
         this.userCredentialsDaoModelMapper = userCredentialsDaoModelMapper;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.passwordGenerator = passwordGenerator;
@@ -87,9 +108,20 @@ public class UserController extends Controller<User, Integer, UserDao> {
     }
 
     @DeleteMapping(value = "{userId}", headers = {"Accept=application/json"})
+    @Transactional
     public ResponseEntity remove(@PathVariable Integer userId) {
         try {
             userCredentialsRepository.delete(userCredentialsRepository.findById(userId).get());
+            operatorUserRepository.deleteByOperatorUserIdsUserId(userId);
+            deskUserRepository.deleteByDeskUserIdsUserId(userId);
+
+            attendanceRepository.findByClientId(userId).forEach(attendanceDao -> {
+                attendanceTicketRepository.deleteByAttendanceId(attendanceDao.getAttendanceId());
+                attendanceClassificationRepository.deleteByAttendanceId(attendanceDao.getAttendanceId());
+            });
+
+            attendanceRepository.deleteByClientId(userId);
+
             return super.remove(userId);
         } catch (Exception exception) {
             return ResponseEntity.status(500).build();

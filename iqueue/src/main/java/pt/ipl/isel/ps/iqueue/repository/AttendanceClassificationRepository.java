@@ -7,4 +7,5 @@ import pt.ipl.isel.ps.iqueue.dao.AttendanceClassificationDao;
 @Component
 public interface AttendanceClassificationRepository extends JpaRepository<AttendanceClassificationDao, Integer> {
 
+    void deleteByAttendanceId(int attendanceId);
 }

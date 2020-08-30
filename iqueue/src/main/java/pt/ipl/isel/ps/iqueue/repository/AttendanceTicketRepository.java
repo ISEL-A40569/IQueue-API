@@ -7,4 +7,6 @@ import pt.ipl.isel.ps.iqueue.model.AttendanceTicket;
 import javax.persistence.criteria.CriteriaBuilder;
 
 public interface AttendanceTicketRepository extends JpaRepository<AttendanceTicketDao, Integer> {
+
+    void deleteByAttendanceId(int attendanceId);
 }

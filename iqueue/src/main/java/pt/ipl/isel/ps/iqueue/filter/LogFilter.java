@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.stream.Collectors;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -36,7 +35,8 @@ public class LogFilter implements Filter {
 
         chain.doFilter(req, res);
 
-        if (!req.getMethod().equals(HttpMethod.OPTIONS.name())) {
+        if (!req.getMethod().equals(HttpMethod.OPTIONS.name()) &&
+                !req.getMethod().equals(HttpMethod.GET.name())) {
             LogEntryDao logEntry = new LogEntryDao();
 
             logEntry.setLogCreationDateTime(LocalDateTime.now());
@@ -44,7 +44,7 @@ public class LogFilter implements Filter {
             logEntry.setRequestUri(req.getRequestURI());
             logEntry.setRequestHeaders("test"); // TODO: how to get all of them?
 
-            logEntry.setRequestBody(new String(requestWrapper.getContentAsByteArray(),UTF_8));
+            logEntry.setRequestBody(new String(requestWrapper.getContentAsByteArray(), UTF_8));
             logEntry.setResponseStatus(res.getStatus());
             logEntry.setResponseHeaders("test");   // TODO: how to get all of them?
             logEntry.setResponseBody("test");   // TODO: how to get body?

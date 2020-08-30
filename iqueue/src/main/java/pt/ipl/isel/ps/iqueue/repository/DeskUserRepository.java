@@ -10,4 +10,7 @@ import pt.ipl.isel.ps.iqueue.dao.embeddable.DeskUserIds;
 @Component
 public interface DeskUserRepository extends JpaRepository<DeskUserDao, DeskUserIds> {
 
+    void deleteByDeskUserIdsDeskId(int deskId);
+
+    void deleteByDeskUserIdsUserId(int userId);
 }

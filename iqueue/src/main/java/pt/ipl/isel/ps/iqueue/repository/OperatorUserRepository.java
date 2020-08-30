@@ -8,4 +8,7 @@ import pt.ipl.isel.ps.iqueue.dao.embeddable.OperatorUserIds;
 @Component
 public interface OperatorUserRepository extends JpaRepository<OperatorUserDao, OperatorUserIds> {
 
+    void deleteByOperatorUserIdsOperatorId(int operatorId);
+
+    void deleteByOperatorUserIdsUserId(int userId);
 }
