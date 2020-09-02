@@ -9,6 +9,7 @@ import pt.ipl.isel.ps.iqueue.dao.ServiceQueueDao;
 import pt.ipl.isel.ps.iqueue.mapping.ServiceQueueDaoModelMapper;
 import pt.ipl.isel.ps.iqueue.model.ServiceQueue;
 import pt.ipl.isel.ps.iqueue.repository.*;
+import pt.ipl.isel.ps.iqueue.utils.ErrorNotificationService;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -45,8 +46,11 @@ public class ServiceQueueController extends Controller<ServiceQueue, Integer, Se
     @Autowired
     private final ServiceQueueDaoModelMapper serviceQueueDaoModelMapper;
 
-    public ServiceQueueController(ServiceQueueRepository serviceQueueRepository, ServiceQueueWaitingCountRepository serviceQueueWaitingCountRepository, ServiceQueueCurrentAttendanceRepository serviceQueueCurrentAttendanceRepository, AttendanceRepository attendanceRepository, AttendanceClassificationRepository attendanceClassificationRepository, AttendanceTicketRepository attendanceTicketRepository, DeskRepository deskRepository, DeskUserRepository deskUserRepository, ServiceQueueDaoModelMapper serviceQueueDaoModelMapper) {
-        super(serviceQueueRepository, serviceQueueDaoModelMapper);
+    @Autowired
+    private final ErrorNotificationService errorNotificationService;
+
+    public ServiceQueueController(ServiceQueueRepository serviceQueueRepository, ServiceQueueWaitingCountRepository serviceQueueWaitingCountRepository, ServiceQueueCurrentAttendanceRepository serviceQueueCurrentAttendanceRepository, AttendanceRepository attendanceRepository, AttendanceClassificationRepository attendanceClassificationRepository, AttendanceTicketRepository attendanceTicketRepository, DeskRepository deskRepository, DeskUserRepository deskUserRepository, ServiceQueueDaoModelMapper serviceQueueDaoModelMapper, ErrorNotificationService errorNotificationService) {
+        super(serviceQueueRepository, serviceQueueDaoModelMapper, errorNotificationService);
         this.serviceQueueRepository = serviceQueueRepository;
         this.serviceQueueWaitingCountRepository = serviceQueueWaitingCountRepository;
         this.serviceQueueCurrentAttendanceRepository = serviceQueueCurrentAttendanceRepository;
@@ -56,6 +60,7 @@ public class ServiceQueueController extends Controller<ServiceQueue, Integer, Se
         this.deskRepository = deskRepository;
         this.deskUserRepository = deskUserRepository;
         this.serviceQueueDaoModelMapper = serviceQueueDaoModelMapper;
+        this.errorNotificationService = errorNotificationService;
     }
 
     @GetMapping(headers = {"Accept=application/json"})

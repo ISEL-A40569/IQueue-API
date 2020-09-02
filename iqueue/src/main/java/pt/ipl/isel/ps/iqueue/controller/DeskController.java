@@ -8,6 +8,7 @@ import pt.ipl.isel.ps.iqueue.mapping.DeskDaoModelMapper;
 import pt.ipl.isel.ps.iqueue.model.Desk;
 import pt.ipl.isel.ps.iqueue.repository.DeskRepository;
 import pt.ipl.isel.ps.iqueue.repository.DeskUserRepository;
+import pt.ipl.isel.ps.iqueue.utils.ErrorNotificationService;
 
 import javax.transaction.Transactional;
 import java.util.stream.Collectors;
@@ -25,11 +26,15 @@ public class DeskController extends Controller<Desk, Integer, DeskDao> {
     @Autowired
     private final DeskDaoModelMapper deskDaoModelMapper;
 
-    public DeskController(DeskRepository deskRepository, DeskUserRepository deskUserRepository, DeskDaoModelMapper deskDaoModelMapper) {
-        super(deskRepository, deskDaoModelMapper);
+    @Autowired
+    private final ErrorNotificationService errorNotificationService;
+
+    public DeskController(DeskRepository deskRepository, DeskUserRepository deskUserRepository, DeskDaoModelMapper deskDaoModelMapper, ErrorNotificationService errorNotificationService) {
+        super(deskRepository, deskDaoModelMapper, errorNotificationService);
         this.deskRepository = deskRepository;
         this.deskUserRepository = deskUserRepository;
         this.deskDaoModelMapper = deskDaoModelMapper;
+        this.errorNotificationService = errorNotificationService;
     }
 
     @GetMapping(value = "{deskId}", headers = {"Accept=application/json"})

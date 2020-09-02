@@ -8,6 +8,7 @@ import pt.ipl.isel.ps.iqueue.dao.embeddable.DeskUserIds;
 import pt.ipl.isel.ps.iqueue.mapping.DeskUserDaoModelMapper;
 import pt.ipl.isel.ps.iqueue.model.DeskUser;
 import pt.ipl.isel.ps.iqueue.repository.DeskUserRepository;
+import pt.ipl.isel.ps.iqueue.utils.ErrorNotificationService;
 
 import java.util.stream.Collectors;
 
@@ -21,10 +22,14 @@ public class DeskUserController extends Controller<DeskUser, DeskUserIds, DeskUs
     @Autowired
     private final DeskUserDaoModelMapper deskUserDaoModelMapper;
 
-    public DeskUserController(DeskUserRepository deskUserRepository, DeskUserDaoModelMapper deskUserDaoModelMapper) {
-        super(deskUserRepository, deskUserDaoModelMapper);
+    @Autowired
+    private final ErrorNotificationService errorNotificationService;
+
+    public DeskUserController(DeskUserRepository deskUserRepository, DeskUserDaoModelMapper deskUserDaoModelMapper, ErrorNotificationService errorNotificationService) {
+        super(deskUserRepository, deskUserDaoModelMapper, errorNotificationService);
         this.deskUserRepository = deskUserRepository;
         this.deskUserDaoModelMapper = deskUserDaoModelMapper;
+        this.errorNotificationService = errorNotificationService;
     }
 
     @GetMapping(value = "{deskId}/user", headers = {"Accept=application/json"})

@@ -8,6 +8,7 @@ import pt.ipl.isel.ps.iqueue.dao.embeddable.OperatorUserIds;
 import pt.ipl.isel.ps.iqueue.mapping.OperatorUserDaoModelMapper;
 import pt.ipl.isel.ps.iqueue.model.OperatorUser;
 import pt.ipl.isel.ps.iqueue.repository.OperatorUserRepository;
+import pt.ipl.isel.ps.iqueue.utils.ErrorNotificationService;
 
 import java.util.stream.Collectors;
 
@@ -21,10 +22,14 @@ public class OperatorUserController extends Controller<OperatorUser, OperatorUse
     @Autowired
     private final OperatorUserDaoModelMapper operatorUserDaoModelMapper;
 
-    public OperatorUserController(OperatorUserRepository operatorUserRepository, OperatorUserDaoModelMapper operatorUserDaoModelMapper) {
-        super(operatorUserRepository, operatorUserDaoModelMapper);
+    @Autowired
+    private final ErrorNotificationService errorNotificationService;
+
+    public OperatorUserController(OperatorUserRepository operatorUserRepository, OperatorUserDaoModelMapper operatorUserDaoModelMapper, ErrorNotificationService errorNotificationService) {
+        super(operatorUserRepository, operatorUserDaoModelMapper, errorNotificationService);
         this.operatorUserRepository = operatorUserRepository;
         this.operatorUserDaoModelMapper = operatorUserDaoModelMapper;
+        this.errorNotificationService = errorNotificationService;
     }
 
     @GetMapping(value = "{operatorId}/user", headers = {"Accept=application/json"})

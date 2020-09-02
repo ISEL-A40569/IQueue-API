@@ -7,6 +7,7 @@ import pt.ipl.isel.ps.iqueue.dao.LanguageDao;
 import pt.ipl.isel.ps.iqueue.mapping.LanguageDaoModelMapper;
 import pt.ipl.isel.ps.iqueue.model.Language;
 import pt.ipl.isel.ps.iqueue.repository.LanguageRepository;
+import pt.ipl.isel.ps.iqueue.utils.ErrorNotificationService;
 
 @RestController
 @RequestMapping("/api/iqueue/language")
@@ -18,10 +19,14 @@ public class LanguageController extends Controller<Language, Integer, LanguageDa
     @Autowired
     private final LanguageDaoModelMapper languageDaoModelMapper;
 
-    public LanguageController(LanguageRepository languageRepository, LanguageDaoModelMapper languageDaoModelMapper) {
-        super(languageRepository, languageDaoModelMapper);
+    @Autowired
+    private final ErrorNotificationService errorNotificationService;
+
+    public LanguageController(LanguageRepository languageRepository, LanguageDaoModelMapper languageDaoModelMapper, ErrorNotificationService errorNotificationService) {
+        super(languageRepository, languageDaoModelMapper, errorNotificationService);
         this.languageRepository = languageRepository;
         this.languageDaoModelMapper = languageDaoModelMapper;
+        this.errorNotificationService = errorNotificationService;
     }
 
     @GetMapping(value = "{languageId}", headers = {"Accept=application/json"})

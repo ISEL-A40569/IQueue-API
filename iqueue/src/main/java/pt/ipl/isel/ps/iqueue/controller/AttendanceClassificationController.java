@@ -7,6 +7,7 @@ import pt.ipl.isel.ps.iqueue.dao.AttendanceClassificationDao;
 import pt.ipl.isel.ps.iqueue.mapping.AttendanceClassificationDaoModelMapper;
 import pt.ipl.isel.ps.iqueue.model.AttendanceClassification;
 import pt.ipl.isel.ps.iqueue.repository.AttendanceClassificationRepository;
+import pt.ipl.isel.ps.iqueue.utils.ErrorNotificationService;
 
 @RestController
 @RequestMapping("/api/iqueue/attendance")
@@ -18,10 +19,14 @@ public class AttendanceClassificationController extends Controller<AttendanceCla
     @Autowired
     private final AttendanceClassificationDaoModelMapper attendanceClassificationDaoModelMapper;
 
-    public AttendanceClassificationController(AttendanceClassificationRepository attendanceClassificationRepository, AttendanceClassificationDaoModelMapper attendanceClassificationDaoModelMapper) {
-        super(attendanceClassificationRepository, attendanceClassificationDaoModelMapper);
+    @Autowired
+    private final ErrorNotificationService errorNotificationService;
+
+    public AttendanceClassificationController(AttendanceClassificationRepository attendanceClassificationRepository, AttendanceClassificationDaoModelMapper attendanceClassificationDaoModelMapper, ErrorNotificationService errorNotificationService) {
+        super(attendanceClassificationRepository, attendanceClassificationDaoModelMapper, errorNotificationService);
         this.attendanceClassificationRepository = attendanceClassificationRepository;
         this.attendanceClassificationDaoModelMapper = attendanceClassificationDaoModelMapper;
+        this.errorNotificationService = errorNotificationService;
     }
 
     @GetMapping(value = "{attendanceId}/classification", headers = {"Accept=application/json"})

@@ -7,6 +7,7 @@ import pt.ipl.isel.ps.iqueue.dao.AttendanceTicketDao;
 import pt.ipl.isel.ps.iqueue.mapping.AttendanceTicketDaoModelMapper;
 import pt.ipl.isel.ps.iqueue.model.AttendanceTicket;
 import pt.ipl.isel.ps.iqueue.repository.AttendanceTicketRepository;
+import pt.ipl.isel.ps.iqueue.utils.ErrorNotificationService;
 
 @RestController
 @RequestMapping("/api/iqueue/attendance")
@@ -18,10 +19,14 @@ public class AttendanceTicketController extends Controller<AttendanceTicket, Int
     @Autowired
     private final AttendanceTicketDaoModelMapper attendanceTicketDaoModelMapper;
 
-    public AttendanceTicketController(AttendanceTicketRepository attendanceTicketRepository, AttendanceTicketDaoModelMapper attendanceTicketDaoModelMapper) {
-        super(attendanceTicketRepository, attendanceTicketDaoModelMapper);
+    @Autowired
+    private final ErrorNotificationService errorNotificationService;
+
+    public AttendanceTicketController(AttendanceTicketRepository attendanceTicketRepository, AttendanceTicketDaoModelMapper attendanceTicketDaoModelMapper, ErrorNotificationService errorNotificationService) {
+        super(attendanceTicketRepository, attendanceTicketDaoModelMapper, errorNotificationService);
         this.attendanceTicketRepository = attendanceTicketRepository;
         this.attendanceTicketDaoModelMapper = attendanceTicketDaoModelMapper;
+        this.errorNotificationService = errorNotificationService;
     }
 
     @GetMapping(value = "{attendanceId}/ticket", headers = {"Accept=application/json"})

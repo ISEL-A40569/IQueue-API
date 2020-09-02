@@ -12,6 +12,7 @@ import pt.ipl.isel.ps.iqueue.model.User;
 import pt.ipl.isel.ps.iqueue.model.UserCredentials;
 import pt.ipl.isel.ps.iqueue.repository.*;
 import pt.ipl.isel.ps.iqueue.utils.EmailService;
+import pt.ipl.isel.ps.iqueue.utils.ErrorNotificationService;
 import pt.ipl.isel.ps.iqueue.utils.PasswordGenerator;
 
 import javax.transaction.Transactional;
@@ -56,8 +57,11 @@ public class UserController extends Controller<User, Integer, UserDao> {
     @Autowired
     private final EmailService emailService;
 
-    public UserController(UserRepository userRepository, UserDaoModelMapper userDaoModelMapper, UserCredentialsRepository userCredentialsRepository, AttendanceRepository attendanceRepository, AttendanceClassificationRepository attendanceClassificationRepository, AttendanceTicketRepository attendanceTicketRepository, DeskUserRepository deskUserRepository, OperatorUserRepository operatorUserRepository, UserCredentialsDaoModelMapper userCredentialsDaoModelMapper, BCryptPasswordEncoder bCryptPasswordEncoder, PasswordGenerator passwordGenerator, EmailService emailService) {
-        super(userRepository, userDaoModelMapper);
+    @Autowired
+    private final ErrorNotificationService errorNotificationService;
+
+    public UserController(UserRepository userRepository, UserDaoModelMapper userDaoModelMapper, UserCredentialsRepository userCredentialsRepository, AttendanceRepository attendanceRepository, AttendanceClassificationRepository attendanceClassificationRepository, AttendanceTicketRepository attendanceTicketRepository, DeskUserRepository deskUserRepository, OperatorUserRepository operatorUserRepository, UserCredentialsDaoModelMapper userCredentialsDaoModelMapper, BCryptPasswordEncoder bCryptPasswordEncoder, PasswordGenerator passwordGenerator, EmailService emailService, ErrorNotificationService errorNotificationService) {
+        super(userRepository, userDaoModelMapper, errorNotificationService);
         this.userRepository = userRepository;
         this.userDaoModelMapper = userDaoModelMapper;
         this.userCredentialsRepository = userCredentialsRepository;
@@ -70,6 +74,7 @@ public class UserController extends Controller<User, Integer, UserDao> {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.passwordGenerator = passwordGenerator;
         this.emailService = emailService;
+        this.errorNotificationService = errorNotificationService;
     }
 
     @GetMapping(value = "{userId}", headers = {"Accept=application/json"})

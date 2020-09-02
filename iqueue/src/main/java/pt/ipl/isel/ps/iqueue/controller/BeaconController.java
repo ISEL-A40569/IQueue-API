@@ -11,6 +11,7 @@ import pt.ipl.isel.ps.iqueue.model.EddystoneUid;
 import pt.ipl.isel.ps.iqueue.model.OperatorBeacon;
 import pt.ipl.isel.ps.iqueue.repository.BeaconRepository;
 import pt.ipl.isel.ps.iqueue.repository.OperatorBeaconRepository;
+import pt.ipl.isel.ps.iqueue.utils.ErrorNotificationService;
 
 import javax.transaction.Transactional;
 
@@ -30,12 +31,16 @@ public class BeaconController extends Controller<Beacon, Integer, BeaconDao> {
     @Autowired
     private final OperatorBeaconDaoModelMapper operatorBeaconDaoModelMapper;
 
-    public BeaconController(BeaconRepository beaconRepository, OperatorBeaconRepository operatorBeaconRepository, BeaconDaoModelMapper beaconDaoModelMapperM, OperatorBeaconDaoModelMapper operatorBeaconDaoModelMapper) {
-        super(beaconRepository, beaconDaoModelMapperM);
+    @Autowired
+    private final ErrorNotificationService errorNotificationService;
+
+    public BeaconController(BeaconRepository beaconRepository, OperatorBeaconRepository operatorBeaconRepository, BeaconDaoModelMapper beaconDaoModelMapperM, OperatorBeaconDaoModelMapper operatorBeaconDaoModelMapper, ErrorNotificationService errorNotificationService) {
+        super(beaconRepository, beaconDaoModelMapperM, errorNotificationService);
         this.beaconRepository = beaconRepository;
         this.operatorBeaconRepository = operatorBeaconRepository;
         this.beaconDaoModelMapper = beaconDaoModelMapperM;
         this.operatorBeaconDaoModelMapper = operatorBeaconDaoModelMapper;
+        this.errorNotificationService = errorNotificationService;
     }
 
     @GetMapping(value = "{beaconId}", headers = {"Accept=application/json"})

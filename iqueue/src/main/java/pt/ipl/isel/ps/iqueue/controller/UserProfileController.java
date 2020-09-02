@@ -8,6 +8,7 @@ import pt.ipl.isel.ps.iqueue.dao.embeddable.UserProfileIds;
 import pt.ipl.isel.ps.iqueue.mapping.UserProfileDaoModelMapper;
 import pt.ipl.isel.ps.iqueue.model.UserProfile;
 import pt.ipl.isel.ps.iqueue.repository.UserProfileRepository;
+import pt.ipl.isel.ps.iqueue.utils.ErrorNotificationService;
 
 import java.util.stream.Collectors;
 
@@ -21,10 +22,14 @@ public class UserProfileController extends Controller<UserProfile, UserProfileId
     @Autowired
     private final UserProfileDaoModelMapper userProfileDaoModelMapper;
 
-    public UserProfileController(UserProfileRepository userProfileRepository,  UserProfileDaoModelMapper userProfileDaoModelMapper) {
-        super(userProfileRepository, userProfileDaoModelMapper);
+    @Autowired
+    private final ErrorNotificationService errorNotificationService;
+
+    public UserProfileController(UserProfileRepository userProfileRepository, UserProfileDaoModelMapper userProfileDaoModelMapper, ErrorNotificationService errorNotificationService) {
+        super(userProfileRepository, userProfileDaoModelMapper, errorNotificationService);
         this.userProfileRepository = userProfileRepository;
         this.userProfileDaoModelMapper = userProfileDaoModelMapper;
+        this.errorNotificationService = errorNotificationService;
     }
 
     @GetMapping(value = "{userProfileId}", headers = {"Accept=application/json"})

@@ -8,6 +8,7 @@ import pt.ipl.isel.ps.iqueue.dao.embeddable.OperatorBeaconIds;
 import pt.ipl.isel.ps.iqueue.mapping.OperatorBeaconDaoModelMapper;
 import pt.ipl.isel.ps.iqueue.model.OperatorBeacon;
 import pt.ipl.isel.ps.iqueue.repository.OperatorBeaconRepository;
+import pt.ipl.isel.ps.iqueue.utils.ErrorNotificationService;
 
 import java.util.stream.Collectors;
 
@@ -21,10 +22,14 @@ public class OperatorBeaconController extends Controller<OperatorBeacon, Operato
     @Autowired
     private final OperatorBeaconDaoModelMapper operatorBeaconDaoModelMapper;
 
-    public OperatorBeaconController(OperatorBeaconRepository operatorBeaconRepository, OperatorBeaconDaoModelMapper operatorBeaconDaoModelMapper) {
-        super(operatorBeaconRepository, operatorBeaconDaoModelMapper);
+    @Autowired
+    private final ErrorNotificationService errorNotificationService;
+
+    public OperatorBeaconController(OperatorBeaconRepository operatorBeaconRepository, OperatorBeaconDaoModelMapper operatorBeaconDaoModelMapper, ErrorNotificationService errorNotificationService) {
+        super(operatorBeaconRepository, operatorBeaconDaoModelMapper, errorNotificationService);
         this.operatorBeaconRepository = operatorBeaconRepository;
         this.operatorBeaconDaoModelMapper = operatorBeaconDaoModelMapper;
+        this.errorNotificationService = errorNotificationService;
     }
 
     @GetMapping(value = "{operatorId}/beacon", headers = {"Accept=application/json"})

@@ -10,6 +10,7 @@ import pt.ipl.isel.ps.iqueue.dao.ServiceQueueDao;
 import pt.ipl.isel.ps.iqueue.mapping.OperatorDaoModelMapper;
 import pt.ipl.isel.ps.iqueue.model.Operator;
 import pt.ipl.isel.ps.iqueue.repository.*;
+import pt.ipl.isel.ps.iqueue.utils.ErrorNotificationService;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -49,9 +50,11 @@ public class OperatorController extends Controller<Operator, Integer, OperatorDa
     @Autowired
     private final OperatorDaoModelMapper operatorDaoModelMapper;
 
+    @Autowired
+    private final ErrorNotificationService errorNotificationService;
 
-    public OperatorController(OperatorRepository operatorRepository, OperatorBeaconRepository operatorBeaconRepository, OperatorUserRepository operatorUserRepository, ServiceQueueRepository serviceQueueRepository, AttendanceRepository attendanceRepository, AttendanceClassificationRepository attendanceClassificationRepository, AttendanceTicketRepository attendanceTicketRepository, DeskRepository deskRepository, DeskUserRepository deskUserRepository, OperatorDaoModelMapper operatorDaoModelMapper) {
-        super(operatorRepository, operatorDaoModelMapper);
+    public OperatorController(OperatorRepository operatorRepository, OperatorBeaconRepository operatorBeaconRepository, OperatorUserRepository operatorUserRepository, ServiceQueueRepository serviceQueueRepository, AttendanceRepository attendanceRepository, AttendanceClassificationRepository attendanceClassificationRepository, AttendanceTicketRepository attendanceTicketRepository, DeskRepository deskRepository, DeskUserRepository deskUserRepository, OperatorDaoModelMapper operatorDaoModelMapper, ErrorNotificationService errorNotificationService) {
+        super(operatorRepository, operatorDaoModelMapper, errorNotificationService);
         this.operatorRepository = operatorRepository;
         this.operatorBeaconRepository = operatorBeaconRepository;
         this.operatorUserRepository = operatorUserRepository;
@@ -62,6 +65,7 @@ public class OperatorController extends Controller<Operator, Integer, OperatorDa
         this.deskRepository = deskRepository;
         this.deskUserRepository = deskUserRepository;
         this.operatorDaoModelMapper = operatorDaoModelMapper;
+        this.errorNotificationService = errorNotificationService;
     }
 
     @GetMapping(value = "{operatorId}", headers = {"Accept=application/json"})

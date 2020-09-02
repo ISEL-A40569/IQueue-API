@@ -8,6 +8,7 @@ import pt.ipl.isel.ps.iqueue.dao.embeddable.ServiceQueueTypeIds;
 import pt.ipl.isel.ps.iqueue.mapping.ServiceQueueTypeDaoModelMapper;
 import pt.ipl.isel.ps.iqueue.model.ServiceQueueType;
 import pt.ipl.isel.ps.iqueue.repository.ServiceQueueTypeRepository;
+import pt.ipl.isel.ps.iqueue.utils.ErrorNotificationService;
 
 import java.util.stream.Collectors;
 
@@ -21,10 +22,14 @@ public class ServiceQueueTypeController extends Controller<ServiceQueueType, Ser
     @Autowired
     private final ServiceQueueTypeDaoModelMapper serviceQueueTypeDaoModelMapper;
 
-    public ServiceQueueTypeController(ServiceQueueTypeRepository serviceQueueTypeRepository, ServiceQueueTypeDaoModelMapper serviceQueueTypeDaoModelMapper) {
-        super(serviceQueueTypeRepository, serviceQueueTypeDaoModelMapper);
+    @Autowired
+    private final ErrorNotificationService errorNotificationService;
+
+    public ServiceQueueTypeController(ServiceQueueTypeRepository serviceQueueTypeRepository, ServiceQueueTypeDaoModelMapper serviceQueueTypeDaoModelMapper, ErrorNotificationService errorNotificationService) {
+        super(serviceQueueTypeRepository, serviceQueueTypeDaoModelMapper, errorNotificationService);
         this.serviceQueueTypeRepository = serviceQueueTypeRepository;
         this.serviceQueueTypeDaoModelMapper = serviceQueueTypeDaoModelMapper;
+        this.errorNotificationService = errorNotificationService;
     }
 
     @GetMapping(value = "{serviceQueueTypeId}", headers = {"Accept=application/json"})

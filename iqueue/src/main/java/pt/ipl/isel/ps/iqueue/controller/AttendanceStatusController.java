@@ -8,6 +8,7 @@ import pt.ipl.isel.ps.iqueue.dao.embeddable.AttendanceStatusIds;
 import pt.ipl.isel.ps.iqueue.mapping.AttendanceStatusDaoModelMapper;
 import pt.ipl.isel.ps.iqueue.model.AttendanceStatus;
 import pt.ipl.isel.ps.iqueue.repository.AttendanceStatusRepository;
+import pt.ipl.isel.ps.iqueue.utils.ErrorNotificationService;
 
 import java.util.stream.Collectors;
 
@@ -21,10 +22,14 @@ public class AttendanceStatusController extends Controller<AttendanceStatus, Att
     @Autowired
     private final AttendanceStatusDaoModelMapper attendanceStatusDaoModelMapper;
 
-    public AttendanceStatusController(AttendanceStatusRepository attendanceStatusRepository, AttendanceStatusDaoModelMapper attendanceStatusDaoModelMapper) {
-        super(attendanceStatusRepository, attendanceStatusDaoModelMapper);
+    @Autowired
+    private final ErrorNotificationService errorNotificationService;
+
+    public AttendanceStatusController(AttendanceStatusRepository attendanceStatusRepository, AttendanceStatusDaoModelMapper attendanceStatusDaoModelMapper, ErrorNotificationService errorNotificationService) {
+        super(attendanceStatusRepository, attendanceStatusDaoModelMapper, errorNotificationService);
         this.attendanceStatusRepository = attendanceStatusRepository;
         this.attendanceStatusDaoModelMapper = attendanceStatusDaoModelMapper;
+        this.errorNotificationService = errorNotificationService;
     }
 
     @GetMapping(value = "{attendanceStatusId}", headers = {"Accept=application/json"})

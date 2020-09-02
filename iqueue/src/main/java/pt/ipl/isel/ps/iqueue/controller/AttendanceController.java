@@ -9,10 +9,8 @@ import pt.ipl.isel.ps.iqueue.model.Attendance;
 import pt.ipl.isel.ps.iqueue.model.NextAttendance;
 import pt.ipl.isel.ps.iqueue.repository.AttendanceRepository;
 import pt.ipl.isel.ps.iqueue.repository.NextAttendanceRepository;
+import pt.ipl.isel.ps.iqueue.utils.ErrorNotificationService;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.net.Socket;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -30,11 +28,15 @@ public class AttendanceController extends Controller<Attendance, Integer, Attend
     @Autowired
     private final AttendanceDaoModelMapper attendanceDaoModelMapper;
 
-    public AttendanceController(AttendanceRepository attendanceRepository, NextAttendanceRepository nextAttendanceRepository, AttendanceDaoModelMapper attendanceDaoModelMapper) {
-        super(attendanceRepository, attendanceDaoModelMapper);
+    @Autowired
+    private final ErrorNotificationService errorNotificationService;
+
+    public AttendanceController(AttendanceRepository attendanceRepository, NextAttendanceRepository nextAttendanceRepository, AttendanceDaoModelMapper attendanceDaoModelMapper, ErrorNotificationService errorNotificationService) {
+        super(attendanceRepository, attendanceDaoModelMapper, errorNotificationService);
         this.attendanceRepository = attendanceRepository;
         this.nextAttendanceRepository = nextAttendanceRepository;
         this.attendanceDaoModelMapper = attendanceDaoModelMapper;
+        this.errorNotificationService = errorNotificationService;
     }
 
     @GetMapping(value = "{attendanceId}", headers = {"Accept=application/json"})
