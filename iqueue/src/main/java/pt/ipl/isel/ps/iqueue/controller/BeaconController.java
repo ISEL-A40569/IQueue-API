@@ -67,6 +67,7 @@ public class BeaconController extends Controller<Beacon, Integer, BeaconDao> {
             return ResponseEntity.ok(operatorBeacon);
 
         } catch (Exception exception) {
+            errorNotificationService.sendErrorToAdministrators(exception.getMessage());
             return ResponseEntity.status(500).build();
         }
     }
@@ -79,6 +80,7 @@ public class BeaconController extends Controller<Beacon, Integer, BeaconDao> {
 
             return super.add(createdBeacon, "/api/iqueue/beacon/" + createdBeacon.getBeaconId());
         } catch (Exception exception) {
+            errorNotificationService.sendErrorToAdministrators(exception.getMessage());
             return ResponseEntity.status(500).build();
         }
 

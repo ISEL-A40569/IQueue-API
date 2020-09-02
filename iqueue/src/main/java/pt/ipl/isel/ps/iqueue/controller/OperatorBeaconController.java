@@ -66,6 +66,7 @@ public class OperatorBeaconController extends Controller<OperatorBeacon, Operato
                     "/beacon/" + operatorBeacon.getBeaconId());
 
         } catch (Exception exception) {
+            errorNotificationService.sendErrorToAdministrators(exception.getMessage());
             return ResponseEntity.status(500).build();
         }
     }

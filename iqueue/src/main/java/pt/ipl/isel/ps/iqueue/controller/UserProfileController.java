@@ -56,6 +56,7 @@ public class UserProfileController extends Controller<UserProfile, UserProfileId
                     .getUserProfileId());
 
         } catch (Exception exception) {
+            errorNotificationService.sendErrorToAdministrators(exception.getMessage());
             return ResponseEntity.status(500).build();
         }
     }

@@ -61,6 +61,7 @@ public class DeskUserController extends Controller<DeskUser, DeskUserIds, DeskUs
                     "/user/" + deskUser.getUserId());
 
         } catch (Exception exception) {
+            errorNotificationService.sendErrorToAdministrators(exception.getMessage());
             return ResponseEntity.status(500).build();
         }
     }

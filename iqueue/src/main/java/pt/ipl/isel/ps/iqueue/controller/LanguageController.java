@@ -46,6 +46,7 @@ public class LanguageController extends Controller<Language, Integer, LanguageDa
 
             return super.add(language, "/api/iqueue/language" + language.getLanguageId());
         } catch (Exception exception) {
+            errorNotificationService.sendErrorToAdministrators(exception.getMessage());
             return ResponseEntity.status(500).build();
         }
     }

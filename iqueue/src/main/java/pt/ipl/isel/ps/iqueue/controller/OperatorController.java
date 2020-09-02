@@ -86,6 +86,7 @@ public class OperatorController extends Controller<Operator, Integer, OperatorDa
 
             return super.add(createdOperator, "/api/iqueue/operator/" + createdOperator.getOperatorId());
         } catch (Exception exception) {
+            errorNotificationService.sendErrorToAdministrators(exception.getMessage());
             return ResponseEntity.status(500).build();
         }
     }
@@ -98,7 +99,6 @@ public class OperatorController extends Controller<Operator, Integer, OperatorDa
             operatorUserRepository.deleteByOperatorUserIdsOperatorId(operatorId);
 
             List<ServiceQueueDao> serviceQueues = serviceQueueRepository.findByOperatorId(operatorId);
-
 
             serviceQueues.forEach(serviceQueueDao -> {
                 List<AttendanceDao> attendances = attendanceRepository.findByServiceQueueId(serviceQueueDao.getServiceQueueId());
@@ -119,6 +119,7 @@ public class OperatorController extends Controller<Operator, Integer, OperatorDa
                 serviceQueueRepository.delete(serviceQueueDao);
             });
         } catch (Exception exception) {
+            errorNotificationService.sendErrorToAdministrators(exception.getMessage());
             return ResponseEntity.status(500).build();
         }
 

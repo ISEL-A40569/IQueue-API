@@ -47,6 +47,7 @@ public class AttendanceClassificationController extends Controller<AttendanceCla
             return super.add(attendanceClassification, "/api/iqueue/attendance/" +
                     attendanceClassification.getAttendanceId() + "/classification");
         } catch (Exception exception) {
+            errorNotificationService.sendErrorToAdministrators(exception.getMessage());
             return ResponseEntity.status(500).build();
         }
     }

@@ -83,6 +83,7 @@ public class ServiceQueueController extends Controller<ServiceQueue, Integer, Se
         try {
             return ResponseEntity.ok(serviceQueueWaitingCountRepository.get(deskId).get());
         } catch (Exception exception) {
+            errorNotificationService.sendErrorToAdministrators(exception.getMessage());
             return ResponseEntity.status(500).build();
         }
     }
@@ -92,6 +93,7 @@ public class ServiceQueueController extends Controller<ServiceQueue, Integer, Se
         try {
             return ResponseEntity.ok(serviceQueueCurrentAttendanceRepository.get(serviceQueueId).get());
         } catch (Exception exception) {
+            errorNotificationService.sendErrorToAdministrators(exception.getMessage());
             return ResponseEntity.status(500).build();
         }
     }
@@ -104,6 +106,7 @@ public class ServiceQueueController extends Controller<ServiceQueue, Integer, Se
 
             return super.add(createdServiceQueue, "/api/iqueue/servicequeue/" + createdServiceQueue.getServiceQueueId());
         } catch (Exception exception) {
+            errorNotificationService.sendErrorToAdministrators(exception.getMessage());
             return ResponseEntity.status(500).build();
         }
     }
@@ -128,6 +131,7 @@ public class ServiceQueueController extends Controller<ServiceQueue, Integer, Se
 
             return super.remove(serviceQueueId);
         } catch (Exception exception) {
+            errorNotificationService.sendErrorToAdministrators(exception.getMessage());
             return ResponseEntity.status(500).build();
         }
     }

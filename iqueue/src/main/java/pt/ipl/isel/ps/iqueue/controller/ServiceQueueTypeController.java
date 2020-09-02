@@ -56,6 +56,7 @@ public class ServiceQueueTypeController extends Controller<ServiceQueueType, Ser
                     .getServiceQueueTypeId());
 
         } catch (Exception exception) {
+            errorNotificationService.sendErrorToAdministrators(exception.getMessage());
             return ResponseEntity.status(500).build();
         }
     }

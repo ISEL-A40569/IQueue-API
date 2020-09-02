@@ -60,6 +60,7 @@ public class OperatorUserController extends Controller<OperatorUser, OperatorUse
             return super.add(operatorUser, "/api/iqueue/operator/" + operatorUser.getOperatorId() +
                     "/user/" + operatorUser.getUserId());
         } catch (Exception exception) {
+            errorNotificationService.sendErrorToAdministrators(exception.getMessage());
             return ResponseEntity.status(500).build();
         }
     }

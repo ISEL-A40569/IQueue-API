@@ -54,6 +54,7 @@ public class AttendanceStatusController extends Controller<AttendanceStatus, Att
 
             return super.add(attendanceStatus, "/api/iqueue/attendancestatus/" + attendanceStatus.getAttendanceStatusId());
         } catch (Exception exception) {
+            errorNotificationService.sendErrorToAdministrators(exception.getMessage());
             return ResponseEntity.status(500).build();
         }
     }

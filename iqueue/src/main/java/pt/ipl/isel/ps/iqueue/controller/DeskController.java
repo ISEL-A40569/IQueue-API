@@ -65,6 +65,7 @@ public class DeskController extends Controller<Desk, Integer, DeskDao> {
             return super.add(createdDesk, "/api/iqueue/desk/" + createdDesk.getDeskId());
 
         } catch (Exception exception) {
+            errorNotificationService.sendErrorToAdministrators(exception.getMessage());
             return ResponseEntity.status(500).build();
         }
     }

@@ -15,14 +15,11 @@ public class ErrorNotificationService {
     @Autowired
     private final UserRepository userRepository;
 
-    @Autowired
-    private final UserDaoModelMapper userDaoModelMapper;
+    private final int ADMIN_USER_PROFILE_ID = 1;
 
-
-    public ErrorNotificationService(EmailService emailService, UserRepository userRepository, UserDaoModelMapper userDaoModelMapper) {
+    public ErrorNotificationService(EmailService emailService, UserRepository userRepository) {
         this.emailService = emailService;
         this.userRepository = userRepository;
-        this.userDaoModelMapper = userDaoModelMapper;
     }
 
     public void sendErrorToAdministrators(String errorMessage) {
@@ -35,9 +32,8 @@ public class ErrorNotificationService {
         return userRepository
                 .findAll()
                 .stream()
-                .map(userDao -> userDaoModelMapper.mapDaoToModel(userDao))
-                .filter(user -> user.getUserProfileId() == 1)
-                .map(user -> user.getEmail())
+                .filter(userDao -> userDao.getUserProfileId() == ADMIN_USER_PROFILE_ID)
+                .map(userDao -> userDao.getEmail())
                 .collect(Collectors.toList());
     }
 }

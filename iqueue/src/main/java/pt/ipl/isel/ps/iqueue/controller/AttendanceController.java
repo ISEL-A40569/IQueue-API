@@ -31,6 +31,8 @@ public class AttendanceController extends Controller<Attendance, Integer, Attend
     @Autowired
     private final ErrorNotificationService errorNotificationService;
 
+    private final int ATTENDANCE_DONE_STATUS_ID = 3;
+
     public AttendanceController(AttendanceRepository attendanceRepository, NextAttendanceRepository nextAttendanceRepository, AttendanceDaoModelMapper attendanceDaoModelMapper, ErrorNotificationService errorNotificationService) {
         super(attendanceRepository, attendanceDaoModelMapper, errorNotificationService);
         this.attendanceRepository = attendanceRepository;
@@ -51,7 +53,7 @@ public class AttendanceController extends Controller<Attendance, Integer, Attend
                     .findAll()
                     .stream()
                     .filter(attendanceDao -> attendanceDao.getServiceQueueId() == serviceQueueId &&
-                            attendanceDao.getAttendanceStatusId() == 3)
+                            attendanceDao.getAttendanceStatusId() == ATTENDANCE_DONE_STATUS_ID) //TODO: why only done attendances?!?
                     .collect(Collectors.toList());
             if (!attendanceDaoList.isEmpty()) {
                 return super.getSome(attendanceDaoList);
@@ -78,6 +80,7 @@ public class AttendanceController extends Controller<Attendance, Integer, Attend
             }
 
         } catch (Exception exception) {
+            errorNotificationService.sendErrorToAdministrators(exception.getMessage());
             return ResponseEntity.status(404).build();
         }
     }
@@ -91,6 +94,7 @@ public class AttendanceController extends Controller<Attendance, Integer, Attend
             return super.add(createdAttendance, "/api/iqueue/attendance" + createdAttendance.getAttendanceId());
 
         } catch (Exception exception) {
+            errorNotificationService.sendErrorToAdministrators(exception.getMessage());
             return ResponseEntity.status(500).build();
         }
     }

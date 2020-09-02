@@ -108,6 +108,7 @@ public class UserController extends Controller<User, Integer, UserDao> {
                     "/api/iqueue/user/" + createdUser.getUserId());
 
         } catch (Exception exception) {
+            errorNotificationService.sendErrorToAdministrators(exception.getMessage());
             return ResponseEntity.status(500).build();
         }
     }
@@ -129,6 +130,7 @@ public class UserController extends Controller<User, Integer, UserDao> {
 
             return super.remove(userId);
         } catch (Exception exception) {
+            errorNotificationService.sendErrorToAdministrators(exception.getMessage());
             return ResponseEntity.status(500).build();
         }
     }
@@ -146,6 +148,7 @@ public class UserController extends Controller<User, Integer, UserDao> {
             userCredentialsRepository.save(userCredentialsDaoModelMapper.mapModelToDao(newUserCredentials));
             return ResponseEntity.ok().build();
         } catch (Exception exception) {
+            errorNotificationService.sendErrorToAdministrators(exception.getMessage());
             return ResponseEntity.status(500).build();
         }
     }
