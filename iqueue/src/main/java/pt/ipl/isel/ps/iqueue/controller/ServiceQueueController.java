@@ -79,11 +79,21 @@ public class ServiceQueueController extends Controller<ServiceQueue, Integer, Se
     }
 
     @GetMapping(value = "waitingcount/{deskId}", headers = {"Accept=application/json"})
-    public ResponseEntity getServiceQueueWaitingCount(@PathVariable int deskId) {
+    public ResponseEntity getServiceQueueWaitingCountFromDesk(@PathVariable int deskId) {
         try {
-            return ResponseEntity.ok(serviceQueueWaitingCountRepository.get(deskId).get());
+            return ResponseEntity.ok(serviceQueueWaitingCountRepository.getServiceQueueWaitingCountFromDesk(deskId).get());
         } catch (Exception exception) {
-            errorNotificationService.sendErrorToAdministrators(exception.getMessage());
+//            errorNotificationService.sendErrorToAdministrators(exception.getMessage());
+            return ResponseEntity.status(500).build();
+        }
+    }
+
+    @GetMapping(value = "{serviceQueueId}/waitingcount", headers = {"Accept=application/json"})
+    public ResponseEntity getServiceQueueWaitingCount(@PathVariable int serviceQueueId) {
+        try {
+            return ResponseEntity.ok(serviceQueueWaitingCountRepository.getServiceQueueWaitingCount(serviceQueueId).get());
+        } catch (Exception exception) {
+//            errorNotificationService.sendErrorToAdministrators(exception.getMessage());
             return ResponseEntity.status(500).build();
         }
     }
@@ -93,7 +103,7 @@ public class ServiceQueueController extends Controller<ServiceQueue, Integer, Se
         try {
             return ResponseEntity.ok(serviceQueueCurrentAttendanceRepository.get(serviceQueueId).get());
         } catch (Exception exception) {
-            errorNotificationService.sendErrorToAdministrators(exception.getMessage());
+//            errorNotificationService.sendErrorToAdministrators(exception.getMessage());
             return ResponseEntity.status(500).build();
         }
     }

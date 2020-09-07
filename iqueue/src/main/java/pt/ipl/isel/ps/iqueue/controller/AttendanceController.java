@@ -80,7 +80,7 @@ public class AttendanceController extends Controller<Attendance, Integer, Attend
             }
 
         } catch (Exception exception) {
-            errorNotificationService.sendErrorToAdministrators(exception.getMessage());
+//            errorNotificationService.sendErrorToAdministrators(exception.getMessage());
             return ResponseEntity.status(404).build();
         }
     }

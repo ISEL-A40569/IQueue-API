@@ -13,9 +13,17 @@ public class ServiceQueueWaitingCountRepository {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    public Optional<ServiceQueueWaitingCount> get(int deskId) {
-        String query = "exec GetServiceQueueWaitingCount ?";
+    public Optional<ServiceQueueWaitingCount> getServiceQueueWaitingCountFromDesk(int deskId) {
+        String query = "exec GetServiceQueueWaitingCountFromDesk ?";
+        return getWaitingCount(query, deskId);
+    }
 
-        return Optional.of(jdbcTemplate.queryForObject(query, new Object[] { deskId }, new ServiceQueueWaitingCountRowMapper()));
+    public Optional<ServiceQueueWaitingCount> getServiceQueueWaitingCount(int serviceQueueId) {
+        String query = "exec GetServiceQueueWaitingCount ?";
+        return getWaitingCount(query, serviceQueueId);
+    }
+
+    private Optional<ServiceQueueWaitingCount> getWaitingCount(String query, int id) {
+        return Optional.ofNullable(jdbcTemplate.queryForObject(query, new Object[] { id }, new ServiceQueueWaitingCountRowMapper()));
     }
 }

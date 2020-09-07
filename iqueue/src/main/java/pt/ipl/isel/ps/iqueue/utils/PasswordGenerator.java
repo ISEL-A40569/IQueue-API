@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class PasswordGenerator {
-
     private final String[] characters = {
             "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "m", "o", "p",
             "q", "r", "s", "t", "v", "w", "x", "y", "z", "A", "B", "C", "D", "E", "F", "G",
@@ -14,12 +13,14 @@ public class PasswordGenerator {
     };
 
     public String generatePassword() {
-        String newPassword = "";
+        final int PASSWORD_LENGTH = 6;
 
-        for(int i = 0; i < 10; ++i) {
-            newPassword += characters[(int)(Math.random() * characters.length)];
+        StringBuilder newPassword = new StringBuilder();
+
+        for(int i = 0; i < PASSWORD_LENGTH; ++i) {
+            newPassword.append(characters[(int) (Math.random() * characters.length)]);
         }
 
-        return newPassword;
+        return newPassword.toString();
     }
 }

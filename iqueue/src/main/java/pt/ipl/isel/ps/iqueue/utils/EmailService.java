@@ -29,6 +29,6 @@ public class EmailService {
         mailMessage.setSubject(subject);
         mailMessage.setText(message);
 
-        mailSender.send(mailMessage);
+        new Thread(() -> mailSender.send(mailMessage)).start();
     }
 }

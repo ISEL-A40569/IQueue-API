@@ -6,7 +6,7 @@ import org.junit.Test;
 public class PasswordGeneratorTest extends TestCase {
     private final PasswordGenerator passwordGenerator = new PasswordGenerator();
 
-    private final int EXPECTED_PASSWORD_LENGTH = 10;
+    private final int EXPECTED_PASSWORD_LENGTH = 6;
 
     @Test
     public void testGeneratePassword() {

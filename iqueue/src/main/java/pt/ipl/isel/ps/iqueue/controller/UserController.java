@@ -146,7 +146,7 @@ public class UserController extends Controller<User, Integer, UserDao> {
         try {
             newUserCredentials.setPassword(bCryptPasswordEncoder.encode(newUserCredentials.getPassword()));
             userCredentialsRepository.save(userCredentialsDaoModelMapper.mapModelToDao(newUserCredentials));
-            return ResponseEntity.ok().build();
+            return ResponseEntity.status(200).body(newUserCredentials);
         } catch (Exception exception) {
             errorNotificationService.sendErrorToAdministrators(exception.getMessage());
             return ResponseEntity.status(500).build();

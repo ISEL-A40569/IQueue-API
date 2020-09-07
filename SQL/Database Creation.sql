@@ -14,7 +14,7 @@ go
 
 create table [Language](
 languageId int primary key,
-languageDescription varchar(20) not null
+languageDescription varchar(2) not null
 )
 
 go
@@ -175,8 +175,8 @@ go
 
 -- Create Parameters Data
 begin transaction
-insert into Language values(1, 'English')
-insert into Language values(2, 'Português')
+insert into Language values(1, 'en')
+insert into Language values(2, 'pt')
 
 insert into UserProfile values(1, 1, 'Master')
 insert into UserProfile values(2, 1, 'Manager')
@@ -187,14 +187,10 @@ insert into UserProfile values(2, 2, 'Gerente')
 insert into UserProfile values(3, 2, 'Serviço')
 insert into UserProfile values(4, 2, 'Cliente')
 
-insert into ServiceQueueType values(1, 1, 'Single Desk No Antecipation')
-insert into ServiceQueueType values(2, 1, 'Multi Desk No Antecipation')
-insert into ServiceQueueType values(3, 1, 'Single Desk With Antecipation')
-insert into ServiceQueueType values(4, 1, 'Multi Desk With Antecipation')
-insert into ServiceQueueType values(1, 2, 'Balcão Único Sem Antecipação')
-insert into ServiceQueueType values(2, 2, 'Múltiplos Balcão Sem Antecipação')
-insert into ServiceQueueType values(3, 2, 'Balcão Único Com Antecipação')
-insert into ServiceQueueType values(4, 2, 'Múltiplos Balcão Com Antecipação')
+insert into ServiceQueueType values(1, 1, 'No Antecipation')
+insert into ServiceQueueType values(2, 1, 'With Antecipation')
+insert into ServiceQueueType values(1, 2, 'Sem Antecipação')
+insert into ServiceQueueType values(2, 2, 'Com Antecipação')
 
 insert into AttendanceStatus values(1, 1, 'Waiting')
 insert into AttendanceStatus values(2, 1, 'In Attendance')
@@ -295,14 +291,28 @@ end
 
 go
 
--- Procedure to get ServiceQueue waiting count
+-- Procedure to get ServiceQueue waiting count from desk id
 create or alter procedure
-GetServiceQueueWaitingCount @deskId int
+GetServiceQueueWaitingCountFromDesk @deskId int
 as 
 begin
 declare @serviceQueueId int
 
 set @serviceQueueId = ( select serviceQueueId from Desk where deskId = @deskId )
+
+select count(*) as waitingCount from Attendance
+where serviceQueueId = @serviceQueueId and
+attendanceStatusId = 1 and
+convert(varchar(10), startWaitingDateTime, 120) = convert(varchar(10), GETDATE(), 120) 
+end
+
+go
+
+-- Procedure to get ServiceQueue waiting count 
+create or alter procedure
+GetServiceQueueWaitingCount @serviceQueueId int
+as 
+begin
 
 select count(*) as waitingCount from Attendance
 where serviceQueueId = @serviceQueueId and
@@ -329,7 +339,7 @@ end
 
 go
 
-
+-- Procedure to get current attendance in a service queue
 create or alter procedure GetCurrentAttendance @serviceQueueId int
 as
 begin
@@ -353,19 +363,21 @@ end
 
 --insert into Attendance values(1, null, 2, '2020-07-05 19:05:00.000', null, null, 1)
 
---select * from Attendance
-
 --select * from AttendanceTicket 
 
 --select * from AttendanceClassification
 
-update Attendance n 
-set attendanceStatusId = 3
-where attendanceId = 106
+--select * from [user]
 
-go 
+--update Attendance 
+--set attendanceStatusId = 3
+--where attendanceId > 158
 
-exec GetCurrentAttendance 3
+--select * from Attendance order by attendanceId desc
+
+--go 
+
+--exec GetCurrentAttendance 3
 
 --update Attendance
 --set attendanceStatusId = 3
@@ -373,3 +385,4 @@ exec GetCurrentAttendance 3
 
 --exec GetNextAttendance 1
 
+--select * from ServiceQueue
