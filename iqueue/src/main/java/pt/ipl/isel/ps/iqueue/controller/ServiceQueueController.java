@@ -74,7 +74,7 @@ public class ServiceQueueController extends Controller<ServiceQueue, Integer, Se
     }
 
     @GetMapping(value = "{serviceQueueId}", headers = {"Accept=application/json"})
-    public ResponseEntity getById(@PathVariable Integer serviceQueueId) {
+    public ResponseEntity getById(@PathVariable int serviceQueueId) {
         return super.getById(serviceQueueId);
     }
 

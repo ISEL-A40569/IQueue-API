@@ -47,13 +47,13 @@ public class AttendanceController extends Controller<Attendance, Integer, Attend
     }
 
     @GetMapping(headers = {"Accept=application/json"})
-    public ResponseEntity getAll(@RequestParam Integer serviceQueueId) {    // TODO: THIS IS HORRIBLE, MUST RE-THINK AND RE-WRITE THIS SHIT!!!
+    public ResponseEntity getAll(@RequestParam Integer serviceQueueId) {
         if (serviceQueueId != null) {
             List<AttendanceDao> attendanceDaoList = attendanceRepository
                     .findAll()
                     .stream()
                     .filter(attendanceDao -> attendanceDao.getServiceQueueId() == serviceQueueId &&
-                            attendanceDao.getAttendanceStatusId() == ATTENDANCE_DONE_STATUS_ID) //TODO: why only done attendances?!?
+                            attendanceDao.getAttendanceStatusId() == ATTENDANCE_DONE_STATUS_ID)
                     .collect(Collectors.toList());
             if (!attendanceDaoList.isEmpty()) {
                 return super.getSome(attendanceDaoList);

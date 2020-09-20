@@ -38,7 +38,7 @@ public class DeskController extends Controller<Desk, Integer, DeskDao> {
     }
 
     @GetMapping(value = "{deskId}", headers = {"Accept=application/json"})
-    public ResponseEntity getById(@PathVariable Integer deskId) {
+    public ResponseEntity getById(@PathVariable int deskId) {
         return super.getById(deskId);
     }
 

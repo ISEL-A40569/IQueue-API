@@ -40,7 +40,6 @@ public class LoginController {
     @PostMapping
     public ResponseEntity login(@RequestBody UserCredentialsDao userCredentials) {
         try {
-//            String encode = bCryptPasswordEncoder.encode(userCredentials.getPassword());
             Optional<UserCredentialsDao> optionalUserCredentials = userCredentialsRepository.findById(userCredentials.getUserId());
 
             if (!optionalUserCredentials.isPresent())

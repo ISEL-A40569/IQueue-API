@@ -14,6 +14,7 @@ import pt.ipl.isel.ps.iqueue.repository.LogEntryRepository;
 import pt.ipl.isel.ps.iqueue.utils.ErrorNotificationService;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 
 @RestController
@@ -37,17 +38,18 @@ public class LogEntryController extends Controller<LogEntry, Integer, LogEntryDa
     }
 
     @GetMapping(headers = {"Accept=application/json"})
-    public ResponseEntity getAll(@RequestParam(required = false) LocalDate date) {
-        if (date != null) {
-            return super.getSome(logEntryRepository
-                    .findAll()
-                    .stream()
-                    .filter(logEntryDao -> logEntryDao.getLogCreationDateTime().equals(date.atStartOfDay()))
-                    .collect(Collectors.toList())
-            );
-        } else {
-            return super.getAll();
-        }
+    public ResponseEntity getAll(@RequestParam String date) {
+        LocalDateTime localDateTime = LocalDate.parse(date).atStartOfDay();
+        return super.getSome(logEntryRepository
+                .findAll()
+                .stream()
+                .filter(logEntryDao ->
+                        logEntryDao.getLogCreationDateTime()
+                                .isAfter(localDateTime) &&
+                                logEntryDao.getLogCreationDateTime()
+                                        .isBefore(localDateTime.plusDays(1))
+                )
+                .collect(Collectors.toList()));
     }
 
     @Override

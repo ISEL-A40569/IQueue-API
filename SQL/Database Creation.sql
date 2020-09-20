@@ -154,7 +154,7 @@ go
 
 create table AttendanceTicket(
 attendanceId int primary key references Attendance,
-ticketNumber int
+ticketNumber int not null
 )
 
 go
@@ -201,6 +201,7 @@ insert into AttendanceStatus values(2, 2, 'Em Atendimento')
 insert into AttendanceStatus values(3, 2, 'Concluído')
 insert into AttendanceStatus values(4, 2, 'Desistência')
 
+-- Create default Master User
 insert into [User] values('Administrator', 'admin@email.com', null, null, 1)
 insert into UserCredentials values(1, '$2a$10$7FSwcv.GcqzRXI3o6UB/X.U1xAnKGVDpk18KUY3D2JzLP./qUZBkC')
 
@@ -228,13 +229,11 @@ if @ticketNumber > 0
 	begin
 		 insert into AttendanceTicket values(@@IDENTITY, @ticketNumber)
 	end
-
 end
 
 go
 
 -- Procedure to read ServiceQueue Attendance Stats
--- TODO: CAN WE OPTIMIZE THESE SELECTS!?
 create or alter procedure
 GetServiceQueueStatistics @serviceQueueId int
 as 
@@ -354,35 +353,3 @@ convert(varchar(10), startWaitingDateTime, 120) = convert(varchar(10), GETDATE()
 select ticketNumber from AttendanceTicket
 where attendanceId = @attendanceId
 end
-
--- Rubish for tests - DELETE WHEN OK
-
---exec GetServiceQueueStatistics 1
-
---exec GetServiceQueueWaitingCount 1
-
---insert into Attendance values(1, null, 2, '2020-07-05 19:05:00.000', null, null, 1)
-
---select * from AttendanceTicket 
-
---select * from AttendanceClassification
-
---select * from [user]
-
---update Attendance 
---set attendanceStatusId = 3
---where attendanceId > 158
-
---select * from Attendance order by attendanceId desc
-
---go 
-
---exec GetCurrentAttendance 3
-
---update Attendance
---set attendanceStatusId = 3
---where attendanceId = 8
-
---exec GetNextAttendance 1
-
---select * from ServiceQueue

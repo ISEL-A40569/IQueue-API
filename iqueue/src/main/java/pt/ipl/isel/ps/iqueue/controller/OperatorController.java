@@ -15,7 +15,6 @@ import pt.ipl.isel.ps.iqueue.utils.ErrorNotificationService;
 import javax.transaction.Transactional;
 import java.util.List;
 
-//@CrossOrigin(origins = "https://localhost:4200", maxAge = 3600)
 @RestController
 @RequestMapping("/api/iqueue/operator")
 public class OperatorController extends Controller<Operator, Integer, OperatorDao> {
