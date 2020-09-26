@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class ServiceQueueDao {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "serviceQueueId")
     private int serviceQueueId;
 

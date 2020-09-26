@@ -15,20 +15,20 @@ public class AttendanceStatus {
         return attendanceStatusId;
     }
 
-    public int getLanguageId() {
-        return languageId;
-    }
-
-    public String getAttendanceStatusDescription() {
-        return attendanceStatusDescription;
-    }
-
     public void setAttendanceStatusId(int attendanceStatusId) {
         this.attendanceStatusId = attendanceStatusId;
     }
 
+    public int getLanguageId() {
+        return languageId;
+    }
+
     public void setLanguageId(int languageId) {
         this.languageId = languageId;
+    }
+
+    public String getAttendanceStatusDescription() {
+        return attendanceStatusDescription;
     }
 
     public void setAttendanceStatusDescription(String attendanceStatusDescription) {

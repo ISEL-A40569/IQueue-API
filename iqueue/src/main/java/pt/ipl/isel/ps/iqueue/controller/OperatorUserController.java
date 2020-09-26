@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pt.ipl.isel.ps.iqueue.dao.OperatorUserDao;
 import pt.ipl.isel.ps.iqueue.dao.UserDao;
-import pt.ipl.isel.ps.iqueue.dao.embeddable.OperatorUserIds;
+import pt.ipl.isel.ps.iqueue.dao.keys.OperatorUserIds;
 import pt.ipl.isel.ps.iqueue.mapping.OperatorUserDaoModelMapper;
 import pt.ipl.isel.ps.iqueue.model.OperatorUser;
 import pt.ipl.isel.ps.iqueue.repository.OperatorUserRepository;
@@ -15,7 +15,6 @@ import pt.ipl.isel.ps.iqueue.utils.ErrorNotificationService;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/api/iqueue/operator")

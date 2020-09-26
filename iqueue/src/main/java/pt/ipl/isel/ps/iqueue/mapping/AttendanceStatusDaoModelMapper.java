@@ -2,7 +2,7 @@ package pt.ipl.isel.ps.iqueue.mapping;
 
 import org.springframework.stereotype.Component;
 import pt.ipl.isel.ps.iqueue.dao.AttendanceStatusDao;
-import pt.ipl.isel.ps.iqueue.dao.embeddable.AttendanceStatusIds;
+import pt.ipl.isel.ps.iqueue.dao.keys.AttendanceStatusIds;
 import pt.ipl.isel.ps.iqueue.model.AttendanceStatus;
 
 @Component

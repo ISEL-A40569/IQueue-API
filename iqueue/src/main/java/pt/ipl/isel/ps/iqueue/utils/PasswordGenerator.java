@@ -17,7 +17,7 @@ public class PasswordGenerator {
 
         StringBuilder newPassword = new StringBuilder();
 
-        for(int i = 0; i < PASSWORD_LENGTH; ++i) {
+        for (int i = 0; i < PASSWORD_LENGTH; ++i) {
             newPassword.append(characters[(int) (Math.random() * characters.length)]);
         }
 

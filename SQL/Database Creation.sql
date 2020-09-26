@@ -273,7 +273,7 @@ attendanceStatusId = 4 )
 -- ServiceQueue Attendance Average Waiting Time
 set @averageWaitingSeconds = ( select avg(DATEDIFF(ss, startWaitingDateTime, startAttendanceDateTime))
 from Attendance
-where serviceQueueId = 1 and
+where serviceQueueId = @serviceQueueId and
 attendanceStatusId = 3 )
 
 -- ServiceQueue Average Attendance Time
@@ -353,3 +353,4 @@ convert(varchar(10), startWaitingDateTime, 120) = convert(varchar(10), GETDATE()
 select ticketNumber from AttendanceTicket
 where attendanceId = @attendanceId
 end
+

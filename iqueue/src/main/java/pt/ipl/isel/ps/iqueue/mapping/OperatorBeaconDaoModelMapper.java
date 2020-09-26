@@ -2,7 +2,7 @@ package pt.ipl.isel.ps.iqueue.mapping;
 
 import org.springframework.stereotype.Component;
 import pt.ipl.isel.ps.iqueue.dao.OperatorBeaconDao;
-import pt.ipl.isel.ps.iqueue.dao.embeddable.OperatorBeaconIds;
+import pt.ipl.isel.ps.iqueue.dao.keys.OperatorBeaconIds;
 import pt.ipl.isel.ps.iqueue.model.OperatorBeacon;
 
 @Component

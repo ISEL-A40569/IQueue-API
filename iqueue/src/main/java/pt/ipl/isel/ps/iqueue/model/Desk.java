@@ -15,20 +15,20 @@ public class Desk {
         return deskId;
     }
 
-    public int getServiceQueueId() {
-        return serviceQueueId;
-    }
-
-    public String getDeskDescription() {
-        return deskDescription;
-    }
-
     public void setDeskId(int deskId) {
         this.deskId = deskId;
     }
 
+    public int getServiceQueueId() {
+        return serviceQueueId;
+    }
+
     public void setServiceQueueId(int serviceQueueId) {
         this.serviceQueueId = serviceQueueId;
+    }
+
+    public String getDeskDescription() {
+        return deskDescription;
     }
 
     public void setDeskDescription(String deskDescription) {

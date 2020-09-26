@@ -2,7 +2,7 @@ package pt.ipl.isel.ps.iqueue.mapping;
 
 import org.springframework.stereotype.Component;
 import pt.ipl.isel.ps.iqueue.dao.ServiceQueueTypeDao;
-import pt.ipl.isel.ps.iqueue.dao.embeddable.ServiceQueueTypeIds;
+import pt.ipl.isel.ps.iqueue.dao.keys.ServiceQueueTypeIds;
 import pt.ipl.isel.ps.iqueue.model.ServiceQueueType;
 
 @Component

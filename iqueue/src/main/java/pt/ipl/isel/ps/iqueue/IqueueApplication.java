@@ -8,14 +8,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @SpringBootApplication
 public class IqueueApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(IqueueApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(IqueueApplication.class, args);
+    }
 
-	@Bean
-	public BCryptPasswordEncoder bCryptPasswordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
 //	@Bean
 //	public WebMvcConfigurer corsConfigurer() {

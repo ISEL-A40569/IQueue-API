@@ -23,14 +23,13 @@ public abstract class Controller<M, K, D> {
 
     protected ResponseEntity getById(K id) {
         try {
-            Optional<D> t = findById(id);
-            if (t.isPresent()) {
-                return ResponseEntity.ok(daoModelMapper.mapDaoToModel(t.get()));
+            Optional<D> dao = findById(id);
+            if (dao.isPresent()) {
+                return ResponseEntity.ok(daoModelMapper.mapDaoToModel(dao.get()));
             } else {
                 return ResponseEntity.status(404).build();
             }
-        }
-        catch (Exception exception) {
+        } catch (Exception exception) {
             errorNotificationService.sendErrorToAdministrators(exception.getMessage());
             return ResponseEntity.status(500).build();
         }
@@ -38,17 +37,16 @@ public abstract class Controller<M, K, D> {
 
     protected ResponseEntity getAll() {
         try {
-            List<D> tList = repository.findAll();
-            if (!tList.isEmpty()) {
-                return ResponseEntity.ok(tList.stream()
+            List<D> daoList = repository.findAll();
+            if (!daoList.isEmpty()) {
+                return ResponseEntity.ok(daoList.stream()
                         .map(daoModelMapper::mapDaoToModel)
                         .collect(Collectors.toList())
                 );
             } else {
                 return ResponseEntity.status(404).build();
             }
-        }
-        catch (Exception exception) {
+        } catch (Exception exception) {
             errorNotificationService.sendErrorToAdministrators(exception.getMessage());
             return ResponseEntity.status(500).build();
         }
@@ -64,8 +62,7 @@ public abstract class Controller<M, K, D> {
             } else {
                 return ResponseEntity.status(404).build();
             }
-        }
-        catch (Exception exception) {
+        } catch (Exception exception) {
             errorNotificationService.sendErrorToAdministrators(exception.getMessage());
             return ResponseEntity.status(500).build();
         }
@@ -87,9 +84,9 @@ public abstract class Controller<M, K, D> {
 
     protected ResponseEntity remove(K id) {
         try {
-            Optional<D> optionalDTo = findById(id);
-            if (optionalDTo.isPresent()) {
-                repository.delete(optionalDTo.get());
+            Optional<D> dao = findById(id);
+            if (dao.isPresent()) {
+                repository.delete(dao.get());
                 return ResponseEntity.ok().build();
             } else {
                 return ResponseEntity.status(404).build();
@@ -102,8 +99,8 @@ public abstract class Controller<M, K, D> {
 
     protected ResponseEntity update(K id, M newM) {
         try {
-            Optional<D> optionalDTo = findById(id);
-            if (optionalDTo.isPresent()) {
+            Optional<D> dao = findById(id);
+            if (dao.isPresent()) {
                 repository.save(daoModelMapper.mapModelToDao(newM));
                 return ResponseEntity.ok(newM);
             } else {

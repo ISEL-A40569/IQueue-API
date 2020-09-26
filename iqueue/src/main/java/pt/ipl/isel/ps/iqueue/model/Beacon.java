@@ -21,44 +21,44 @@ public class Beacon {
         return beaconId;
     }
 
-    public String getBeaconMacAddress() {
-        return beaconMacAddress;
-    }
-
-    public String getNamespaceId() {
-        return namespaceId;
-    }
-
-    public String getInstanceId() {
-        return instanceId;
-    }
-
-    public String getManufacturer() {
-        return manufacturer;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
     public void setBeaconId(int beaconId) {
         this.beaconId = beaconId;
+    }
+
+    public String getBeaconMacAddress() {
+        return beaconMacAddress;
     }
 
     public void setBeaconMacAddress(String beaconMacAddress) {
         this.beaconMacAddress = beaconMacAddress;
     }
 
+    public String getNamespaceId() {
+        return namespaceId;
+    }
+
     public void setNamespaceId(String namespaceId) {
         this.namespaceId = namespaceId;
+    }
+
+    public String getInstanceId() {
+        return instanceId;
     }
 
     public void setInstanceId(String instanceId) {
         this.instanceId = instanceId;
     }
 
+    public String getManufacturer() {
+        return manufacturer;
+    }
+
     public void setManufacturer(String manufacturer) {
         this.manufacturer = manufacturer;
+    }
+
+    public String getModel() {
+        return model;
     }
 
     public void setModel(String model) {

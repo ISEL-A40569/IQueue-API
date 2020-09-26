@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 public class AttendanceDao {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "attendanceId")
     private int attendanceId;
 

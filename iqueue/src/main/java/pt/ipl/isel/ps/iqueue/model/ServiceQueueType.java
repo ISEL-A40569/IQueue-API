@@ -15,20 +15,20 @@ public class ServiceQueueType {
         return serviceQueueTypeId;
     }
 
-    public int getLanguageId() {
-        return languageId;
-    }
-
-    public String getServiceQueueTypeDescription() {
-        return serviceQueueTypeDescription;
-    }
-
     public void setServiceQueueTypeId(int serviceQueueTypeId) {
         this.serviceQueueTypeId = serviceQueueTypeId;
     }
 
+    public int getLanguageId() {
+        return languageId;
+    }
+
     public void setLanguageId(int languageId) {
         this.languageId = languageId;
+    }
+
+    public String getServiceQueueTypeDescription() {
+        return serviceQueueTypeDescription;
     }
 
     public void setServiceQueueTypeDescription(String serviceQueueTypeDescription) {

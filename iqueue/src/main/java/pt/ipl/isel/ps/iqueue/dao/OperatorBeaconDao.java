@@ -1,6 +1,6 @@
 package pt.ipl.isel.ps.iqueue.dao;
 
-import pt.ipl.isel.ps.iqueue.dao.embeddable.OperatorBeaconIds;
+import pt.ipl.isel.ps.iqueue.dao.keys.OperatorBeaconIds;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;

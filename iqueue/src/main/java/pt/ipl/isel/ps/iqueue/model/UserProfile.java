@@ -15,20 +15,20 @@ public class UserProfile {
         return userProfileId;
     }
 
-    public int getLanguageId() {
-        return languageId;
-    }
-
-    public String getUserProfileDescription() {
-        return userProfileDescription;
-    }
-
     public void setUserProfileId(int userProfileId) {
         this.userProfileId = userProfileId;
     }
 
+    public int getLanguageId() {
+        return languageId;
+    }
+
     public void setLanguageId(int languageId) {
         this.languageId = languageId;
+    }
+
+    public String getUserProfileDescription() {
+        return userProfileDescription;
     }
 
     public void setUserProfileDescription(String userProfileDescription) {

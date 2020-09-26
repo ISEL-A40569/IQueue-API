@@ -1,6 +1,6 @@
 package pt.ipl.isel.ps.iqueue.dao;
 
-import pt.ipl.isel.ps.iqueue.dao.embeddable.ServiceQueueTypeIds;
+import pt.ipl.isel.ps.iqueue.dao.keys.ServiceQueueTypeIds;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;

@@ -16,6 +16,6 @@ public class NextAttendanceRepository {
     public Optional<NextAttendance> get(int deskId) {
         String query = "exec GetNextAttendance ?";
 
-        return Optional.of(jdbcTemplate.queryForObject(query, new Object[] { deskId }, new NextAttendanceRowMapper()));
+        return Optional.of(jdbcTemplate.queryForObject(query, new Object[]{deskId}, new NextAttendanceRowMapper()));
     }
 }

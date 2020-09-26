@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pt.ipl.isel.ps.iqueue.dao.ServiceQueueTypeDao;
-import pt.ipl.isel.ps.iqueue.dao.embeddable.ServiceQueueTypeIds;
+import pt.ipl.isel.ps.iqueue.dao.keys.ServiceQueueTypeIds;
 import pt.ipl.isel.ps.iqueue.mapping.ServiceQueueTypeDaoModelMapper;
 import pt.ipl.isel.ps.iqueue.model.ServiceQueueType;
 import pt.ipl.isel.ps.iqueue.repository.ServiceQueueTypeRepository;
@@ -62,7 +62,7 @@ public class ServiceQueueTypeController extends Controller<ServiceQueueType, Ser
     }
 
     @DeleteMapping(value = "{serviceQueueTypeId}")
-    public ResponseEntity remove(@PathVariable int serviceQueueTypeId,  @RequestParam int languageId) {
+    public ResponseEntity remove(@PathVariable int serviceQueueTypeId, @RequestParam int languageId) {
         return super.remove(new ServiceQueueTypeIds(serviceQueueTypeId, languageId));
     }
 

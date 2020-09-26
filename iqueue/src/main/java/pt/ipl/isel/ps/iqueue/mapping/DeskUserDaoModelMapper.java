@@ -2,7 +2,7 @@ package pt.ipl.isel.ps.iqueue.mapping;
 
 import org.springframework.stereotype.Component;
 import pt.ipl.isel.ps.iqueue.dao.DeskUserDao;
-import pt.ipl.isel.ps.iqueue.dao.embeddable.DeskUserIds;
+import pt.ipl.isel.ps.iqueue.dao.keys.DeskUserIds;
 import pt.ipl.isel.ps.iqueue.model.DeskUser;
 
 @Component

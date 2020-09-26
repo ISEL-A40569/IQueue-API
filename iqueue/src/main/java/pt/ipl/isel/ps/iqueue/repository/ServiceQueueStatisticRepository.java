@@ -17,6 +17,6 @@ public class ServiceQueueStatisticRepository {
     public Optional<ServiceQueueStatistic> get(int serviceQueueId) {
         String query = "exec GetServiceQueueStatistics ?";
 
-        return Optional.of(jdbcTemplate.queryForObject(query, new Object[] { serviceQueueId }, new ServiceQueueStatisticRowMapper()));
+        return Optional.of(jdbcTemplate.queryForObject(query, new Object[]{serviceQueueId}, new ServiceQueueStatisticRowMapper()));
     }
 }

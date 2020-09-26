@@ -1,6 +1,5 @@
 package pt.ipl.isel.ps.iqueue.model;
 
-import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class ServiceQueueStatistic {

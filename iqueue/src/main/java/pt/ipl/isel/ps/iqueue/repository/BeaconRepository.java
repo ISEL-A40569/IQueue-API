@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 import pt.ipl.isel.ps.iqueue.dao.BeaconDao;
 
 
-
 @Component
 public interface BeaconRepository extends JpaRepository<BeaconDao, Integer> {
 

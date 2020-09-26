@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class OperatorDao {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "operatorId")
     private int operatorId;
 

@@ -1,6 +1,6 @@
 package pt.ipl.isel.ps.iqueue.dao;
 
-import pt.ipl.isel.ps.iqueue.dao.embeddable.DeskUserIds;
+import pt.ipl.isel.ps.iqueue.dao.keys.DeskUserIds;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;

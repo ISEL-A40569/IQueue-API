@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pt.ipl.isel.ps.iqueue.dao.OperatorBeaconDao;
-import pt.ipl.isel.ps.iqueue.dao.embeddable.OperatorBeaconIds;
+import pt.ipl.isel.ps.iqueue.dao.keys.OperatorBeaconIds;
 import pt.ipl.isel.ps.iqueue.mapping.OperatorBeaconDaoModelMapper;
 import pt.ipl.isel.ps.iqueue.model.OperatorBeacon;
 import pt.ipl.isel.ps.iqueue.repository.OperatorBeaconRepository;

@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pt.ipl.isel.ps.iqueue.dao.UserProfileDao;
-import pt.ipl.isel.ps.iqueue.dao.embeddable.UserProfileIds;
+import pt.ipl.isel.ps.iqueue.dao.keys.UserProfileIds;
 import pt.ipl.isel.ps.iqueue.mapping.UserProfileDaoModelMapper;
 import pt.ipl.isel.ps.iqueue.model.UserProfile;
 import pt.ipl.isel.ps.iqueue.repository.UserProfileRepository;

@@ -19,36 +19,36 @@ public class ServiceQueue {
         return serviceQueueId;
     }
 
-    public int getOperatorId() {
-        return operatorId;
-    }
-
-    public String getServiceQueueDescription() {
-        return serviceQueueDescription;
-    }
-
-    public int getServiceQueueTypeId() {
-        return serviceQueueTypeId;
-    }
-
-    public int getDailyLimit() {
-        return dailyLimit;
-    }
-
     public void setServiceQueueId(int serviceQueueId) {
         this.serviceQueueId = serviceQueueId;
+    }
+
+    public int getOperatorId() {
+        return operatorId;
     }
 
     public void setOperatorId(int operatorId) {
         this.operatorId = operatorId;
     }
 
+    public String getServiceQueueDescription() {
+        return serviceQueueDescription;
+    }
+
     public void setServiceQueueDescription(String serviceQueueDescription) {
         this.serviceQueueDescription = serviceQueueDescription;
     }
 
+    public int getServiceQueueTypeId() {
+        return serviceQueueTypeId;
+    }
+
     public void setServiceQueueTypeId(int serviceQueueTypeId) {
         this.serviceQueueTypeId = serviceQueueTypeId;
+    }
+
+    public int getDailyLimit() {
+        return dailyLimit;
     }
 
     public void setDailyLimit(int dailyLimit) {

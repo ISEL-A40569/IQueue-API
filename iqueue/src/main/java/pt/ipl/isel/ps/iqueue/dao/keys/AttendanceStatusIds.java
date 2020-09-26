@@ -1,4 +1,4 @@
-package pt.ipl.isel.ps.iqueue.dao.embeddable;
+package pt.ipl.isel.ps.iqueue.dao.keys;
 
 import javax.persistence.Embeddable;
 import java.io.Serializable;

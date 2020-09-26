@@ -2,7 +2,7 @@ package pt.ipl.isel.ps.iqueue.mapping;
 
 import org.springframework.stereotype.Component;
 import pt.ipl.isel.ps.iqueue.dao.OperatorUserDao;
-import pt.ipl.isel.ps.iqueue.dao.embeddable.OperatorUserIds;
+import pt.ipl.isel.ps.iqueue.dao.keys.OperatorUserIds;
 import pt.ipl.isel.ps.iqueue.model.OperatorUser;
 
 @Component

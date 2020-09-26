@@ -24,6 +24,6 @@ public class ServiceQueueWaitingCountRepository {
     }
 
     private Optional<ServiceQueueWaitingCount> getWaitingCount(String query, int id) {
-        return Optional.ofNullable(jdbcTemplate.queryForObject(query, new Object[] { id }, new ServiceQueueWaitingCountRowMapper()));
+        return Optional.ofNullable(jdbcTemplate.queryForObject(query, new Object[]{id}, new ServiceQueueWaitingCountRowMapper()));
     }
 }

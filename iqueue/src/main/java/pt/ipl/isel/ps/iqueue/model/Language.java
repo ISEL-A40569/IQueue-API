@@ -13,12 +13,12 @@ public class Language {
         return languageId;
     }
 
-    public String getLanguageDescription() {
-        return languageDescription;
-    }
-
     public void setLanguageId(int languageId) {
         this.languageId = languageId;
+    }
+
+    public String getLanguageDescription() {
+        return languageDescription;
     }
 
     public void setLanguageDescription(String languageDescription) {

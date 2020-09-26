@@ -9,9 +9,9 @@ import java.util.List;
 @Component
 public interface AttendanceRepository extends JpaRepository<AttendanceDao, Integer> {
 
-    List<AttendanceDao> findByServiceQueueId (int serviceQueueId);
+    List<AttendanceDao> findByServiceQueueId(int serviceQueueId);
 
-    List<AttendanceDao> findByClientId (int clientId);
+    List<AttendanceDao> findByClientId(int clientId);
 
     void deleteByServiceQueueId(int serviceQueueId);
 

@@ -1,6 +1,6 @@
 package pt.ipl.isel.ps.iqueue.dao;
 
-import pt.ipl.isel.ps.iqueue.dao.embeddable.UserProfileIds;
+import pt.ipl.isel.ps.iqueue.dao.keys.UserProfileIds;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;

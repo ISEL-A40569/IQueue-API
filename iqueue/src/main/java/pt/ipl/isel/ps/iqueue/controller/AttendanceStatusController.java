@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pt.ipl.isel.ps.iqueue.dao.AttendanceStatusDao;
-import pt.ipl.isel.ps.iqueue.dao.embeddable.AttendanceStatusIds;
+import pt.ipl.isel.ps.iqueue.dao.keys.AttendanceStatusIds;
 import pt.ipl.isel.ps.iqueue.mapping.AttendanceStatusDaoModelMapper;
 import pt.ipl.isel.ps.iqueue.model.AttendanceStatus;
 import pt.ipl.isel.ps.iqueue.repository.AttendanceStatusRepository;

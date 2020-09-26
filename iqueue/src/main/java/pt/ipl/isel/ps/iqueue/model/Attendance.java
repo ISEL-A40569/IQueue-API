@@ -27,6 +27,10 @@ public class Attendance {
         return attendanceId;
     }
 
+    public void setAttendanceId(int attendanceId) {
+        this.attendanceId = attendanceId;
+    }
+
     public int getServiceQueueId() {
         return serviceQueueId;
     }
@@ -53,9 +57,5 @@ public class Attendance {
 
     public int getAttendanceStatusId() {
         return attendanceStatusId;
-    }
-
-    public void setAttendanceId(int attendanceId) {
-        this.attendanceId = attendanceId;
     }
 }

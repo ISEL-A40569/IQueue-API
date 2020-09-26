@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class BeaconDao {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "beaconId")
     private int beaconId;
 

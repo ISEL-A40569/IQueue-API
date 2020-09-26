@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pt.ipl.isel.ps.iqueue.dao.DeskUserDao;
-import pt.ipl.isel.ps.iqueue.dao.embeddable.DeskUserIds;
+import pt.ipl.isel.ps.iqueue.dao.keys.DeskUserIds;
 import pt.ipl.isel.ps.iqueue.mapping.DeskUserDaoModelMapper;
 import pt.ipl.isel.ps.iqueue.model.DeskUser;
 import pt.ipl.isel.ps.iqueue.repository.DeskUserRepository;

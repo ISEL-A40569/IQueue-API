@@ -2,7 +2,6 @@ package pt.ipl.isel.ps.iqueue.utils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pt.ipl.isel.ps.iqueue.mapping.UserDaoModelMapper;
 import pt.ipl.isel.ps.iqueue.repository.UserRepository;
 
 import java.util.List;

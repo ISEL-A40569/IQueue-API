@@ -1,6 +1,6 @@
 package pt.ipl.isel.ps.iqueue.dao;
 
-import pt.ipl.isel.ps.iqueue.dao.embeddable.OperatorUserIds;
+import pt.ipl.isel.ps.iqueue.dao.keys.OperatorUserIds;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;

@@ -1,6 +1,6 @@
 package pt.ipl.isel.ps.iqueue.dao;
 
-import pt.ipl.isel.ps.iqueue.dao.embeddable.AttendanceStatusIds;
+import pt.ipl.isel.ps.iqueue.dao.keys.AttendanceStatusIds;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
