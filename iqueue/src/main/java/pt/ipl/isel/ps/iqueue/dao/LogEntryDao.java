@@ -21,34 +21,18 @@ public class LogEntryDao {
     @Column(name = "requestUri")
     private String requestUri;
 
-    @Column(name = "requestHeaders")
-    private String requestHeaders;
-
-    @Column(name = "requestBody")
-    private String requestBody;
-
     @Column(name = "responseStatus")
     private int responseStatus;
-
-    @Column(name = "responseHeaders")
-    private String responseHeaders;
-
-    @Column(name = "responseBody")
-    private String responseBody;
 
     public LogEntryDao() {
     }
 
-    public LogEntryDao(int logId, LocalDateTime logCreationDateTime, String requestMethod, String requestUri, String requestHeaders, String requestBody, int responseStatus, String responseHeaders, String responseBody) {
+    public LogEntryDao(int logId, LocalDateTime logCreationDateTime, String requestMethod, String requestUri, int responseStatus) {
         this.logId = logId;
         this.logCreationDateTime = logCreationDateTime;
         this.requestMethod = requestMethod;
         this.requestUri = requestUri;
-        this.requestHeaders = requestHeaders;
-        this.requestBody = requestBody;
         this.responseStatus = responseStatus;
-        this.responseHeaders = responseHeaders;
-        this.responseBody = responseBody;
     }
 
     public int getLogId() {
@@ -83,22 +67,6 @@ public class LogEntryDao {
         this.requestUri = requestUri;
     }
 
-    public String getRequestHeaders() {
-        return requestHeaders;
-    }
-
-    public void setRequestHeaders(String requestHeaders) {
-        this.requestHeaders = requestHeaders;
-    }
-
-    public String getRequestBody() {
-        return requestBody;
-    }
-
-    public void setRequestBody(String requestBody) {
-        this.requestBody = requestBody;
-    }
-
     public int getResponseStatus() {
         return responseStatus;
     }
@@ -107,19 +75,5 @@ public class LogEntryDao {
         this.responseStatus = responseStatus;
     }
 
-    public String getResponseHeaders() {
-        return responseHeaders;
-    }
 
-    public void setResponseHeaders(String responseHeaders) {
-        this.responseHeaders = responseHeaders;
-    }
-
-    public String getResponseBody() {
-        return responseBody;
-    }
-
-    public void setResponseBody(String responseBody) {
-        this.responseBody = responseBody;
-    }
 }

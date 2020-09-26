@@ -10,17 +10,13 @@ public class LogEntryDaoModelMapper implements DaoModelMapper<LogEntryDao, LogEn
     public LogEntry mapDaoToModel(LogEntryDao dao) {
         return new LogEntry(dao.getLogId(), dao.getLogCreationDateTime(),
                 dao.getRequestMethod(), dao.getRequestUri(),
-                dao.getRequestHeaders(), dao.getRequestBody(),
-                dao.getResponseStatus(), dao.getResponseHeaders(),
-                dao.getResponseBody());
+                dao.getResponseStatus());
     }
 
     @Override
     public LogEntryDao mapModelToDao(LogEntry model) {
         return new LogEntryDao(model.getLogId(), model.getLogCreationDateTime(),
                 model.getRequestMethod(), model.getRequestUri(),
-                model.getRequestHeaders(), model.getRequestBody(),
-                model.getResponseStatus(), model.getResponseHeaders(),
-                model.getResponseBody());
+                model.getResponseStatus());
     }
 }

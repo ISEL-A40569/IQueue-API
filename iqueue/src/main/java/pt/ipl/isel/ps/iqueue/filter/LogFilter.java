@@ -31,7 +31,6 @@ public class LogFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
-        ContentCachingRequestWrapper requestWrapper = new ContentCachingRequestWrapper(req);
 
         chain.doFilter(req, res);
 
@@ -42,17 +41,11 @@ public class LogFilter implements Filter {
             logEntry.setLogCreationDateTime(LocalDateTime.now());
             logEntry.setRequestMethod(req.getMethod());
             logEntry.setRequestUri(req.getRequestURI());
-            logEntry.setRequestHeaders("test"); // TODO: how to get all of them?
-
-            logEntry.setRequestBody(new String(requestWrapper.getContentAsByteArray(), UTF_8));
             logEntry.setResponseStatus(res.getStatus());
-            logEntry.setResponseHeaders("test");   // TODO: how to get all of them?
-            logEntry.setResponseBody("test");   // TODO: how to get body?
 
             try {
                 logEntryRepository.save(logEntry);
             } catch (Exception e) {
-                // TODO: What if LOG throws exception !? -> send email !?
             }
         }
     }
