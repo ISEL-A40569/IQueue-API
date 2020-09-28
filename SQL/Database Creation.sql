@@ -164,11 +164,7 @@ logId int identity primary key,
 logCreationDateTime datetime not null,
 requestMethod varchar(6) not null,
 requestUri varchar(256) not null,
-requestHeaders varchar(1024) not null,
-requestBody varchar(1024) not null,
 responseStatus int not null,
-responseHeaders varchar(1024) not null,
-responseBody varchar(1024) not null,
 )
 
 go
